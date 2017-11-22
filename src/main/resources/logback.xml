@@ -6,6 +6,7 @@
         <encoder>
             <!--打印台输出格式-->
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
         </encoder>
     </appender>
     <!--定义的级别为debug-->

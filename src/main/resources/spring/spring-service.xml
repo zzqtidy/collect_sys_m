@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!-- 扫描service包（包括子包中）下面的所有注解，初始化并加入到IOC的容器中,如果类中有其他的依赖，也会初始化-->
-    <context:component-scan base-package="org.seckill.service"/>
+    <context:component-scan base-package="org.zzq.csm.service"/>
     <!--配置事务管理器-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
