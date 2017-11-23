@@ -1,5 +1,6 @@
 package org.zzq.csm.service.login.impl;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zzq.csm.dao.login.SysPermissionMapperCustom;
@@ -34,10 +35,13 @@ public class SysServiceImpl implements SysService {
 
         // 数据库密码（MD5加密后的密码）
         String password_db = sysUser.getPassword();
-
+        String salt_db = sysUser.getSalt(); //盐值
+        int hashIterations = 1;//加密次数
         // 对输入的密码和数据库密码进行比对，如果一致，认证通过
-        // 对页面输入的密码进行MD5加密
-        String password_input_md5 = new MD5().getMD5ofStr(password);
+        // 对页面输入的密码进行MD5加密,注意，由于后面需要使用shiro的验证，此处的加密也应该用shiro的MD5加密方法，使两边对应起来
+
+        Object obj = new SimpleHash("MD5", password, salt_db, hashIterations);
+        String password_input_md5 = obj.toString();
         if (!password_db.equalsIgnoreCase(password_input_md5)) {
             //抛出异常
             throw new Exception("用户名或密码错误");

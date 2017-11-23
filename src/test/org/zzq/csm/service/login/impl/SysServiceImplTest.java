@@ -40,8 +40,9 @@ public class SysServiceImplTest {
     public void testAuthenticat() throws Exception {
         try {
             ActiveUser activeUser = sysService.authenticat("zhangsan", "123456");
+            logger.info("成功验证用户："+activeUser.getUsercode());
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("错误："+e.getMessage());
         }
 
     }

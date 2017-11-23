@@ -26,6 +26,8 @@
         <property name="checkoutTimeout" value="1000"/>
         <!--获取连接池中连接的超时次数-->
         <property name="acquireRetryAttempts" value="2"/>
+
+        <property name="maxStatements" value="0"/>
     </bean>
 
     <!--约定大于配置-->
