@@ -3,7 +3,7 @@
 <mapper namespace="org.zzq.csm.dao.login.SysPermissionMapperCustom">
 
     <!-- 根据用户id查询菜单 -->
-    <select id="findMenuListByUserId" parameterType="string" resultType="org.zzq.csm.dao.login.SysPermissionMapperCustom">
+    <select id="findMenuListByUserId" parameterType="java.lang.String" resultType="org.zzq.csm.entity.login.SysPermission">
         SELECT
         *
         FROM
@@ -22,7 +22,7 @@
         WHERE sys_user_id = #{userid}))
     </select>
     <!-- 根据用户id查询URL -->
-    <select id="findPermissionListByUserId" parameterType="string" resultType="org.zzq.csm.entity.login.SysPermission">
+    <select id="findPermissionListByUserId" parameterType="java.lang.String" resultType="org.zzq.csm.entity.login.SysPermission">
         SELECT
         *
         FROM
