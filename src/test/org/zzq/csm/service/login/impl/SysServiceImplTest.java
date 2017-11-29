@@ -1,8 +1,6 @@
 package org.zzq.csm.service.login.impl;
 
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +38,7 @@ public class SysServiceImplTest {
     public void testAuthenticat() throws Exception {
         try {
             ActiveUser activeUser = sysService.authenticat("zhangsan", "123456");
-            logger.info("成功验证用户："+activeUser.getUsercode());
+            logger.info("成功验证用户:"+activeUser.getUsername());
         } catch (Exception e) {
             logger.error("错误："+e.getMessage());
         }
