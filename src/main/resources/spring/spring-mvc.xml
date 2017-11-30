@@ -37,7 +37,7 @@
     </bean>
 
     <!--4.扫描Web相关的类，也就是扫描controller-->
-    <context:component-scan base-package="org.zzq.csm.controller"/>
+    <!--<context:component-scan base-package="org.zzq.csm.controller"/>-->
 
     <!-- 开启aop，对类代理 -->
     <aop:config proxy-target-class="true"></aop:config>

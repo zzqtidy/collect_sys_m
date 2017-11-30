@@ -1,0 +1,17 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../config/ehcache.xsd" updateCheck="false">
+	<!--上面的updateCheck="false"最好加上，否则在服务器启动的时候回出现检查更新的报错 -->
+	<!--diskStore：缓存数据持久化的目录 地址  -->
+	<diskStore path="D:\JavaProjectDemo\collect_sys_m\ehcache" />
+	<defaultCache
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000000"
+		eternal="false" 
+		overflowToDisk="true" 
+		diskPersistent="false"
+		timeToIdleSeconds="120"
+		timeToLiveSeconds="120" 
+		diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU">
+	</defaultCache>
+</ehcache>
