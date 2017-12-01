@@ -29,6 +29,7 @@
                 /clearShiroCache.action = anon
                 <!-- 无权访问页面 anon表示可以匿名访问 -->
                 /refuse.jsp = anon
+                /error.jsp = anon
                 <!-- 验证码可以匿名访问 -->
                 /validatecode.jsp = anon
                 <!-- perms[xx] 表示有xx权限才可以访问 一般此类使用注解替代配置 -->
@@ -53,8 +54,8 @@
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="customRealm" />
-        <!-- 注入缓存管理器 -->
-        <property name="cacheManager" ref="cacheManager"/>
+        <!-- 注入缓存管理器
+        <property name="cacheManager" ref="cacheManager"/>-->
         <!-- 注入Session管理器 -->
         <property name="sessionManager" ref="sessionManager"/>
         <!-- 注入rememberMe管理器 -->
