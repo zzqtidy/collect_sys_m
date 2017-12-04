@@ -24,7 +24,7 @@
         1) 加入对静态资源的处理：如js、png、gif
         2）允许使用'/'作整体的映射
     -->
-    <!--<mvc:default-servlet-handler/>-->
+    <mvc:default-servlet-handler/>
 
     <!--配置jsp 显示ViewResolver-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

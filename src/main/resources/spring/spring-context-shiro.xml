@@ -36,6 +36,7 @@
                 <!-- /item/queryItem.action = perms[item:query] -->
                 <!-- /item/editItem.action = perms[item:edit] -->
                 <!-- 配置记住我或认证通过可以访问的地址 -->
+                /login = user
                 /index.jsp = user
                 /first = user
                 /welcome.jsp = user
@@ -43,6 +44,7 @@
                 /js/** = anon
                 /images/** = anon
                 /styles/** = anon
+                /static/** = anon
                 <!--/** = authc 表示所有的URL都必须认真通过才可以进行访问-->
                 /** = authc
             </value>
