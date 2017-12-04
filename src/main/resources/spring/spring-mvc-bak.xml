@@ -40,7 +40,14 @@
     <context:component-scan base-package="org.zzq.csm.controller"/>
 
     <!-- 开启aop，对类代理 -->
-    <aop:config proxy-target-class="true"></aop:config>
+    <!--<aop:config proxy-target-class="true"></aop:config>-->
+
+    <!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
     <!-- 开启shiro注解支持 -->
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">

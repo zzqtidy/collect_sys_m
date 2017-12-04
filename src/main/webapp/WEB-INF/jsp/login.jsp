@@ -1,16 +1,25 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zzq
-  Date: 2017/11/29
-  Time: 12:55
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="common/tag.jsp" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <%@ include file="common/header.jsp" %>
+    <title>登录</title>
 </head>
 <body>
+<form id="loginForm" action="${baseurl}login" method="post">
+    <input type="text" id="username" name="username" placeholder="用户名" ></input>
+    <input type="password" id="password" name="password" placeholder="密码"></input>
+    <input id="loginBtn" type="button" value="Login"/>
+</form>
 
 </body>
+<%@ include file="common/footer.jsp" %>
+<script type="text/javascript">
+    $(function () {
+        $("#loginBtn").click(function () {
+            $("#loginForm").submit();
+        })
+    })
+</script>
 </html>

@@ -12,7 +12,7 @@
         <!-- 认证成功统一跳转到first.action，建议不配置，默认情况下，shiro认证成功后自动跳转上一个请求路径 -->
         <property name="successUrl" value="/first"/>
         <!-- 通过unauthorizedUrl 指定没有权限操作时的跳转页面 -->
-        <property name="unauthorizedUrl" value="/refuse.jsp"/>
+        <property name="unauthorizedUrl" value="/refuse"/>
         <!-- 自定义filter配置 -->
         <property name="filters">
             <map>
@@ -23,31 +23,27 @@
         <!-- 过滤器链定义，从上向下执行，一般将/**放在最下边 -->
         <property name="filterChainDefinitions">
             <value>
-                <!-- 退出拦截，请求logout.action执行退出操作 shiro自动清除Session-->
-                <!--/logout.action = logout-->
-                <!--&lt;!&ndash; 测试清空缓存 &ndash;&gt;-->
-                <!--/clearShiroCache.action = anon-->
-                <!--&lt;!&ndash; 无权访问页面 anon表示可以匿名访问 &ndash;&gt;-->
-                <!--/refuse.jsp = anon-->
-                <!--/error.jsp = anon-->
-                <!--&lt;!&ndash; 验证码可以匿名访问 &ndash;&gt;-->
-                <!--/validatecode.jsp = anon-->
-                <!--&lt;!&ndash; perms[xx] 表示有xx权限才可以访问 一般此类使用注解替代配置 &ndash;&gt;-->
-                <!--&lt;!&ndash; /item/queryItem.action = perms[item:query] &ndash;&gt;-->
-                <!--&lt;!&ndash; /item/editItem.action = perms[item:edit] &ndash;&gt;-->
-                <!--&lt;!&ndash; 配置记住我或认证通过可以访问的地址 &ndash;&gt;-->
-                <!--/index.jsp = user-->
-                <!--/first.action = user-->
-                <!--/welcome.jsp = user-->
-                <!--&lt;!&ndash; /item/queryItem.action = user &ndash;&gt;-->
-                <!--/item/** = user-->
-                <!--&lt;!&ndash; 对静态资源设置匿名访问 &ndash;&gt;-->
-                <!--/js/** = anon-->
-                <!--/images/** = anon-->
-                <!--/styles/** = anon-->
-                <!-- /** = authc 表示所有的URL都必须认真通过才可以进行访问-->
-                /login.jsp =anon
-                /login.action=authc
+                <!--退出拦截，请求logout.action执行退出操作 shiro自动清除Session-->
+                /logout = logout
+                <!-- 测试清空缓存 -->
+                /clearShiroCache = anon
+                <!-- 无权访问页面 anon表示可以匿名访问 -->
+                /refuse.jsp = anon
+                /error.jsp = anon
+                <!-- 验证码可以匿名访问 -->
+                /validatecode.jsp = anon
+                <!-- perms[xx] 表示有xx权限才可以访问 一般此类使用注解替代配置 -->
+                <!-- /item/queryItem.action = perms[item:query] -->
+                <!-- /item/editItem.action = perms[item:edit] -->
+                <!-- 配置记住我或认证通过可以访问的地址 -->
+                /index.jsp = user
+                /first = user
+                /welcome.jsp = user
+                <!-- 对静态资源设置匿名访问 -->
+                /js/** = anon
+                /images/** = anon
+                /styles/** = anon
+                <!--/** = authc 表示所有的URL都必须认真通过才可以进行访问-->
                 /** = authc
             </value>
         </property>
@@ -61,7 +57,7 @@
         <!-- 注入Session管理器 -->
         <property name="sessionManager" ref="sessionManager"/>
         <!-- 注入rememberMe管理器 -->
-        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
     </bean>
 
     <!-- 自定义Realm -->
@@ -97,7 +93,7 @@
         <!-- 表单中密码的input名称 -->
         <property name="passwordParam" value="password"/>
         <!-- 记住我input的名称 -->
-        <property name="rememberMeParam" value="rememberMe"/>
+        <!--<property name="rememberMeParam" value="rememberMe"/>-->
     </bean>
 
     <!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
