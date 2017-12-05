@@ -23,6 +23,7 @@
         <!-- 过滤器链定义，从上向下执行，一般将/**放在最下边 -->
         <property name="filterChainDefinitions">
             <value>
+
                 <!--退出拦截，请求logout.action执行退出操作 shiro自动清除Session-->
                 /logout = logout
                 <!-- 测试清空缓存 -->
@@ -36,16 +37,13 @@
                 <!-- /item/queryItem.action = perms[item:query] -->
                 <!-- /item/editItem.action = perms[item:edit] -->
                 <!-- 配置记住我或认证通过可以访问的地址 -->
-                /login = user
                 /index.jsp = user
                 /first = user
                 /welcome.jsp = user
-                <!-- 对静态资源设置匿名访问 -->
-                /js/** = anon
-                /images/** = anon
-                /styles/** = anon
+                <!-- 对静态资源设置匿名访问,如果不添加，无法访问js/css/image,而这些文件都放在static文件夹下 -->
                 /static/** = anon
                 <!--/** = authc 表示所有的URL都必须认真通过才可以进行访问-->
+                <!--/login = authc-->
                 /** = authc
             </value>
         </property>
@@ -108,5 +106,17 @@
         <constructor-arg value="rememberMe"/>
         <!-- 记住我cookie的有效时间是30天 30*24*60*60 单位是秒 -->
         <property name="maxAge" value="2592000"></property>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- AOP式方法级权限检查  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
     </bean>
 </beans>
