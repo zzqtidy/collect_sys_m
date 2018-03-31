@@ -6,7 +6,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1"
          metadata-complete="true">
-    <!--配置DispatcherServlet(配置springmvc servlet)-->
+    <!--配置DispatcherServlet(配置springmvc servlet)，可以配置多个，如电脑端访问和手机端（云端）访问各一个-->
     <servlet>
         <servlet-name>csm-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -17,8 +17,8 @@
         寻找并加载该目录下的名为csm-dispatcher-servlet.xml这个文件
         -->
         <init-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/spring/spring-mvc.xml</param-value>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/spring/spring-mvc.xml</param-value>
         </init-param>
     </servlet>
     <!--上面的配置映射哪些请求，此处用/来匹配所有请求，主要是兼顾RESTful请求url-->

@@ -7,10 +7,10 @@
     <!-- Shiro的web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证,请求此地址将由formAuthenticationFilter进行表单认证 -->
+        <!-- loginUrl认证提交地址，如果没有认证(认证失败)将会请求此地址进行认证,请求此地址将由formAuthenticationFilter进行表单认证 -->
         <property name="loginUrl" value="/login"/>
         <!-- 认证成功统一跳转到first.action，建议不配置，默认情况下，shiro认证成功后自动跳转上一个请求路径 -->
-        <property name="successUrl" value="/first"/>
+        <!--<property name="successUrl" value="/first"/>-->
         <!-- 通过unauthorizedUrl 指定没有权限操作时的跳转页面 -->
         <property name="unauthorizedUrl" value="/refuse"/>
         <!-- 自定义filter配置 -->
@@ -24,27 +24,12 @@
         <property name="filterChainDefinitions">
             <value>
 
-                <!--退出拦截，请求logout.action执行退出操作 shiro自动清除Session-->
-                /logout = logout
-                <!-- 测试清空缓存 -->
-                /clearShiroCache = anon
-                <!-- 无权访问页面 anon表示可以匿名访问 -->
-                /refuse.jsp = anon
-                /error.jsp = anon
-                <!-- 验证码可以匿名访问 -->
-                /validatecode.jsp = anon
-                <!-- perms[xx] 表示有xx权限才可以访问 一般此类使用注解替代配置 -->
-                <!-- /item/queryItem.action = perms[item:query] -->
-                <!-- /item/editItem.action = perms[item:edit] -->
-                <!-- 配置记住我或认证通过可以访问的地址 -->
-                /index.jsp = user
-                /first = user
-                /welcome.jsp = user
+                /example/** = anon
                 <!-- 对静态资源设置匿名访问,如果不添加，无法访问js/css/image,而这些文件都放在static文件夹下 -->
                 /static/** = anon
-                <!--/** = authc 表示所有的URL都必须认真通过才可以进行访问-->
-                <!--/login = authc-->
-                /** = authc
+                /logout = logout
+                /login = authc
+                /** = user
             </value>
         </property>
     </bean>
@@ -55,7 +40,7 @@
         <!-- 注入缓存管理器
         <property name="cacheManager" ref="cacheManager"/>-->
         <!-- 注入Session管理器 -->
-        <property name="sessionManager" ref="sessionManager"/>
+        <!--<property name="sessionManager" ref="sessionManager"/>-->
         <!-- 注入rememberMe管理器 -->
         <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
     </bean>

@@ -22,5 +22,7 @@ Welcome,${activeUser.username}
     </c:forEach>
 </ul>
 </body>
+</br>
+<a href="${baseurl}logout">logout</a>
 <%@ include file="common/footer.jsp" %>
 </html>
