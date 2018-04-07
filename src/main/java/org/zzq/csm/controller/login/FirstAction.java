@@ -17,7 +17,7 @@ import org.zzq.csm.entity.login.ActiveUser;
 @Controller
 public class FirstAction {
     //系统首页
-    @RequestMapping("/first")
+    @RequestMapping("/admin/first")
     public String first(Model model)throws Exception{
 
         //主体
@@ -25,14 +25,14 @@ public class FirstAction {
         //身份
         ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
         model.addAttribute("activeUser", activeUser);
-        return "/first";
+        return "/admin/first";
     }
 
     //欢迎页面
-    @RequestMapping("/welcome")
+    @RequestMapping("/admin/welcome")
     public String welcome(Model model)throws Exception{
 
-        return "/welcome";
+        return "/admin/welcome";
 
     }
 }

@@ -10,21 +10,15 @@ package org.zzq.csm.controller.login;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.zzq.csm.entity.login.ActiveUser;
-import org.zzq.csm.exception.CustomException;
 import org.zzq.csm.service.login.SysService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -37,29 +31,8 @@ public class LoginController {
     @Autowired
     private SysService sysService;
 
-    //用户登录提交方法
-    /*@RequestMapping("/login")
-	public String login(HttpSession session,String randomcode,String usercode,String password) throws Exception{
-		// 校验验证码，防止恶性攻击
-		// 从Session中获取正确的验证码
-		String validateCode = (String) session.getAttribute("validateCode");
-
-		//输入的验证码和Session中的验证码进行对比
-		if (!randomcode.equalsIgnoreCase(validateCode)) {
-			//抛出异常
-			throw new CustomException("验证码输入错误");
-		}
-
-		//调用Service校验用户账号和密码的正确性
-		ActiveUser activeUser = sysService.authenticat(usercode, password);
-
-		//如果Service校验通过，将用户身份记录到Session
-		session.setAttribute("activeUser", activeUser);
-		//重定向到商品查询页面
-		return "redirect:/first.action";
-	} */
     //用户登录提交方法，该controller会mapping如下的浏览器请求  http://host:port/login
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "admin/login")
     public String login(HttpServletRequest request, Model model) throws Exception {
 
         //shiro在认证通过后出现错误后将异常类路径通过request返回
@@ -80,8 +53,8 @@ public class LoginController {
 //            }
 //        }
 
-        if(username==null)
-            return "login";
+//        if(username==null)
+//            return "/login";
         Subject subject = SecurityUtils.getSubject();
 
         if(!subject.isAuthenticated()){
@@ -89,31 +62,22 @@ public class LoginController {
             try {
                 subject.login(token);
                 //身份
-                ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
-                model.addAttribute("activeUser", activeUser);
-                return "first"; //返回页面 WEB-INF/jsp/first.jsp
+                return "redirect:/admin/first";
+//              return "/first"; //返回页面 WEB-INF/jsp/first.jsp
             }
             catch (ExcessiveAttemptsException ex){
-                return "login";
+                return "/admin/login";
+            }
+            catch (Exception ex){
+                return "/admin/login";
             }
         }
         else{
-            ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
-            model.addAttribute("activeUser", activeUser);
-            return "first";
+//            ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
+//            model.addAttribute("activeUser", activeUser);
+//            return "/first";
+            return "redirect:/admin/first";
         }
 
-
-    }
-
-    //用户退出
-    @RequestMapping("/logout")
-    public String logout(HttpSession session) throws Exception {
-        //session失效
-        session.invalidate();
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        //重定向到商品查询页面
-        return "login";
     }
 }

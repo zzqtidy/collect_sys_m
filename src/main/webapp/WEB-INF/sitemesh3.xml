@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+
+
+    <!-- 拦截任何路径配置装饰器 -->
+    <mapping path="/admin/*" decorator="/WEB-INF/jsp/layouts/decorator.jsp"/>
+
+    <mapping path="/admin/login" exclue="true"/>
+    <!-- 这里配置自定义的tag -->
+    <content-processor>
+        <tag-rule-bundle class="org.zzq.csm.util.MySiteMeshFilter"/>
+    </content-processor>
+
+
+</sitemesh>

@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="common/tag.jsp" %>
+<%@ include file="../common/tag.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <%@ include file="common/header.jsp" %>
+    <%@ include file="../common/header.jsp" %>
     <link href="/static/css/signin.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 
-    <form class="form-signin" id="loginForm" action="${baseurl}login" method="post">
+    <form class="form-signin" id="loginForm" action="${baseurl}admin/login" method="post">
         <div class="row">
             <i class="fa fa-user "></i>
             <input type="text" id="username" name="username" placeholder="用户名" class="form-control" required autofocus/>
