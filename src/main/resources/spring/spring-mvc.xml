@@ -32,14 +32,35 @@
     <!--配置jsp 显示ViewResolver
         可以用多个ViewResolver,使用order排序即可
         InternalResourceViewResolver 需要放置在最后
+        如果不使用jsp，而使用模板，请将下面的注释。
     -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!--view技术的Spring实现类-->
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <!--前缀-->
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <!--后缀-->
-        <property name="suffix" value=".jsp"/>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--&lt;!&ndash;view技术的Spring实现类&ndash;&gt;-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <!--&lt;!&ndash;前缀&ndash;&gt;-->
+        <!--<property name="prefix" value="/WEB-INF/pages/"/>-->
+        <!--&lt;!&ndash;后缀&ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <!-- 使用thymeleaf模板 解析 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML" />
+        <property name="cacheable" value="false" />
+        <property name="characterEncoding" value="UTF-8"/><!--不加会乱码-->
+    </bean>
+
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <!--解决中文乱码-->
+        <property name="characterEncoding" value="UTF-8"/>
     </bean>
 
     <!--4.扫描Web相关的类，也就是扫描controller-->

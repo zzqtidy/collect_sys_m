@@ -12,10 +12,12 @@
     <description>Camel project that deploys the Camel Web Console, REST API, and your routes as a WAR</description>
     <url>http://www.myorganization.org</url>
     <packaging>war</packaging>
-    <!--设定jar包版本-->
+    <!--设定jar包版本,版本属性-->
     <properties>
         <spring.version>4.1.7.RELEASE</spring.version>
         <mybatis.version>3.3.0</mybatis.version>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+
     </properties>
 
     <dependencies>
@@ -71,6 +73,7 @@
 
         <!--3:servlet web依赖-->
         <!--标签-->
+        <!--idea使用jstl需要同时导入jstl包和standard包 -->
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
@@ -230,20 +233,31 @@
             <artifactId>sitemesh</artifactId>
             <version>3.0.0</version>
         </dependency>
-
-        <!-- jsp Template jar -->
+        <!--SSM项目中引入Thymeleaf -->
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.20</version>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
-        <!-- apache servlet api jar -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>6.0.37</version>
-        </dependency>
+        <!--&lt;!&ndash; jsp Template jar &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.freemarker</groupId>-->
+            <!--<artifactId>freemarker</artifactId>-->
+            <!--<version>2.3.20</version>-->
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; apache servlet api jar &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>servlet-api</artifactId>-->
+            <!--<version>6.0.37</version>-->
+        <!--</dependency>-->
     </dependencies>
     <build>
         <finalName>collect_sys_m</finalName>
