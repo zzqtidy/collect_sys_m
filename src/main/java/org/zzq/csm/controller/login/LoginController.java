@@ -38,7 +38,7 @@ public class LoginController {
     private SysService sysService;
 
     //用户登录提交方法，该controller会mapping如下的浏览器请求  http://host:port/login
-    @RequestMapping(value = "/admin/login")//, method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    @RequestMapping(value = "admin/login")//, method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
 //    @ResponseBody
     public String login(HttpServletRequest request, Model model) throws Exception {
 
@@ -55,14 +55,14 @@ public class LoginController {
             try {
                 subject.login(token);
             } catch (Exception ex) {
-                jsonResult.failure("/admin/login");
-                return "/admin/login";
+                jsonResult.failure("admin/login");
+                return "admin/login";
                 //return jsonResult;
             }
         }
-        jsonResult.success("/admin/first");
+        jsonResult.success("admin/first");
         //return jsonResult;
-        return "/admin/first";
+        return "admin/first";
     }
 
     // ajax json

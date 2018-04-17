@@ -3,7 +3,7 @@
 
 
     <!-- 拦截任何路径配置装饰器 -->
-    <!--<mapping path="/admin/*" decorator="/WEB-INF/pages/layouts/decorator.jsp"/>-->
+    <!--<mapping path="/admin/*" decorator="/WEB-INF/views/layouts/decorator.html"/>-->
 
     <!--<mapping path="/admin/login" exclue="true"/>-->
     <!-- 这里配置自定义的tag -->
