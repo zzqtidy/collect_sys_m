@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/main::head(~{::title},~{::script})">
+    <title>首页</title>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-container style="border: 1px solid #eee">
+            <el-header th:replace="layouts/main::body_header"></el-header>
+            <el-container>
+                <el-aside th:replace="layouts/main::body_menu"></el-aside>
+                <el-main style="background-color: rgb(638, 241, 246);height:700px;border: 1px solid #eee">
+                    <el-table :data="tableData">
+                        <el-table-column prop="date" label="日期" width="140">
+                        </el-table-column>
+                        <el-table-column prop="name" label="姓名" width="120">
+                        </el-table-column>
+                        <el-table-column prop="address" label="地址">
+                        </el-table-column>
+                    </el-table>
+                </el-main>
+            </el-container>
+            <el-footer th:replace="layouts/main::body_footer"></el-footer>
+        </el-container>
+    </div>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                menus:[],
+                username:"11",
+                tableData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }]
+            },
+            mounted:function () {
+                //页面加载完之后执行
+                $.ajax({
+                    url:"/admin/ajaxfirst",
+                    success:function (res) {
+                        app.menus=res.data.menus;
+                        app.username=res.data.username;
+                    }
+                })
+            },
+            methods:{
+                //退出
+                logout:function () {
+                    window.location.href = "/admin/logout";
+                }
+            }
+        })
+    </script>
+</body>
+</br>
+</html>

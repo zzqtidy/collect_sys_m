@@ -90,4 +90,9 @@
         <servlet-name>csm-dispatcher</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+    <!--定义404错误，如果找不到页面会用改页面来代替，而不是在界面上展示一堆不美观的错误码-->
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/WEB-INF/jquerypages/error/404.html</location>-->
+    <!--</error-page>-->
 </web-app>

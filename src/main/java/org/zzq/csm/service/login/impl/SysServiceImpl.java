@@ -79,6 +79,11 @@ public class SysServiceImpl implements SysService {
         return null;
     }
 
+    public List<SysUser> selectAllSysUser() throws Exception{
+        List<SysUser> list = sysUserMapper.selectAllSysUser();
+        return list;
+    }
+
     public List<SysPermission> findMenuListByUserId(String userid) throws Exception {
         return sysPermissionMapperCustom.findMenuListByUserId(userid);
     }

@@ -15,20 +15,29 @@ import org.zzq.csm.entity.login.ActiveUser;
  * Description:
  * User: zzq
  * Date: 2017-12-04
- * Time: 18:18
  */
 @Controller
 public class FirstAction {
     //系统首页
     @RequestMapping("/admin/first")
     public String first(Model model)throws Exception{
-
         //主体
         Subject subject = SecurityUtils.getSubject();
         //身份
         ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
         model.addAttribute("activeUser", activeUser);
         return "admin/first";
+    }
+    //系统首页index
+    @RequestMapping("/admin/index")
+    public String index(Model model)throws Exception{
+
+        //主体
+        Subject subject = SecurityUtils.getSubject();
+        //身份
+        ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
+        model.addAttribute("activeUser", activeUser);
+        return "admin/index";
     }
 
     @RequestMapping(value = "/admin/ajaxfirst", method = RequestMethod.GET, produces = {"application/json; charset=utf-8" })
@@ -46,8 +55,6 @@ public class FirstAction {
     //欢迎页面
     @RequestMapping("/admin/welcome")
     public String welcome(Model model)throws Exception{
-
         return "/admin/welcome";
-
     }
 }

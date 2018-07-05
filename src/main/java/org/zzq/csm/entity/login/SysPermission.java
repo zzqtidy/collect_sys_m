@@ -18,6 +18,7 @@ public class SysPermission {
     private String sortstring;
 
     private String available;
+    private String iconclass;
 
     public Long getId() {
         return id;
@@ -89,5 +90,13 @@ public class SysPermission {
 
     public void setAvailable(String available) {
         this.available = available == null ? null : available.trim();
+    }
+
+    public String getIconclass() {
+        return iconclass;
+    }
+
+    public void setIconclass(String iconclass) {
+        this.iconclass = iconclass == null ? null : iconclass.trim();
     }
 }

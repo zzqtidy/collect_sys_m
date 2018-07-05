@@ -84,6 +84,11 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="selectAllSysUser" resultMap="BaseResultMap">
+    select * from sys_user
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

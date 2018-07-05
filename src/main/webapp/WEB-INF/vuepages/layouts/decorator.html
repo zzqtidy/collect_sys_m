@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <sitemesh:write property='title'/>
+    </title>
+    <!-- 引入样式 -->
+    <sitemesh:write property='head'/>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <el-container style="border: 1px solid #eee">
+        <el-header style="background-color: rgb(738, 241, 246)">
+            <el-row>
+                <el-col :span="18">
+                    TZ系统
+                </el-col>
+                <el-col :span="6">
+                    <el-dropdown>
+                        <i class="el-icon-setting" style="margin-right: 15px"></i>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>我的</el-dropdown-item>
+                            <el-dropdown-item>退出</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <span>aaaaaaaaaa</span>
+                </el-col>
+            </el-row>
+        </el-header>
+    </el-container>
+</body>
+</html>

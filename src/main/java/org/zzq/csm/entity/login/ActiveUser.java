@@ -46,7 +46,4 @@ public class ActiveUser implements Serializable {
     public void setPermissions(List<SysPermission> permissions) {
         this.permissions = permissions;
     }
-
-
-
 }

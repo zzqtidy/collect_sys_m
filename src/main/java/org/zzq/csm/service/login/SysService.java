@@ -16,6 +16,9 @@ public interface SysService {
     //根据用户账号查询用户信息
     public SysUser findSysUserByUserCode(String userCode) throws Exception;
 
+    //查找所有的用户
+    public List<SysUser> selectAllSysUser() throws Exception;
+
     //根据用户id查询权限范围内的菜单
     public List<SysPermission> findMenuListByUserId(String userid) throws Exception;
 

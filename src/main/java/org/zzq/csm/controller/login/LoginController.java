@@ -5,7 +5,6 @@ package org.zzq.csm.controller.login;
  * Description:
  * User: zzq
  * Date: 2017-12-04
- * Time: 10:29
  */
 
 import org.apache.shiro.SecurityUtils;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 登录和退出
  *
- * @author liuxun
+ *
  */
 @Controller
 public class LoginController {
@@ -60,11 +59,10 @@ public class LoginController {
                 //return jsonResult;
             }
         }
-        jsonResult.success("admin/first");
+        jsonResult.success("admin/index");
         //return jsonResult;
-        return "admin/first";
+        return "admin/index";
     }
-
     // ajax json
     @RequestMapping(value = "/admin/ajaxlogin", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
     @ResponseBody

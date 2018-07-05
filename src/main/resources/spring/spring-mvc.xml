@@ -45,7 +45,7 @@
 
     <!-- 使用thymeleaf模板 解析 -->
     <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
-        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="prefix" value="/WEB-INF/jquerypages/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML" />
         <property name="cacheable" value="false" />
