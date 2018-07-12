@@ -39,6 +39,20 @@ public class CmsArticleController {
     public String add(Model model){
         return "cms_article/add";
     }
+    
+    @RequestMapping(value = "cms_article/save/json", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public String save(String param){
+        JSONObject jsonObject = JSONObject.fromObject(param);
+        //生成类
+        CmsArticle cmsArticle = (CmsArticle)JSONObject.toBean(jsonObject,CmsArticle.class);
+        try {
+            cmsArticleService.insertCmsArticle(cmsArticle);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return "OK";
+    }
 
     @RequestMapping(value = "cms_article/{id}/json", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
     @ResponseBody
