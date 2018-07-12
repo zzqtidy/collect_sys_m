@@ -35,6 +35,11 @@ public class CmsArticleController {
         return "cms_article/list";
     }
 
+    @RequestMapping(value = "cms_article/add")
+    public String add(Model model){
+        return "cms_article/add";
+    }
+
     @RequestMapping(value = "cms_article/{id}/json", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public CmsArticle selectByid(@PathVariable(value = "id") int id) throws Exception{
