@@ -48,7 +48,7 @@
                                 事件结果
                             </div>
                             <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-                                <button type="button" class="btn btn-outline btn-default">
+                                <button type="button" class="btn btn-outline btn-default" onclick="addLayer()">
                                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                                 </button>
                                 <button type="button" class="btn btn-outline btn-default">
@@ -99,8 +99,21 @@
 <script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="../../../static/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<!-- layer javascript -->
+<script src="../../../static/js/plugins/layer/layer.min.js"></script>
 <!-- Peity -->
 <script>
+    function addLayer() {
+        var index = layer.open({
+            type: 2,
+            title:'新增文章',
+            content: '/cms_article/add',
+            area: ['300px', '195px'],
+            maxmin: true
+        });
+        layer.full(index);
+    }
     // Example Bootstrap Table Events
     // ------------------------------
     //获取选择的哪些行
