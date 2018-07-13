@@ -27,7 +27,6 @@ public class CmsArticle implements Serializable {
     private int clickcount;
     private boolean isurl;
     private String src;
-    private int rank;
 
     public int getId() {
         return id;
@@ -147,14 +146,6 @@ public class CmsArticle implements Serializable {
 
     public void setSrc(String src) {
         this.src = src;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
 }

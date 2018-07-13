@@ -11,8 +11,8 @@
 
     <insert id="insertCmsArticle" parameterType="org.zzq.csm.entity.cms.CmsArticle">
         insert into cms_article
-        (title,keywords,description,content,keyname,type,source,author,url,isurl,src,rank) values
-        (#{title},#{keywords},#{description},#{content},#{keyname},#{type},#{source},#{author},#{url},#{isurl},#{src},#{rank})
+        (title,keywords,description,content,keyname,type,source,author,url,isurl,src) values
+        (#{title},#{keywords},#{description},#{content},#{keyname},#{type},#{source},#{author},#{url},#{isurl},#{src})
     </insert>
 
     <update id="updateCmsArticle" parameterType="org.zzq.csm.entity.cms.CmsArticle">
@@ -50,9 +50,6 @@
             </if>
             <if test="src != null">
                 src = #{src},
-            </if>
-            <if test="rank != null">
-                rank = #{rank},
             </if>
         </set>
         edittime = NOW() where id = #{id}
