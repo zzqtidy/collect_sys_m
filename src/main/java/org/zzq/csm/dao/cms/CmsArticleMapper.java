@@ -6,7 +6,7 @@ import java.util.List;
 public interface CmsArticleMapper {
     CmsArticle selectByid(int id);
     List<CmsArticle> selectAll();
-    CmsArticle insertCmsArticle(CmsArticle cmsArticle);
-    CmsArticle updateCmsArticle(CmsArticle cmsArticle);
-    CmsArticle deleteCmsArticle(int id);
+    void insertCmsArticle(CmsArticle cmsArticle);
+    void updateCmsArticle(CmsArticle cmsArticle);
+    void deleteCmsArticle(int id);
 }

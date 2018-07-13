@@ -30,17 +30,17 @@ public class CmsArticleServiceImpl implements CmsArticleService {
     }
 
     @Override
-    public CmsArticle insertCmsArticle(CmsArticle cmsArticle) throws Exception {
-        return cmsArticleMapper.insertCmsArticle(cmsArticle);
+    public void insertCmsArticle(CmsArticle cmsArticle) throws Exception {
+        cmsArticleMapper.insertCmsArticle(cmsArticle);
     }
 
     @Override
-    public CmsArticle updateCmsArticle(CmsArticle cmsArticle) throws Exception {
-        return cmsArticleMapper.updateCmsArticle(cmsArticle);
+    public void updateCmsArticle(CmsArticle cmsArticle) throws Exception {
+        cmsArticleMapper.updateCmsArticle(cmsArticle);
     }
 
     @Override
-    public CmsArticle deleteCmsArticle(int id) throws Exception {
-        return cmsArticleMapper.deleteCmsArticle(id);
+    public void deleteCmsArticle(int id) throws Exception {
+        cmsArticleMapper.deleteCmsArticle(id);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface CmsArticleService {
     public CmsArticle selectByid(int id) throws Exception;
     public List<CmsArticle> selectAll() throws Exception;
-    public CmsArticle insertCmsArticle(CmsArticle cmsArticle) throws Exception;
-    public CmsArticle updateCmsArticle(CmsArticle cmsArticle) throws Exception;
-    public CmsArticle deleteCmsArticle(int id) throws Exception;
+    public void insertCmsArticle(CmsArticle cmsArticle) throws Exception;
+    public void updateCmsArticle(CmsArticle cmsArticle) throws Exception;
+    public void deleteCmsArticle(int id) throws Exception;
 }
