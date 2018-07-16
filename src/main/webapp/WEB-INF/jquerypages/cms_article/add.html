@@ -55,18 +55,18 @@
                             </div>
                         </div>
 
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-1 control-label">内容：</label>-->
-                            <!--<div class="col-sm-11">-->
-                                <!--<div class="summernote">-->
-                                    <!--<p>1.XXXXXXXXXXXXXXXXXXXX</p>-->
-                                    <!--<p>2.XXXXXXXXXXXXXXXXXXXX</p>-->
-                                    <!--<p>3.XXXXXXXXXXXXXXXXXXXX</p>-->
-                                    <!--<p>4.XXXXXXXXXXXXXXXXXXXX</p>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">内容：</label>
+                            <div class="col-sm-11">
+                                <div class="summernote">
+                                    <p>1.XXXXXXXXXXXXXXXXXXXX</p>
+                                    <p>2.XXXXXXXXXXXXXXXXXXXX</p>
+                                    <p>3.XXXXXXXXXXXXXXXXXXXX</p>
+                                    <p>4.XXXXXXXXXXXXXXXXXXXX</p>
+                                </div>
+                            </div>
 
-                        <!--</div>-->
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-3">
                                 <button class="btn btn-primary" type="button" id="savebtn">提交</button>
@@ -125,15 +125,27 @@
         });
 
         $("#savebtn").click(function () {
+            //获取form表单的数据，转化成JsonObject
+            var reqData = $('#commentForm').serializeObject();
+            var summernoteValue = $('.summernote').code(); //获取富文本中的数据
+            reqData["content"] = summernoteValue;
             $.ajax({
                 type: "POST",//方法类型
                 url:"/cms_article/save/json",
                 data:{
-                    param:JSON.stringify($('#commentForm').serializeObject())
+                    param:JSON.stringify(reqData) //将JsonObject转化成Json字符串
+                },
+                complete:function(res){
+                    alert(res["responseText"]);
+                    //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
                 },
                 success:function(res)
                 {
-                    alert("OK");
+                    alert("success");
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
                 }
             });
         })
