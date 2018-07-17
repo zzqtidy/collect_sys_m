@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzq.csm.dao.cms.CmsCodesDetailMapper">
+    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.CmsCodesDetail">
+        select * from cms_codes where id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="org.zzq.csm.entity.cms.CmsCodesDetail">
+        select * from cms_codes
+    </select>
+
+    <insert id="insertCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.CmsCodesDetail">
+        insert into cms_codes
+        (typename,codename,short_value,long_value,isactive,description,addtime,addwho) values
+        (#{typename},#{description},#{codename},#{short_value},#{long_value},#{isactive},#{addtime},#{addwho})
+    </insert>
+
+    <update id="updateCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.CmsCodesDetail">
+        update cms_codes
+        <set>
+            <if test="typename != null">
+                typename = #{typename},
+            </if>
+            <if test="codename != null">
+                codename = #{codename},
+            </if>
+            <if test="short_value != null">
+                short_value = #{short_value},
+            </if>
+            <if test="long_value != null">
+                long_value = #{long_value},
+            </if>
+            <if test="isactive != null">
+                isactive = #{isactive},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </set>
+        edittime = NOW(),version = version+1 where id = #{id}
+    </update>
+
+    <delete id="deleteCmsCodesDetail" parameterType="int">
+        delete from cms_codesdetail where id = #{id}
+    </delete>
+</mapper>
