@@ -30,39 +30,37 @@
                         <div class="form-group">
                             <label class="col-sm-1 control-label">标题：</label>
                             <div class="col-sm-5">
-                                <input id="title" name="title" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                <input id="title" name="title" minlength="2" type="text" class="form-control" required="" aria-required="true" cs-auto-init="true">
                             </div>
                             <label class="col-sm-1 control-label">关键字：</label>
                             <div class="col-sm-5">
-                                <input id="keywords" type="text" class="form-control" name="keywords" required="" aria-required="true">
+                                <input id="keywords" type="text" class="form-control" name="keywords" required="" aria-required="true" cs-auto-init="true">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label">类型：</label>
                             <div class="col-sm-5">
-                                <input id="type" name="type" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                <input id="type" name="type" minlength="2" type="text" class="form-control" required="" aria-required="true" cs-auto-init="true">
                             </div>
                             <label class="col-sm-1 control-label">来源：</label>
                             <div class="col-sm-5">
-                                <input id="source" type="text" class="form-control" name="source" required="" aria-required="true">
+                                <input id="source" type="text" class="form-control" name="source" required="" aria-required="true" cs-auto-init="true">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-1 control-label">描述：</label>
                             <div class="col-sm-11">
-                                <input id="description" type="text" class="form-control" name="description">
+                                <input id="description" type="text" class="form-control" name="description" cs-auto-init="true">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-1 control-label">内容：</label>
                             <div class="col-sm-11">
-                                <div class="summernote">
-                                    <p>1.XXXXXXXXXXXXXXXXXXXX</p>
-                                    <p>2.XXXXXXXXXXXXXXXXXXXX</p>
-                                    <p>3.XXXXXXXXXXXXXXXXXXXX</p>
-                                    <p>4.XXXXXXXXXXXXXXXXXXXX</p>
+                                <!--cs-开头表示自定义属性，此处代表该富文本在编辑的时候加载后台返回值中哪个字段-->
+                                <div class="summernote" cs-content-field="content">
+
                                 </div>
                             </div>
 
@@ -70,6 +68,7 @@
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-3">
                                 <button class="btn btn-primary" type="button" id="savebtn">提交</button>
+                                <button class="btn btn-default" type="button" id="resetbtn">重置</button>
                             </div>
                         </div>
                     </form>
@@ -103,6 +102,28 @@
 <script src="../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
 <!-- Peity -->
 <script>
+    function init_summernote(content){
+        $('.summernote').code(content);
+    }
+
+    function init_form(res){
+        //后期需要优化，判断是输入框、下拉框、还是其他的，最好写成扩展控件
+        $("#commentForm input[type='text']").each(function (index,element) {
+            //页面元素有auto-init属性的才赋值，取id来赋值
+            if(typeof($(element).attr("cs-auto-init"))!="undefined"){
+                var dom_id = $(element).attr("id");
+                var dom_str = "#"+dom_id;
+                $(dom_str).val(res[dom_id]);//赋值
+            }
+        });
+        //为富文本编辑控件赋值
+        var summernote_plug=$("#commentForm .summernote"); //找到该控件
+        if(typeof(summernote_plug.attr("cs-content-field"))!="undefined"){ //判断是否存在需要绑定的值的属性，如果有，直接绑定
+            var content_field_name = summernote_plug.attr("cs-content-field");
+            summernote_plug.code(res[content_field_name]);
+        }
+    }
+
     $.fn.serializeObject = function()
     {
         var o = {};
@@ -121,7 +142,8 @@
     };
     $(document).ready(function () {
         $('.summernote').summernote({
-            lang: 'zh-CN'
+            lang: 'zh-CN',
+            height: 150 //固定高度
         });
 
         $("#savebtn").click(function () {
@@ -150,6 +172,10 @@
             });
         })
 
+        $("#resetbtn").click(function () {
+            $('#commentForm')[0].reset(); //清空form中数据
+            $('.summernote').code(""); //清空富文本编辑器中的数据
+        });
     });
 </script>
 </body>

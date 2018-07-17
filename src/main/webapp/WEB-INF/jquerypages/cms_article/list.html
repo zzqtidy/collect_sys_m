@@ -49,19 +49,20 @@
                         </div>
                         <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
                             <button type="button" class="btn btn-outline btn-default" onclick="addLayer()">
-                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
-                            <button type="button" class="btn btn-outline btn-default">
-                                <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+                            <button type="button" class="btn btn-outline btn-default" onclick="editLayer()">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
                             </button>
                             <button type="button" class="btn btn-outline btn-default" onclick="deleteSelectData()">
-                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                             <button type="button" class="btn btn-outline btn-default" onclick="getSelectData()">
                                 <i class="fa fa-wrench" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <table id="exampleTableEvents" data-url="/user/listJson" data-height="400" data-mobile-responsive="true">
+                        <table id="exampleTableEvents" data-url="/user/listJson" data-height="400"
+                               data-mobile-responsive="true">
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
@@ -104,10 +105,11 @@
 <script src="../../../static/js/plugins/layer/layer.min.js"></script>
 <!-- Peity -->
 <script>
+    //新增
     function addLayer() {
         var index = layer.open({
             type: 2,
-            title:'新增文章',
+            title: '新增文章',
             content: '/cms_article/add',
             area: ['300px', '195px'],
             maxmin: true,
@@ -117,29 +119,80 @@
         });
         layer.full(index);
     }
+
+    //修改
+    function editLayer() {
+        debugger;
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+
+        if (selectDatas.length > 1 || selectDatas.length == 0) {
+            swal('错误', '请选中一行', 'error');
+            return;
+        }
+        var index = layer.open({
+            type: 2,
+            title: '新增文章',
+            content: '/cms_article/add',
+            area: ['300px', '195px'],
+            maxmin: true,
+            //向弹框出来的IFrame填充值
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = selectDatas[0]["id"];
+                var requestUrl = "/cms_article/" + id + "/json";
+                console.log(requestUrl);
+                $.ajax({
+                    url: requestUrl,
+                    success: function (res) {
+
+                        // for(var key in res) {
+                        //     //console.log(key,":",res[key]);
+                        //     var domStr = "input[name='"+key+"']";//找到那个对应的输入参数
+                        //     var val = res[key];//取值
+                        //     body.find(domStr).val(val);//循环赋值
+                        // }
+                        // //得到iframe页的窗口对象，执行iframe页的方法（这个方法可以是jquery自带的，也可以是这个页面中自定义的js方法）
+                        // var iframeWin = window[layero.find('iframe')[0]['name']];
+                        // iframeWin.init_summernote(res["content"]);
+                        //
+                        //以上的还可以全部都放在Iframe页面进行初始化
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.init_form(res);
+                    },
+
+                });
+            },
+            end: function () {
+                $("#exampleTableEvents").bootstrapTable('refresh');
+            }
+        });
+        layer.full(index);
+    }
+
     // Example Bootstrap Table Events
     // ------------------------------
     //获取选择的哪些行
     function getSelectData() {
-        var selectDatas= $("#exampleTableEvents").bootstrapTable('getSelections');
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
-        if(selectDatas.length>0){
+        if (selectDatas.length > 0) {
             var text = "";
-            for(var i = 0;i<selectDatas.length;i++){
-                text+=selectDatas[i].username+"  ";
+            for (var i = 0; i < selectDatas.length; i++) {
+                text += selectDatas[i].username + "  ";
             }
             $('#examplebtTableEventsResult').text(text);
         }
-        else{
-            swal('错误','请选中一行','error');
+        else {
+            swal('错误', '请选中一行', 'error');
             return;
         }
     }
+
     //删除所选项（删除后重新加载数据）
     function deleteSelectData() {
-        var selectDatas= $("#exampleTableEvents").bootstrapTable('getSelections');
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
-        if(selectDatas.length>0){
+        if (selectDatas.length > 0) {
             swal({
                     title: "确定删除吗？",
                     text: "删除后您将无法恢复这些数据！",
@@ -151,27 +204,27 @@
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 },
-                function(){
+                function () {
                     $.ajax({
-                        url:"/cms_article/delete",
-                        data:{
+                        url: "/cms_article/delete",
+                        data: {
                             paramList: JSON.stringify(selectDatas)
                         },
-                        success:function(res)
-                        {
-                            $("#exampleTableEvents").bootstrapTable('refresh',res);
+                        success: function (res) {
+                            $("#exampleTableEvents").bootstrapTable('refresh', res);
                             swal("删除", "所选数据已经被删除！", "success");
                         }
                     });
                 }
             );
         }
-        else{
-            swal('错误','请选中一行','error');
+        else {
+            swal('错误', '请选中一行', 'error');
             return;
         }
     }
-    (function() {
+
+    (function () {
         $('#exampleTableEvents').bootstrapTable
         (
             {
@@ -180,11 +233,11 @@
                 showRefresh: true,
                 showToggle: true,
                 showColumns: true,
-                switchable:true,
+                switchable: true,
                 cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
                 striped: true,  //表格显示条纹，默认为false
                 pagination: true, // 在表格底部显示分页组件，默认false
-                pageList: [20,100], // 设置页面可以显示的数据条数
+                pageList: [20, 100], // 设置页面可以显示的数据条数
                 pageSize: 20, // 页面数据条数
                 pageNumber: 1, // 首页页码
                 iconSize: 'outline',
@@ -199,44 +252,44 @@
 
         var $result = $('#examplebtTableEventsResult');
 
-        $('#exampleTableEvents').on('all.bs.table', function(e, name, args) {
+        $('#exampleTableEvents').on('all.bs.table', function (e, name, args) {
             console.log('Event:', name, ', data:', args);
         })
-            .on('click-row.bs.table', function(e, row, $element) {
-                $result.text('Event: 单击某行：'+row.username);
+            .on('click-row.bs.table', function (e, row, $element) {
+                $result.text('Event: 单击某行：' + row.username);
             })
-            .on('dbl-click-row.bs.table', function(e, row, $element) {
-                $result.text('Event: 双击某行：'+row.username);
+            .on('dbl-click-row.bs.table', function (e, row, $element) {
+                $result.text('Event: 双击某行：' + row.username);
             })
-            .on('sort.bs.table', function(e, name, order) {
+            .on('sort.bs.table', function (e, name, order) {
                 $result.text('Event: sort.bs.table');
             })
-            .on('check.bs.table', function(e, row) {
-                $result.text('Event: 你选择了一行：'+row.usercode+'--'+row.username);
+            .on('check.bs.table', function (e, row) {
+                $result.text('Event: 你选择了一行：' + row.usercode + '--' + row.username);
             })
-            .on('uncheck.bs.table', function(e, row) {
-                $result.text('Event: 取消了选择行：'+row.usercode+'--'+row.username);
+            .on('uncheck.bs.table', function (e, row) {
+                $result.text('Event: 取消了选择行：' + row.usercode + '--' + row.username);
             })
-            .on('check-all.bs.table', function(e) {
+            .on('check-all.bs.table', function (e) {
                 $result.text('Event: 全选');
             })
-            .on('uncheck-all.bs.table', function(e) {
+            .on('uncheck-all.bs.table', function (e) {
                 $result.text('Event: 取消全选');
             })
-            .on('load-success.bs.table', function(e, data) {
-                $result.text('Event: 成功加载表格数据,共计条数为：'+data.length);
+            .on('load-success.bs.table', function (e, data) {
+                $result.text('Event: 成功加载表格数据,共计条数为：' + data.length);
             })
-            .on('load-error.bs.table', function(e, status) {
-                $result.text('Event: 加载数据失败：'+status);
+            .on('load-error.bs.table', function (e, status) {
+                $result.text('Event: 加载数据失败：' + status);
             })
-            .on('column-switch.bs.table', function(e, field, checked) {
+            .on('column-switch.bs.table', function (e, field, checked) {
                 $result.text('Event: column-switch.bs.table');
             })
-            .on('page-change.bs.table', function(e, size, number) {
-                $result.text('Event: 换页：'+size+' '+number);
+            .on('page-change.bs.table', function (e, size, number) {
+                $result.text('Event: 换页：' + size + ' ' + number);
             })
-            .on('search.bs.table', function(e, text) {
-                $result.text('Event: 查询事件，输入的参数:'+text);
+            .on('search.bs.table', function (e, text) {
+                $result.text('Event: 查询事件，输入的参数:' + text);
             });
     })();
 </script>
