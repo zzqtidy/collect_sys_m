@@ -19,7 +19,22 @@
         2）提供了一系列的数据绑定，数字和日期等的Format，如@NumberFormat @DateTimeFormat
         3) 提供了xml、json的读写支持，也就是说如果要返回json数据（Restful接口中用到），不用额外配置
     -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!-- 处理responseBody 里面日期类型 -->
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="dateFormat">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
 
     <!--2.servlet-mapping映射-->

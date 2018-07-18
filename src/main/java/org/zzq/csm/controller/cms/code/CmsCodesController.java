@@ -3,6 +3,9 @@ package org.zzq.csm.controller.cms.code;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zzq.csm.entity.cms.code.CmsCodes;
+import org.zzq.csm.entity.login.ActiveUser;
 import org.zzq.csm.service.cms.code.CmsCodesService;
+import org.zzq.csm.util.CurrentUserManager;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,11 +51,26 @@ public class CmsCodesController {
         JSONObject jsonObject = JSONObject.fromObject(param);
         //生成类
         CmsCodes cmsCodes = (CmsCodes) JSONObject.toBean(jsonObject, CmsCodes.class);
-        try {
-            cmsCodesService.insertCmsCodes(cmsCodes);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        if(cmsCodes.getId()==0){
+            //新增
+            cmsCodes.setAddwho(CurrentUserManager.getUserId());
+            cmsCodes.setAddtime(new Date());
+            try {
+                cmsCodesService.insertCmsCodes(cmsCodes);
+            } catch (Exception e) {
+                logger.error("新增："+e.getMessage());
+            }
         }
+        else{
+            //修改
+            try {
+                cmsCodesService.updateCmsCodes(cmsCodes);
+            } catch (Exception e) {
+                logger.error("修改："+e.getMessage());
+            }
+        }
+
+
         return "OK";
     }
 

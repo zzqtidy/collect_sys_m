@@ -25,7 +25,7 @@
                 description = #{description},
             </if>
         </set>
-        edittime = NOW(),version = version+1 where id = #{id}
+        ,edittime = NOW(),version = version+1 where id = #{id}
     </update>
 
     <delete id="deleteCmsCodes" parameterType="int">

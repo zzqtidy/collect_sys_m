@@ -1,5 +1,7 @@
 package org.zzq.csm.entity.common;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -9,7 +11,9 @@ import java.util.Date;
  * Date: 2018-07-17
  */
 public class BaseEntity {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date addtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date edittime;
     private String addwho;
     private String editwho;
