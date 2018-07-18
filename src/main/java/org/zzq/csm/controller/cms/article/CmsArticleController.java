@@ -1,4 +1,4 @@
-package org.zzq.csm.controller.cms;
+package org.zzq.csm.controller.cms.article;
 
 
 import net.sf.json.JSONArray;
@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.zzq.csm.entity.cms.CmsArticle;
-import org.zzq.csm.service.cms.CmsArticleService;
+import org.zzq.csm.entity.cms.article.CmsArticle;
+import org.zzq.csm.service.cms.article.CmsArticleService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,12 +31,12 @@ public class CmsArticleController {
 
     @RequestMapping(value = "cms_article/list")
     public String selectAll(Model model){
-        return "cms_article/list";
+        return "cms/article/list";
     }
 
     @RequestMapping(value = "cms_article/add")
     public String add(Model model){
-        return "cms_article/add";
+        return "cms/article/add";
     }
     
     @RequestMapping(value = "cms_article/save/json", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})

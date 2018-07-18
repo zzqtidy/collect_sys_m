@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.zzq.csm.dao.cms.CmsArticleMapper">
-    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.CmsArticle">
+<mapper namespace="org.zzq.csm.dao.cms.article.CmsArticleMapper">
+    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.article.CmsArticle">
         select * from cms_article where id = #{id}
     </select>
 
-    <select id="selectAll" resultType="org.zzq.csm.entity.cms.CmsArticle">
+    <select id="selectAll" resultType="org.zzq.csm.entity.cms.article.CmsArticle">
         select * from cms_article
     </select>
 
-    <insert id="insertCmsArticle" parameterType="org.zzq.csm.entity.cms.CmsArticle">
+    <insert id="insertCmsArticle" parameterType="org.zzq.csm.entity.cms.article.CmsArticle">
         insert into cms_article
         (title,keywords,description,content,keyname,type,source,author,url,isurl,src) values
         (#{title},#{keywords},#{description},#{content},#{keyname},#{type},#{source},#{author},#{url},#{isurl},#{src})
     </insert>
 
-    <update id="updateCmsArticle" parameterType="org.zzq.csm.entity.cms.CmsArticle">
+    <update id="updateCmsArticle" parameterType="org.zzq.csm.entity.cms.article.CmsArticle">
         update cms_article
         <set>
             <if test="title != null">

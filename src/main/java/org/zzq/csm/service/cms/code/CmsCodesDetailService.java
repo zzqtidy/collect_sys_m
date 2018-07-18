@@ -1,6 +1,6 @@
-package org.zzq.csm.service.cms;
+package org.zzq.csm.service.cms.code;
 
-import org.zzq.csm.entity.cms.CmsCodesDetail;
+import org.zzq.csm.entity.cms.code.CmsCodesDetail;
 
 import java.util.List;
 

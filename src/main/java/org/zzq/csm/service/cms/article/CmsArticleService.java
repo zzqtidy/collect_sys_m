@@ -1,6 +1,6 @@
-package org.zzq.csm.service.cms;
+package org.zzq.csm.service.cms.article;
 
-import org.zzq.csm.entity.cms.CmsArticle;
+import org.zzq.csm.entity.cms.article.CmsArticle;
 
 import java.util.List;
 

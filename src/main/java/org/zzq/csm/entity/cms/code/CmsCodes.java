@@ -1,4 +1,4 @@
-package org.zzq.csm.entity.cms;
+package org.zzq.csm.entity.cms.code;
 
 import org.zzq.csm.entity.common.BaseEntity;
 

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.zzq.csm.dao.cms.CmsCodesDetailMapper">
-    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.CmsCodesDetail">
+<mapper namespace="org.zzq.csm.dao.cms.code.CmsCodesDetailMapper">
+    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.code.CmsCodesDetail">
         select * from cms_codes where id = #{id}
     </select>
 
-    <select id="selectAll" resultType="org.zzq.csm.entity.cms.CmsCodesDetail">
+    <select id="selectAll" resultType="org.zzq.csm.entity.cms.code.CmsCodesDetail">
         select * from cms_codes
     </select>
 
-    <insert id="insertCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.CmsCodesDetail">
+    <insert id="insertCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.code.CmsCodesDetail">
         insert into cms_codes
         (typename,codename,short_value,long_value,isactive,description,addtime,addwho) values
         (#{typename},#{description},#{codename},#{short_value},#{long_value},#{isactive},#{addtime},#{addwho})
     </insert>
 
-    <update id="updateCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.CmsCodesDetail">
+    <update id="updateCmsCodesDetail" parameterType="org.zzq.csm.entity.cms.code.CmsCodesDetail">
         update cms_codes
         <set>
             <if test="typename != null">

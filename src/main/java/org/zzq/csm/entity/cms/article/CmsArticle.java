@@ -1,4 +1,4 @@
-package org.zzq.csm.entity.cms;
+package org.zzq.csm.entity.cms.article;
 
 import java.io.Serializable;
 import java.util.Date;

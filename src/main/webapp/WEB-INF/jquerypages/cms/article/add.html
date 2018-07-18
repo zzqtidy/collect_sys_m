@@ -8,12 +8,12 @@
     <title>新增</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="../../../static/css/animate.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../../../../static/css/animate.css" rel="stylesheet">
 
-    <link href="../../../static/css/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="../../../static/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-    <link href="../../../static/css/style.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="../../../../static/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -81,25 +81,25 @@
 </div>
 
 <!-- 全局js -->
-<script src="../../../static/js/jquery.min.js"></script>
-<script src="../../../static/js/bootstrap.min.js"></script>
+<script src="../../../../static/js/jquery.min.js"></script>
+<script src="../../../../static/js/bootstrap.min.js"></script>
 
 <!-- 自定义js -->
-<script src="../../../static/js/content.js"></script>
+<script src="../../../../static/js/content.js"></script>
 
 
 <!-- Bootstrap table -->
-<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="../../../static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="../../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="../../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="../../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../../../../static/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- layer javascript -->
-<script src="../../../static/js/plugins/layer/layer.min.js"></script>
+<script src="../../../../static/js/plugins/layer/layer.min.js"></script>
 
 <!-- SUMMERNOTE -->
-<script src="../../../static/js/plugins/summernote/summernote.min.js"></script>
-<script src="../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
+<script src="../../../../static/js/plugins/summernote/summernote.min.js"></script>
+<script src="../../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
 <!-- Peity -->
 <script>
     function init_summernote(content){
@@ -158,16 +158,14 @@
                     param:JSON.stringify(reqData) //将JsonObject转化成Json字符串
                 },
                 complete:function(res){
-                    alert(res["responseText"]);
-                    //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                },
-                success:function(res)
-                {
-                    alert("success");
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
+                    if(res["responseText"]=="OK"){
+                        layer.alert("操作成功",{icon:1});
+                        //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+
+
                 }
             });
         })

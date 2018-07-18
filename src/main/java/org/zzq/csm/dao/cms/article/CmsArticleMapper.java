@@ -1,6 +1,6 @@
-package org.zzq.csm.dao.cms;
+package org.zzq.csm.dao.cms.article;
 
-import org.zzq.csm.entity.cms.CmsArticle;
+import org.zzq.csm.entity.cms.article.CmsArticle;
 import java.util.List;
 
 public interface CmsArticleMapper {

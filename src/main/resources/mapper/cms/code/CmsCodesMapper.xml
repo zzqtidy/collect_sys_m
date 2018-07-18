@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.zzq.csm.dao.cms.CmsCodesMapper">
-    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.CmsCodes">
+<mapper namespace="org.zzq.csm.dao.cms.code.CmsCodesMapper">
+    <select id="selectByid" parameterType="int" resultType="org.zzq.csm.entity.cms.code.CmsCodes">
         select * from cms_codes where id = #{id}
     </select>
 
-    <select id="selectAll" resultType="org.zzq.csm.entity.cms.CmsCodes">
+    <select id="selectAll" resultType="org.zzq.csm.entity.cms.code.CmsCodes">
         select * from cms_codes
     </select>
 
-    <insert id="insertCmsCodes" parameterType="org.zzq.csm.entity.cms.CmsCodes">
+    <insert id="insertCmsCodes" parameterType="org.zzq.csm.entity.cms.code.CmsCodes">
         insert into cms_codes
         (typename,description,addtime,addwho) values
         (#{typename},#{description},#{addtime},#{addwho})
     </insert>
 
-    <update id="updateCmsCodes" parameterType="org.zzq.csm.entity.cms.CmsCodes">
+    <update id="updateCmsCodes" parameterType="org.zzq.csm.entity.cms.code.CmsCodes">
         update cms_codes
         <set>
             <if test="typename != null">

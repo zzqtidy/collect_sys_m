@@ -1,10 +1,10 @@
-package org.zzq.csm.service.cms.impl;
+package org.zzq.csm.service.cms.article.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.zzq.csm.dao.cms.CmsArticleMapper;
-import org.zzq.csm.entity.cms.CmsArticle;
-import org.zzq.csm.service.cms.CmsArticleService;
+import org.zzq.csm.dao.cms.article.CmsArticleMapper;
+import org.zzq.csm.entity.cms.article.CmsArticle;
+import org.zzq.csm.service.cms.article.CmsArticleService;
 
 import java.util.List;
 
