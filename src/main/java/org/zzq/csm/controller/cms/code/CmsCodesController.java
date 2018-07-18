@@ -31,12 +31,12 @@ public class CmsCodesController {
 
     @RequestMapping(value = "cms_codes/list")
     public String selectAll(Model model) {
-        return "cms/codes/list";
+        return "cms/code/list";
     }
 
     @RequestMapping(value = "cms_codes/add")
     public String add(Model model) {
-        return "cms/codes/add";
+        return "cms/code/add";
     }
 
     @RequestMapping(value = "cms_codes/save/json", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})

@@ -41,7 +41,7 @@
                                 <i class="fa fa-wrench" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <table id="exampleTableEvents" data-url="/user/listJson" data-height="400"
+                        <table id="exampleTableEvents" data-height="400"
                                data-mobile-responsive="true">
                             <thead>
                             <tr>
@@ -90,7 +90,7 @@
         var index = layer.open({
             type: 2,
             title: '新增文章',
-            content: '/cms_article/add',
+            content: '/cms_codes/add',
             area: ['300px', '195px'],
             maxmin: true,
             end: function () {
@@ -106,20 +106,20 @@
         var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
         if (selectDatas.length > 1 || selectDatas.length == 0) {
-            swal('错误', '请选中一行', 'error');
+            layer.alert('请选中一行');
             return;
         }
         var index = layer.open({
             type: 2,
             title: '新增文章',
-            content: '/cms_article/add',
+            content: '/cms_codes/add',
             area: ['300px', '195px'],
             maxmin: true,
             //向弹框出来的IFrame填充值
             success: function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var id = selectDatas[0]["id"];
-                var requestUrl = "/cms_article/" + id + "/json";
+                var requestUrl = "/cms_codes/" + id + "/json";
                 console.log(requestUrl);
                 $.ajax({
                     url: requestUrl,
@@ -151,7 +151,7 @@
             $('#examplebtTableEventsResult').text(text);
         }
         else {
-            swal('错误', '请选中一行', 'error');
+            layer.alert("请选择一行",2);
             return;
         }
     }
@@ -161,33 +161,32 @@
         var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
         if (selectDatas.length > 0) {
-            swal({
-                    title: "确定删除吗？",
-                    text: "删除后您将无法恢复这些数据！",
-                    type: "warning",
-                    confirmButtonColor: "#67dd20",
-                    confirmButtonText: "确定删除！",
-                    cancelButtonText: "取消删除！",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true
+            layer.confirm(
+                "确定删除吗？",
+                {
+                    btn: ['确定', '取消'] //按钮
                 },
-                function () {
+                function(){
+                    //第一个按钮事件
                     $.ajax({
-                        url: "/cms_article/delete",
+                        url: "/cms_codes/delete",
                         data: {
                             paramList: JSON.stringify(selectDatas)
                         },
                         success: function (res) {
                             $("#exampleTableEvents").bootstrapTable('refresh', res);
-                            swal("删除", "所选数据已经被删除！", "success");
+                            layer.msg("所选数据已经被删除！",{icon:1});
                         }
                     });
+                },
+                function(){
+                    //第二个事件按钮
+                    layer.close();
                 }
             );
         }
         else {
-            swal('错误', '请选中一行', 'error');
+            layer.alert("请选择一行",{icon:2});
             return;
         }
     }
@@ -196,7 +195,7 @@
         $('#exampleTableEvents').bootstrapTable
         (
             {
-                url: "/cms_article/listjson",
+                url: "/cms_codes/listjson",
                 search: true,
                 showRefresh: true,
                 showToggle: true,
