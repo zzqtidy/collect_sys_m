@@ -20,7 +20,7 @@
         3) 提供了xml、json的读写支持，也就是说如果要返回json数据（Restful接口中用到），不用额外配置
     -->
     <mvc:annotation-driven>
-        <!-- 处理responseBody 里面日期类型 -->
+        <!-- 处理responseBody 里面日期类型,如果不加这段，前台所有的日期类型都会变成Long类型的时间戳 -->
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper">
