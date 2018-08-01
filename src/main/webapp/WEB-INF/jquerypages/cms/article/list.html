@@ -122,9 +122,7 @@
 
     //修改
     function editLayer() {
-        debugger;
         var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
-
         if (selectDatas.length > 1 || selectDatas.length == 0) {
             layer.alert('请选中一行');
             return;
@@ -193,6 +191,10 @@
         var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
         if (selectDatas.length > 0) {
+            var idList = new Array(selectDatas.length);
+            for(var i = 0;i<selectDatas.length;i++){
+                idList[i] = selectDatas[i]["id"];
+            }
             layer.confirm(
                 "确定删除吗？",
                 {
@@ -201,9 +203,12 @@
                 function(){
                     //第一个按钮事件
                     $.ajax({
-                        url: "/cms_article/delete",
+                        type: "POST", //如果提交的数据太大，请不要使用get请求，否则会出错
+                        // url: "/cms_article/delete",
+                        url: "/cms_article/delete_by_ids",
                         data: {
-                            paramList: JSON.stringify(selectDatas)
+                            // paramList: JSON.stringify(selectDatas)
+                            paramList: JSON.stringify(idList)
                         },
                         success: function (res) {
                             $("#exampleTableEvents").bootstrapTable('refresh', res);
@@ -255,19 +260,19 @@
             console.log('Event:', name, ', data:', args);
         })
             .on('click-row.bs.table', function (e, row, $element) {
-                $result.text('Event: 单击某行：' + row.username);
+                $result.text('Event: 单击某行：' + row.id);
             })
             .on('dbl-click-row.bs.table', function (e, row, $element) {
-                $result.text('Event: 双击某行：' + row.username);
+                $result.text('Event: 双击某行：' + row.id);
             })
             .on('sort.bs.table', function (e, name, order) {
                 $result.text('Event: sort.bs.table');
             })
             .on('check.bs.table', function (e, row) {
-                $result.text('Event: 你选择了一行：' + row.usercode + '--' + row.username);
+                $result.text('Event: 你选择了一行：' + row.id);
             })
             .on('uncheck.bs.table', function (e, row) {
-                $result.text('Event: 取消了选择行：' + row.usercode + '--' + row.username);
+                $result.text('Event: 取消了选择行：' + row.id);
             })
             .on('check-all.bs.table', function (e) {
                 $result.text('Event: 全选');

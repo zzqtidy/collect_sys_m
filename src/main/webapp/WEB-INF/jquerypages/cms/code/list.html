@@ -169,6 +169,7 @@
                 function(){
                     //第一个按钮事件
                     $.ajax({
+                        type: "POST",
                         url: "/cms_codes/delete",
                         data: {
                             paramList: JSON.stringify(selectDatas)

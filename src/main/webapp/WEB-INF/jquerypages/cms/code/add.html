@@ -114,15 +114,22 @@
                 data:{
                     param:JSON.stringify(reqData) //将JsonObject转化成Json字符串
                 },
-                complete:function(res){
-                    if(res["responseText"]=="OK"){
-                        layer.alert("操作成功",{icon:1});
-                        //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
+                success:function(res){
+                    var success = res["meta"]["success"];
+                    if(success){
+                        layer.alert("操作成功",{icon:1},function()
+                            {
+                                //点击弹出框确认按钮之后发生的事情：关闭弹出层页
+                                //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            }
+                        );
                     }
-
-
+                    else
+                    {
+                        layer.alert("操作失败，请联系管理员",{icon:1});
+                    }
                 }
             });
         })

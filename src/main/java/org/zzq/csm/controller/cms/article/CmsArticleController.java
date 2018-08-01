@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zzq.csm.entity.cms.article.CmsArticle;
+import org.zzq.csm.entity.dto.JsonResult;
 import org.zzq.csm.service.cms.article.CmsArticleService;
-
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,16 +42,36 @@ public class CmsArticleController {
     
     @RequestMapping(value = "cms_article/save/json", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
     @ResponseBody
-    public String save(String param){
+    public JsonResult<CmsArticle> save(String param){
+        /*
+        * 注意，如果要返回的是json类型，返回的不是标准的json字符串的化，前台ajax是不会走到success方法的【我之前写的是返回String】
+        * */
+        JsonResult<CmsArticle> jsonResult = new JsonResult<CmsArticle>();
         JSONObject jsonObject = JSONObject.fromObject(param);
         //生成类
         CmsArticle cmsArticle = (CmsArticle)JSONObject.toBean(jsonObject,CmsArticle.class);
-        try {
-            cmsArticleService.insertCmsArticle(cmsArticle);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        if(cmsArticle.getId()==0){
+            //新增
+            cmsArticle.setCreatetime(new Date());
+            try {
+                cmsArticleService.insertCmsArticle(cmsArticle);
+            } catch (Exception e) {
+                logger.error("新增："+e.getMessage());
+                jsonResult.failure(cmsArticle);
+            }
+            jsonResult.success(cmsArticle);
         }
-        return "OK";
+        else{
+            //修改
+            try {
+                cmsArticleService.updateCmsArticle(cmsArticle);
+            } catch (Exception e) {
+                logger.error("修改："+e.getMessage());
+                jsonResult.failure(cmsArticle);
+            }
+            jsonResult.success(cmsArticle);
+        }
+        return jsonResult;
     }
 
     @RequestMapping(value = "cms_article/{id}/json", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
@@ -67,7 +88,7 @@ public class CmsArticleController {
         return cmsArticleService.selectAll();
     }
 
-    @RequestMapping(value = "cms_article/delete", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    @RequestMapping(value = "cms_article/delete", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public List<CmsArticle> deleteSelectRows(String paramList) throws Exception{
         JSONArray jsonArray=JSONArray.fromObject(paramList);
@@ -78,6 +99,22 @@ public class CmsArticleController {
                 cmsArticleService.deleteCmsArticle(cmsArticle.getId());
             }
             catch (Exception ex){
+                logger.error(ex.getMessage());
+            }
+        }
+        return selectAll();
+    }
+    //传输CmsCodes对应id的数据到json，传输数据量比较小
+    @RequestMapping(value = "cms_article/delete_by_ids", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public List<CmsArticle> deleteSelectRowsByIds(String paramList) throws Exception {
+        JSONArray jsonArray = JSONArray.fromObject(paramList);
+        //生成类
+        List<Integer> idList = (List<Integer>) JSONArray.toCollection(jsonArray, Integer.class);
+        for (Integer id : idList) {
+            try {
+                cmsArticleService.deleteCmsArticle(id);
+            } catch (Exception ex) {
                 logger.error(ex.getMessage());
             }
         }

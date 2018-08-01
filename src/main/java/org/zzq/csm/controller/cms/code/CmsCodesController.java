@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zzq.csm.entity.cms.code.CmsCodes;
+import org.zzq.csm.entity.dto.JsonResult;
 import org.zzq.csm.entity.login.ActiveUser;
 import org.zzq.csm.service.cms.code.CmsCodesService;
 import org.zzq.csm.util.CurrentUserManager;
@@ -47,7 +48,8 @@ public class CmsCodesController {
 
     @RequestMapping(value = "cms_codes/save/json", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
     @ResponseBody
-    public String save(String param) {
+    public JsonResult<CmsCodes> save(String param) {
+        JsonResult<CmsCodes> jsonResult = new JsonResult<CmsCodes>();
         JSONObject jsonObject = JSONObject.fromObject(param);
         //生成类
         CmsCodes cmsCodes = (CmsCodes) JSONObject.toBean(jsonObject, CmsCodes.class);
@@ -57,21 +59,23 @@ public class CmsCodesController {
             cmsCodes.setAddtime(new Date());
             try {
                 cmsCodesService.insertCmsCodes(cmsCodes);
+                jsonResult.success(cmsCodes);
             } catch (Exception e) {
                 logger.error("新增："+e.getMessage());
+                jsonResult.failure(cmsCodes);
             }
         }
         else{
             //修改
             try {
                 cmsCodesService.updateCmsCodes(cmsCodes);
+                jsonResult.success(cmsCodes);
             } catch (Exception e) {
                 logger.error("修改："+e.getMessage());
+                jsonResult.failure(cmsCodes);
             }
         }
-
-
-        return "OK";
+        return jsonResult;
     }
 
     @RequestMapping(value = "cms_codes/{id}/json", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
@@ -88,7 +92,8 @@ public class CmsCodesController {
         return cmsCodesService.selectAll();
     }
 
-    @RequestMapping(value = "cms_codes/delete", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    //传输CmsCodes对应的数据在json，传输数据量比较大
+    @RequestMapping(value = "cms_codes/delete", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public List<CmsCodes> deleteSelectRows(String paramList) throws Exception {
         JSONArray jsonArray = JSONArray.fromObject(paramList);
@@ -103,5 +108,20 @@ public class CmsCodesController {
         }
         return selectAll();
     }
-
+    //传输CmsCodes对应id的数据到json，传输数据量比较小
+    @RequestMapping(value = "cms_codes/delete_by_ids", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public List<CmsCodes> deleteSelectRowsByIds(String paramList) throws Exception {
+        JSONArray jsonArray = JSONArray.fromObject(paramList);
+        //生成类
+        List<Integer> idList = (List<Integer>) JSONArray.toCollection(jsonArray, Integer.class);
+        for (Integer id : idList) {
+            try {
+                cmsCodesService.deleteCmsCodes(id);
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+            }
+        }
+        return selectAll();
+    }
 }

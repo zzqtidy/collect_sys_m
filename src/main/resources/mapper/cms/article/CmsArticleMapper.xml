@@ -52,7 +52,7 @@
                 src = #{src},
             </if>
         </set>
-        edittime = NOW() where id = #{id}
+        ,edittime = NOW() where id = #{id}
     </update>
 
     <delete id="deleteCmsArticle" parameterType="int">
