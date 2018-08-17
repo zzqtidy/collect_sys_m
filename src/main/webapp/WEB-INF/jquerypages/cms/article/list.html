@@ -69,6 +69,7 @@
                                 <th data-field="id">ID</th>
                                 <th data-field="title">标题</th>
                                 <th data-field="type">类型</th>
+                                <th data-field="typename">类型</th>
                                 <th data-field="createtime">创建时间</th>
                                 <th data-field="edittime">编辑时间</th>
                                 <th data-field="source">来源</th>
@@ -232,7 +233,7 @@
         $('#exampleTableEvents').bootstrapTable
         (
             {
-                url: "/cms_article/listjson",
+                url: "/cms_article_hashmap/listjson",
                 search: true,
                 showRefresh: true,
                 showToggle: true,
@@ -253,6 +254,8 @@
                 }
             }
         );
+        $('#exampleTableEvents').bootstrapTable('hideColumn', 'id'); //隐藏id列
+        $('#exampleTableEvents').bootstrapTable('hideColumn', 'type'); //隐藏type列
 
         var $result = $('#examplebtTableEventsResult');
 

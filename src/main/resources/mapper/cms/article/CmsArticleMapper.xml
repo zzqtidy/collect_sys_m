@@ -9,6 +9,12 @@
         select * from cms_article
     </select>
 
+    <select id="selectAllHashMap" resultType="java.util.HashMap">
+        select ca.*,cd.description typename from cms_article ca
+        inner join cms_codesdetail cd on ca.type = cd.codename and cd.typename = 'ARTICLE_TYPE'
+    </select>
+
+
     <insert id="insertCmsArticle" parameterType="org.zzq.csm.entity.cms.article.CmsArticle">
         insert into cms_article
         (title,keywords,description,content,keyname,type,source,author,url,isurl,src) values

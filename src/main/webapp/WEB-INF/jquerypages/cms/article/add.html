@@ -13,7 +13,10 @@
 
     <link href="../../../../static/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="../../../../static/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-    <link href="../../../../static/css/style.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/chosen/chosen.css" rel="stylesheet">
+
+    <link href="../../../../static/css/style.css" rel="stylesheet"> <!--放在最后-->
+
 
 </head>
 
@@ -41,7 +44,9 @@
                         <div class="form-group">
                             <label class="col-sm-1 control-label">类型：</label>
                             <div class="col-sm-5">
-                                <input id="type" name="type" minlength="2" type="text" class="form-control" required="" aria-required="true" cs-auto-init="true">
+                                <!--<input id="type" name="type" minlength="2" type="text" class="form-control" required="" aria-required="true" cs-auto-init="true">-->
+                                <select id="type" name="type" data-placeholder="选择类型……" class="chosen-select" cs-auto-init="true">
+                                </select>
                             </div>
                             <label class="col-sm-1 control-label">来源：</label>
                             <div class="col-sm-5">
@@ -101,6 +106,8 @@
 <!-- SUMMERNOTE -->
 <script src="../../../../static/js/plugins/summernote/summernote.min.js"></script>
 <script src="../../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
+<!-- Chosen -->
+<script src="../../../../static/js/plugins/chosen/chosen.jquery.js"></script>
 <!-- Peity -->
 <script>
     function init_summernote(content){
@@ -115,6 +122,15 @@
                 var dom_id = $(element).attr("id");
                 var dom_str = "#"+dom_id;
                 $(dom_str).val(res[dom_id]);//赋值
+            }
+        });
+        $("#commentForm select").each(function (index,element) {
+            //页面元素有auto-init属性的才赋值，取id来赋值
+            if(typeof($(element).attr("cs-auto-init"))!="undefined"){
+                var dom_id = $(element).attr("id");
+                var dom_str = "#"+dom_id;
+                $(dom_str).val(res[dom_id]);//赋值
+                $(dom_str).trigger("chosen:updated")//更新选中项
             }
         });
         //为富文本编辑控件赋值
@@ -142,6 +158,23 @@
         return o;
     };
     $(document).ready(function () {
+        //初始化下拉框
+        $.ajax({
+            url: "/common/comboboxinfo/getcodesdetailmap",
+            data: {
+                typename: "ARTICLE_TYPE"
+            },
+            success: function (data) {
+                $.each(data,function(i){
+                    var op = "<option value='"+data[i].code+"'>"+data[i].value+"</option>";
+                    $("#type").append(op);
+                });
+                $("#type").trigger("liszt:updated");
+                $("#type").chosen({ allow_single_deselect: true,width:"100%" });
+            }
+        });
+
+
         $('.summernote').summernote({
             lang: 'zh-CN',
             height: 150 //固定高度

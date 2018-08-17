@@ -1,6 +1,7 @@
 package org.zzq.csm.entity.cms.code;
 
 import org.zzq.csm.entity.common.BaseEntity;
+import org.zzq.csm.entity.common.ExtEntity;
 
 import java.io.Serializable;
 
@@ -17,8 +18,8 @@ public class CmsCodesDetail extends BaseEntity implements Serializable {
     private String typename;
     private String codename;
     private String description;
-    private String short_name;
-    private String long_value;
+    private String shortvalue; //注意，在数据库中存放的字段是short_value,而java代码中在默认情况下需要去掉下划线，否则无法进行访问
+    private String longvalue;
     private int isactive;
 
     public int getId() {
@@ -53,21 +54,22 @@ public class CmsCodesDetail extends BaseEntity implements Serializable {
         this.description = description;
     }
 
-    public String getShort_name() {
-        return short_name;
+    public String getShortvalue() {
+        return shortvalue;
     }
 
-    public void setShort_name(String short_name) {
-        this.short_name = short_name;
+    public void setShortvalue(String shortvalue) {
+        this.shortvalue = shortvalue;
     }
 
-    public String getLong_value() {
-        return long_value;
+    public String getLongvalue() {
+        return longvalue;
     }
 
-    public void setLong_value(String long_value) {
-        this.long_value = long_value;
+    public void setLongvalue(String longvalue) {
+        this.longvalue = longvalue;
     }
+
 
     public int getIsactive() {
         return isactive;

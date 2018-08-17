@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface CmsCodesService {
     public CmsCodes selectByid(int id) throws Exception;
+    public CmsCodes selectByidWithCodeDetails(int id) throws Exception;
     public List<CmsCodes> selectAll() throws Exception;
     public void insertCmsCodes(CmsCodes cmsCodes) throws Exception;
     public void updateCmsCodes(CmsCodes cmsCodes) throws Exception;

@@ -7,6 +7,7 @@ import org.zzq.csm.entity.cms.article.CmsArticle;
 import org.zzq.csm.service.cms.article.CmsArticleService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +28,11 @@ public class CmsArticleServiceImpl implements CmsArticleService {
     @Override
     public List<CmsArticle> selectAll() throws Exception {
         return cmsArticleMapper.selectAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> selectAllHashMap() throws Exception {
+        return cmsArticleMapper.selectAllHashMap();
     }
 
     @Override

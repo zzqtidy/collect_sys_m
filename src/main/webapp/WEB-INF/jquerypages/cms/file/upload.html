@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../../static/css/animate.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/plugins/webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/demo/webuploader-demo.css">
+
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="page-container">
+                            <div id="uploader" class="wu-example">
+                                <div class="queueList">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                        <p>或将照片拖到这里，单次最多可选300张</p>
+                                    </div>
+                                </div>
+                                <div class="statusBar" style="display:none;">
+                                    <div class="progress">
+                                        <span class="text">0%</span>
+                                        <span class="percentage"></span>
+                                    </div>
+                                    <div class="info"></div>
+                                    <div class="btns">
+                                        <div id="filePicker2"></div>
+                                        <div class="uploadBtn">开始上传</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- 全局js -->
+<script src="../../../../static/js/jquery.min.js"></script>
+<script src="../../../../static/js/bootstrap.min.js"></script>
+
+<!-- 自定义js -->
+<script src="../../../../static/js/content.js"></script>
+
+<!-- layer javascript -->
+<script src="../../../../static/js/plugins/layer/layer.min.js"></script>
+
+<!-- Web Uploader -->
+<script type="text/javascript">
+    // 添加全局站点信息
+    var BASE_URL = '../../../../static/js/plugins/webuploader';
+</script>
+<script src="../../../../static/js/plugins/webuploader/webuploader.min.js"></script>
+<script src="../../../../static/js/demo/webuploader-demo.js"></script>
+</body>
+</html>

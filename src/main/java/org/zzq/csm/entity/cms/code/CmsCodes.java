@@ -4,6 +4,7 @@ import org.zzq.csm.entity.common.BaseEntity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +18,7 @@ public class CmsCodes extends BaseEntity implements Serializable {
     private int id;
     private String typename;
     private String description;
+    private List<CmsCodesDetail> codesDetails;
 
     public int getId() {
         return id;
@@ -40,5 +42,13 @@ public class CmsCodes extends BaseEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<CmsCodesDetail> getCodesDetails() {
+        return codesDetails;
+    }
+
+    public void setCodesDetails(List<CmsCodesDetail> codesDetails) {
+        this.codesDetails = codesDetails;
     }
 }

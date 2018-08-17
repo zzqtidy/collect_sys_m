@@ -17,6 +17,7 @@ import org.zzq.csm.entity.dto.JsonResult;
 import org.zzq.csm.service.cms.article.CmsArticleService;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -86,6 +87,13 @@ public class CmsArticleController {
     public List<CmsArticle> selectAll() throws Exception{
         //注意@PathVariable(value = "id")是取出url地址中的{id},当然也可以不用写，不过按照规范，最好写上
         return cmsArticleService.selectAll();
+    }
+
+    @RequestMapping(value = "cms_article_hashmap/listjson", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public List<Map<String,Object>> selectAllHashMap() throws Exception{
+        //注意@PathVariable(value = "id")是取出url地址中的{id},当然也可以不用写，不过按照规范，最好写上
+        return cmsArticleService.selectAllHashMap();
     }
 
     @RequestMapping(value = "cms_article/delete", method = RequestMethod.POST, produces = {"application/json; charset=utf-8"})

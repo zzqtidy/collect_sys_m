@@ -23,7 +23,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <!--<div class="ibox-title">-->
-                    <!--<h5>新增</h5>-->
+                <!--<h5>新增</h5>-->
                 <!--</div>-->
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="commentForm">
@@ -31,11 +31,13 @@
                             <label class="col-sm-2 control-label">类型名：</label>
                             <div class="col-sm-4">
                                 <input id="id" name="id" type="text" class="form-control hidden" cs-auto-init="true">
-                                <input id="typename" name="typename" minlength="2" type="text" class="form-control" required="" aria-required="true" cs-auto-init="true">
+                                <input id="typename" name="typename" minlength="2" type="text" class="form-control"
+                                       required="" aria-required="true" cs-auto-init="true" edit-readonly="true">
                             </div>
                             <label class="col-sm-2 control-label">类型名描述：</label>
                             <div class="col-sm-4">
-                                <input id="description" name="description" type="text" class="form-control"  required="" aria-required="true" cs-auto-init="true">
+                                <input id="description" name="description" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,7 +51,47 @@
             </div>
         </div>
     </div>
-
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <!-- Example Events -->
+                    <div class="example-wrap">
+                        <div class="example">
+                            <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                <button type="button" class="btn btn-outline btn-default" onclick="addDetailLayer()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline btn-default" onclick="editDetailLayer()">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline btn-default"
+                                        onclick="deleteDetailSelectData()">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
+                                <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th data-field="state" data-checkbox="true"></th>-->
+                                    <!--<th data-field="id" visible="false">ID</th>-->
+                                    <!--<th data-field="typename">类型名</th>-->
+                                    <!--<th data-field="codename">编码</th>-->
+                                    <!--<th data-field="description">编码描述</th>-->
+                                    <!--<th data-field="shortvalue">短值</th>-->
+                                    <!--<th data-field="longvalue">长值</th>-->
+                                    <!--<th data-field="isactive" style="display: none">是否启用</th>-->
+                                    <!--<th data-field="isactivename">是否启用</th>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End Example Events -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 
@@ -75,23 +117,71 @@
 <script src="../../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
 <!-- Peity -->
 <script>
-    function init_form(res){
-        //后期需要优化，判断是输入框、下拉框、还是其他的，最好写成扩展控件
-        $("#commentForm input[type='text']").each(function (index,element) {
-            //页面元素有auto-init属性的才赋值，取id来赋值
-            if(typeof($(element).attr("cs-auto-init"))!="undefined"){
-                var dom_id = $(element).attr("id");
-                var dom_str = "#"+dom_id;
-                $(dom_str).val(res[dom_id]);//赋值
+    function init_form(res) {
+        var data = res["data"];
+        var iframeType = res["iframeType"];
+        if (iframeType == "EDIT") {
+            //后期需要优化，判断是输入框、下拉框、还是其他的，最好写成扩展控件
+            $("#commentForm input[type='text']").each(function (index, element) {
+                //页面元素有auto-init属性的才赋值，取id来赋值
+                if (typeof($(element).attr("cs-auto-init")) != "undefined") {
+                    var dom_id = $(element).attr("id");
+                    var dom_str = "#" + dom_id;
+                    $(dom_str).val(data[dom_id]);//赋值
+                }
+                var dom_edit_readonly = $(element).attr("edit-readonly");
+                if (dom_edit_readonly != "undefined") {
+                    $(element).attr("readonly", dom_edit_readonly);
+                }
+                var dom_new_readonly = $(element).attr("new-readonly");
+                if (dom_new_readonly != "undefined") {
+                    $(element).attr("readonly", dom_new_readonly);
+                }
+            });
+        }
+        //初始化bootstrap-table
+        $('#exampleTableEvents').bootstrapTable
+        (
+            {
+                url: "/cms_codesdetail/" + $("#typename").val() + "/listjson",
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                switchable: true,
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [20, 100], // 设置页面可以显示的数据条数
+                pageSize: 20, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                iconSize: 'outline',
+                toolbar: '#exampleTableEventsToolbar',
+                icons: {
+                    refresh: 'glyphicon-repeat',
+                    toggle: 'glyphicon-list-alt',
+                    columns: 'glyphicon-list'
+                },
+                columns: //bootstrap-table 另外一种用法，可以直接在js中绑定值，这种用法比较灵活，推荐使用
+                [
+                    {field: 'state', checkbox:'true', title: '', visible: true},
+                    {field: 'id', title: 'ID', visible: false},
+                    {field: 'typename', title: '类型名', visible: true},
+                    {field: 'codename', title: '编码', visible: true},
+                    {field: 'description', title: '编码描述', visible: true},
+                    {field: 'short_value', title: '短值', visible: true},
+                    {field: 'long_value', title: '长值', visible: true},
+                    {field: 'isactive', title: '是否启用', visible: false},
+                    {field: 'isactivename', title: '是否启用', visible: true}
+                ]
             }
-        });
+        );
     }
 
-    $.fn.serializeObject = function()
-    {
+    $.fn.serializeObject = function () {
         var o = {};
         var a = this.serializeArray();
-        $.each(a, function() {
+        $.each(a, function () {
             if (o[this.name]) {
                 if (!o[this.name].push) {
                     o[this.name] = [o[this.name]];
@@ -103,22 +193,121 @@
         });
         return o;
     };
-    $(document).ready(function () {
 
+    //新增
+    function addDetailLayer() {
+        var index = layer.open({
+            type: 2,
+            title: '新增代码',
+            content: '/cms_codesdetail/add',
+            area: ['80%', '80%'],
+            maxmin: true,
+            //向弹框出来的IFrame填充值
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var typename = $("#typename").val();
+                if (!typename) {
+                    layer.alert("类型名不能为空", {icon: 2});
+                    return;
+                }
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var res = {};
+                res.typename = typename;
+                res.isactive = "0";
+                iframeWin.init_form(res);
+            },
+            end: function () {
+                $("#exampleTableEvents").bootstrapTable('refresh');
+            }
+        });
+        // layer.full(index);//二级弹出框不需要全屏
+    }
+
+    //修改
+    function editDetailLayer() {
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+
+        if (selectDatas.length > 1 || selectDatas.length == 0) {
+            layer.alert('请选中一行');
+            return;
+        }
+        var index = layer.open({
+            type: 2,
+            title: '编辑代码',
+            content: '/cms_codesdetail/add',
+            area: ['80%', '80%'],
+            maxmin: true,
+            //向弹框出来的IFrame填充值
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = selectDatas[0]["id"];
+                var requestUrl = "/cms_codesdetail/" + id + "/json";
+                console.log(requestUrl);
+                $.ajax({
+                    url: requestUrl,
+                    success: function (res) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.init_form(res);
+                    },
+
+                });
+            },
+            end: function () {
+                $("#exampleTableEvents").bootstrapTable('refresh');
+            }
+        });
+    }
+
+    //删除所选项（删除后重新加载数据）
+    function deleteDetailSelectData() {
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+
+        if (selectDatas.length > 0) {
+            layer.confirm(
+                "确定删除吗？",
+                {
+                    btn: ['确定', '取消'] //按钮
+                },
+                function(){
+                    //第一个按钮事件
+                    $.ajax({
+                        type: "POST",
+                        url: "/cms_codesdetail/delete",
+                        data: {
+                            paramList: JSON.stringify(selectDatas)
+                        },
+                        success: function (res) {
+                            $("#exampleTableEvents").bootstrapTable('refresh', res);
+                            layer.msg("所选数据已经被删除！",{icon:1});
+                        }
+                    });
+                },
+                function(){
+                    //第二个事件按钮
+                    layer.close();
+                }
+            );
+        }
+        else {
+            layer.alert("请选择一行",{icon:2});
+            return;
+        }
+    }
+
+    $(document).ready(function () {
         $("#savebtn").click(function () {
             //获取form表单的数据，转化成JsonObject
             var reqData = $('#commentForm').serializeObject();
             $.ajax({
                 type: "POST",//方法类型
-                url:"/cms_codes/save/json",
-                data:{
-                    param:JSON.stringify(reqData) //将JsonObject转化成Json字符串
+                url: "/cms_codes/save/json",
+                data: {
+                    param: JSON.stringify(reqData) //将JsonObject转化成Json字符串
                 },
-                success:function(res){
+                success: function (res) {
                     var success = res["meta"]["success"];
-                    if(success){
-                        layer.alert("操作成功",{icon:1},function()
-                            {
+                    if (success) {
+                        layer.alert("操作成功", {icon: 1}, function () {
                                 //点击弹出框确认按钮之后发生的事情：关闭弹出层页
                                 //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
                                 var index = parent.layer.getFrameIndex(window.name);
@@ -126,9 +315,8 @@
                             }
                         );
                     }
-                    else
-                    {
-                        layer.alert("操作失败，请联系管理员",{icon:1});
+                    else {
+                        layer.alert("操作失败，请联系管理员", {icon: 2});
                     }
                 }
             });

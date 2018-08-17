@@ -85,6 +85,13 @@ public class CmsCodesController {
         return cmsCodesService.selectByid(id);
     }
 
+    @RequestMapping(value = "cms_codes/{id}/with_codedetail_json", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public CmsCodes selectByidWithCodeDetails(@PathVariable(value = "id") int id) throws Exception {
+        //注意@PathVariable(value = "id")是取出url地址中的{id},当然也可以不用写，不过按照规范，最好写上
+        return cmsCodesService.selectByidWithCodeDetails(id);
+    }
+
     @RequestMapping(value = "cms_codes/listjson", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public List<CmsCodes> selectAll() throws Exception {

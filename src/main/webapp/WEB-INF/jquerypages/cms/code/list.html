@@ -93,8 +93,16 @@
             content: '/cms_codes/add',
             area: ['300px', '195px'],
             maxmin: true,
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var resIframe = {};
+                resIframe.iframeType = "NEW";
+                iframeWin.init_form(resIframe);
+            },
             end: function () {
                 $("#exampleTableEvents").bootstrapTable('refresh');
+
             }
         });
         layer.full(index);
@@ -102,7 +110,6 @@
 
     //修改
     function editLayer() {
-        debugger;
         var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
 
         if (selectDatas.length > 1 || selectDatas.length == 0) {
@@ -125,7 +132,11 @@
                     url: requestUrl,
                     success: function (res) {
                         var iframeWin = window[layero.find('iframe')[0]['name']];
-                        iframeWin.init_form(res);
+                        var resIframe = {};
+                        resIframe.iframeType = "EDIT";
+                        resIframe.data = res;
+
+                        iframeWin.init_form(resIframe);
                     },
 
                 });
@@ -217,6 +228,7 @@
                 }
             }
         );
+        $('#exampleTableEvents').bootstrapTable('hideColumn', 'id'); //隐藏id列
 
         var $result = $('#examplebtTableEventsResult');
 
