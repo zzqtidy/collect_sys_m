@@ -21,6 +21,8 @@
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
         <commons-io.version>2.4</commons-io.version>
         <!--spring mvc 文件上传 -end-->
+        <!--定时任务-->
+        <quartz.version>2.2.1</quartz.version>
     </properties>
 
     <dependencies>
@@ -302,7 +304,22 @@
             <version>${commons-fileupload.version}</version>
 
         </dependency>
-
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.1.9.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
         <!--&lt;!&ndash; jsp Template jar &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>org.freemarker</groupId>-->
@@ -320,6 +337,15 @@
     <build>
         <finalName>collect_sys_m</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
