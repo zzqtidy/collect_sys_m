@@ -25,7 +25,7 @@ public interface QuartzProducer {
      * @throws SchedulerException
      * @throws ParseException
      */
-    public void addSimpleJob(String jobName, String jobGroup, String className, String methodName, ArrayList paramArray, String runDateTime) throws SchedulerException, ParseException;
+    public void addSimpleJob(String jobName, String jobGroup,String triggerName, String triggerGroup, String className, String methodName, ArrayList paramArray, String runDateTime)  throws SchedulerException, ParseException;
 
 
     /**
@@ -39,7 +39,7 @@ public interface QuartzProducer {
      * @param cron
      * @throws SchedulerException
      */
-    public void addCronJob(String jobName, String jobGroup, String className, String methodName, ArrayList paramArray, String cron) throws SchedulerException;
+    public void addCronJob(String jobName, String jobGroup,String triggerName, String triggerGroup, String className, String methodName, ArrayList paramArray, String cron) throws SchedulerException;
 
     /**
      * 修改简单任务,一般指修改运行时间
@@ -48,7 +48,7 @@ public interface QuartzProducer {
      * @param jobGroup
      * @param runDateTime 格式：yyyyMMddHHmmss
      */
-    public void updateSimpleJob(String jobName, String jobGroup, String runDateTime) throws SchedulerException, ParseException;
+    public void updateSimpleJob(String jobName, String jobGroup,String triggerName, String triggerGroup, String runDateTime) throws SchedulerException, ParseException;
 
     /**
      * 修改cron任务,一般指修改循环运行时间
@@ -57,7 +57,7 @@ public interface QuartzProducer {
      * @param jobGroup
      * @param cron
      */
-    public void updateCronJob(String jobName, String jobGroup, String cron) throws SchedulerException;
+    public void updateCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup,String cron) throws SchedulerException;
 
     /**
      * 移除任务
