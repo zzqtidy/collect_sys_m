@@ -1,280 +1,518 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本地Mysql
  Source Server Type    : MySQL
- Source Server Version : 50720
- Source Host           : localhost
- Source Database       : collect_sys_m
+ Source Server Version : 80011
+ Source Host           : localhost:3306
+ Source Schema         : collect_sys_m
 
  Target Server Type    : MySQL
- Target Server Version : 50720
- File Encoding         : utf-8
+ Target Server Version : 80011
+ File Encoding         : 65001
 
- Date: 07/19/2018 00:36:15 AM
+ Date: 05/09/2018 18:13:43
 */
 
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `cms_article`
+-- Table structure for cms_article
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_article`;
-CREATE TABLE `cms_article` (
+CREATE TABLE `cms_article`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL COMMENT '标题',
-  `keywords` varchar(50) DEFAULT NULL COMMENT '关键字',
-  `description` varchar(100) DEFAULT NULL COMMENT '描述',
-  `content` text COMMENT '内容',
-  `keyname` varchar(50) DEFAULT NULL,
-  `type` varchar(20) NOT NULL COMMENT '类型（属于那个板块）',
-  `createtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `edittime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '编辑时间',
-  `source` varchar(50) DEFAULT NULL COMMENT '来源',
-  `author` varchar(50) DEFAULT NULL COMMENT '作者',
-  `url` varchar(50) DEFAULT NULL,
-  `clickcount` int(8) unsigned DEFAULT '0' COMMENT '点击次数',
-  `isurl` bit(1) DEFAULT NULL,
-  `src` varchar(100) DEFAULT NULL,
-  `rank` int(8) DEFAULT '0',
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `keywords` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关键字',
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `keyname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型（属于那个板块）',
+  `createtime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `edittime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '编辑时间',
+  `source` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
+  `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者',
+  `url` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `clickcount` int(8) UNSIGNED NULL DEFAULT 0 COMMENT '点击次数',
+  `isurl` bit(1) NULL DEFAULT NULL,
+  `src` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `rank` int(8) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `cms_article`
+-- Records of cms_article
 -- ----------------------------
-BEGIN;
-INSERT INTO `cms_article` VALUES ('29', '成都暴雨预警仍未解除 18日天气转好阳光回归', '成都 洪水', '成都2018年大雨不断', '\n\n                                15日上午10点40分，成都市气象台发布了暴雨橙色预警信号，正当市民担心大雨再次造成路面积水时，雨水在中午时分却戛然而止，阳光拨开云层露脸了，气温也略有回升。\n<p>　　不过暴雨的警报还未解除，15日下午4点，成都市气象台将7月15日07时00分发布的暴雨蓝色预警升级为黄色预警：受高原低值系统和偏南暖湿气流共同影响，预计15日20时到16日20时还将有明显的降雨天气过程，雨量大雨，部分地方暴雨，局部地方雨量可达100毫米以上，暴雨主要集中在我市的中西部地区，降雨时伴有雷电和短时阵性大风。</p>\n<p>　　同时，四川省气象台也于15日15时30分发布暴雨黄色预警：15日20时～16日20时，广元、绵阳、德阳、成都、雅安、眉山、乐山7市的部分地方及阿坝州漩映地区有暴雨（雨量60～90毫米），局部地方有大暴雨（雨量180～220毫米）。</p>\n<p>　　根据成都市气象台预计，16日白天成都阴云密布，大雨倾盆，中西部部分地方暴雨，个别地方甚至雨量将达大暴雨，气温22～27℃；16日晚上到17日白天降雨稍稍减弱，雨量中到大雨，西部局部地方暴雨，气温22～27℃；17日晚上到18日白天天空状况转好，太阳回归主场，雨水虽有，不过零零散散，气温22～32℃。（记者\n 逯望一）</p>', null, '新闻', '2018-07-16 17:30:20', '2018-07-16 17:30:20', '成都商报', null, null, '0', b'0', null, '0'), ('30', 'jQuery插件的几种写法', 'jQuery', 'jQuery插件的几种写法', '\n\n                                <p>之前在一篇求职的帖子上看过，前端面试的景点题目：jquery插件的几种写法。</p>\n<p>这是看到的一篇总结。比较到位。详尽且简单易懂。如果之前看过jquery的源码，应该特别好理解了。</p>\n\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n插件编写的目的是给已经有的一系列方法或函数做一个封装，以便在其他地方重复使用，方便后期维护。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>一、jQuery插件开发方式</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、通过$.extend()来扩展jQuery</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、通过$.fn 向jQuery添加新的方法</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n3、通过$.widget()应用jQuery UI的部件工厂方式创建</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>二、三种jQuery插件开发方式说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、$.extend()相对简单，一般很少能够独立开发复杂插件，仅仅是在jQuery命名空间或者理解成jQuery身上添加了一个静态方法而以。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、我们调用通过$.extend()添加的函数时直接通过$符号调用（$.myfunction()），而不需要选中DOM元素($(\'#example\').myfunction())。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n3、$.widget()是一种高级的开发模式，该模式开发出来的部件带有很多jQuery内建的特性，比如插件的状态信息自动保存，各种关于插件的常用方法等</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n4、$.fn则是一般插件开发用到的方式，可以利用jQuery强大的选择器带来的便利，以及将插件更好地运用于所选择的元素身上，使用的插件也大多是通过此种方式开发。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>三、$.extend()扩展jQuery的实例</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"2487937147230699286\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.extend(</span><span id=\"Highlighter_10_111_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n    sayHello: </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(name) </span><span id=\"Highlighter_41_109_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n        console.log(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">Hello,</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> (name </span><span style=\"color:rgb(0,0,0);\">?</span><span style=\"color:rgb(0,0,0);\"> name : </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">aaa</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">) </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">!</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n    }</span></span><span style=\"color:rgb(0,0,0);\">\n}</span></span><span style=\"color:rgb(0,0,0);\">)\n$.sayHello(); </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">Hello,aaa</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">$.sayHello(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">bbb</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">); </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">Hello,bbb</span><span style=\"color:rgb(0,128,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n说明：上面代码中，通过$.extend()向jQuery添加了一个sayHello函数，然后通过$直接调用。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>四、$.fn方式插件开发</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">1、定义</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div id=\"5379426089840105907\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.pluginName </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> function() </span><span id=\"Highlighter_30_54_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">your code here</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">2、定义说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n基本上就是往$.fn上面添加一个方法，名字是我们的插件名称。然后我们的插件代码在这个方法里面展开。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">3、简单实例</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n将页面上所有链接颜色转成红色，则可以这样写这个插件</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"736868317292439663\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_127_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">example :$(\'a\'),则this=$(\'a\')</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">4、实例说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、在插件名字定义的这个函数内部，this指代的是我们在调用该插件时，用jQuery选择器选中的元素，一般是一个jQuery类型的集合。在插件名字定义的这个函数内部，this指代的是我们在调用该插件时，用jQuery选择器选中的元素，一般是一个jQuery类型的集合。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、如果通过调用jQuery的.each()方法处理集合中的每个元素时要注意的是，在each方法内部，this指带的是普通的DOM元素了，如果需要调用jQuery的方法那就需要用$来重新包装一下。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>&nbsp;</div>\n<div>\n<div id=\"50549955515517096492\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_199_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.each(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_116_195_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">对每个元素进行操作</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">        $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).append(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).attr(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">href</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">));\n    }</span></span><span style=\"color:rgb(0,0,0);\">))\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">5、实例插件的使用</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"27129935143000795453\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">ul</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">aaa</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">bbb</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">ccc</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">ul</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">p</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">这是p标签不是a标签，我不会受影响</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">p</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script src</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">jquery-1.11.0.min.js</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script src</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">jquery.myplugin.js</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script type</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">text/javascript</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n    $(function()</span><span id=\"Highlighter_275_300_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n        $(</span><span style=\"color:rgb(128,0,0);\">\'</span><span style=\"color:rgb(128,0,0);\">a</span><span style=\"color:rgb(128,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">).myPlugin();\n    }</span></span><span style=\"color:rgb(0,0,0);\">)\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">6、让插件支持链式调用</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\njQuery一个时常优雅的特性是支持链式调用，选择好DOM元素后可以不断地调用其他方法。要让插件不打破这种链式调用，只需return一下即可。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"47251486690072406299\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_206_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n</span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.each(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_123_202_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">对每个元素进行操作</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">        $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).append(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).attr(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">href</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">));\n    }</span></span><span style=\"color:rgb(0,0,0);\">))\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">7、让插件接收参数</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、一个强劲的插件是可以让使用者随意定制的，这要求我们提供在编写插件时就要考虑得全面些，尽量提供合适的参数。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、比如现在我们不想让链接只变成红色，我们让插件的使用者自己定义显示什么颜色，要做到这一点很方便，只需要使用者在调用的时候传入一个参数即可。同时我们在插件的代码里面接收。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(3)、为了灵活，使用者可以不传递参数，插件里面会给出参数的默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(4)、在处理插件参数的接收上，通常使用jQuery的extend方法，当给extend方法传递一个以上的参数时，它会将所有参数对象合并到第一个里。同时，如果对象中有同名属性时，合并的时候后面的会覆盖前面的。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(5)、可以在插件里定义一个保存插件参数默认值的对象，同时将接收来的参数对象合并到默认对象上，最后就实现了用户指定了值的参数使用指定的值，未指定的参数使用插件默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(6)、保护好默认参数：做法是将一个新的空对象做为$.extend的第一个参数，defaults和用户传递的参数对象紧随其后，这样做的好处是所有值被合并到这个空对象上，保护了插件里面的默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(0,0,255);\">(7)、实例</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"3077846793797099967\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(options) </span><span id=\"Highlighter_35_266_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> defaults </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span id=\"Highlighter_56_114_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">12px</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">\n    }</span></span><span style=\"color:rgb(0,0,0);\">;\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> settings </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> $.extend({}, defaults, options);\n</span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span id=\"Highlighter_184_262_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.color,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.fontSize\n    }</span></span><span style=\"color:rgb(0,0,0);\">);\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">8、插件开发中的命名空间</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、不仅仅是jQuery插件的开发，我们在写任何JS代码时都应该注意的一点是不要污染全局命名空间。因为随着你代码的增多，如果有意无意在全局范围内定义一些变量的话，最后很难维护，也容易跟别人写的代码有冲突。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、比如你在代码中向全局window对象添加了一个变量status用于存放状态，同时页面中引用了另一个别人写的库，也向全局添加了这样一个同名变量，最后的结果肯定不是你想要的。所以不到万不得已，一般我们不会将变量定义成全局的。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(3)、可以使用<span style=\"color:#FF0000;\">自调用匿名函数</span>包裹插件代码</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"10960674695664685403\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_13_302_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n $.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(options) </span><span id=\"Highlighter_50_300_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> defaults </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span id=\"Highlighter_71_129_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">12px</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">\n    }</span></span><span style=\"color:rgb(0,0,0);\">;\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> settings </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> $.extend(</span><span id=\"Highlighter_159_161_Open_Text\"><span style=\"color:rgb(0,0,0);\">{}</span></span><span style=\"color:rgb(0,0,0);\">,defaults, options);</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">将一个空对象做为第一个参数</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span id=\"Highlighter_217_295_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.color,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.fontSize\n    }</span></span><span style=\"color:rgb(0,0,0);\">);\n }</span></span><span style=\"color:rgb(0,0,0);\">\n}</span></span><span style=\"color:rgb(0,0,0);\">)();\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">9、尽量在插件的最前面加上分号</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n这样可以避免我们将这段代码放到页面后，前面别人写的代码没有用分号结尾，这样，这个插件代码就会报错。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">10、可以将系统变量以变量形式传递到插件内部</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"90638801778483676\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n;(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">($,window,document,undefined)</span><span id=\"Highlighter_40_67_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">我们的代码。。</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">...</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">}</span></span><span style=\"color:rgb(0,0,0);\">)(jQuery,window,document);\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>五、将插件代码混淆与压缩的方法</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、我们下载的插件里面，一般都会提供一个压缩的版本一般在文件名里带个\'min\'字样。也就是minified的意思，压缩浓缩后的版本。例如，并且平时我们使用的jQuery也是官网提供的压缩版本，jquery.min.js。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、这里的压缩不是指代码进行功能上的压缩，而是通过将代码里面的变量名，方法函数名等等用更短的名称来替换，并且删除注释（如果有的话）删除代码间的空白及换行所得到的浓缩版本。同时由于代码里面的各种名称都已经被替代，别人无法阅读和分清其逻辑，也起到了混淆代码的作用。&nbsp;</p>\n', null, 'web 前段杂 ', '2018-07-17 12:30:26', '2018-07-17 12:30:26', '网摘', null, null, '0', b'0', null, '0');
-COMMIT;
+INSERT INTO `cms_article` VALUES (29, '成都暴雨预警仍未解除 18日天气转好阳光回归', '成都 洪水', '成都2018年大雨不断', '\n\n                                15日上午10点40分，成都市气象台发布了暴雨橙色预警信号，正当市民担心大雨再次造成路面积水时，雨水在中午时分却戛然而止，阳光拨开云层露脸了，气温也略有回升。\n<p>　　不过暴雨的警报还未解除，15日下午4点，成都市气象台将7月15日07时00分发布的暴雨蓝色预警升级为黄色预警：受高原低值系统和偏南暖湿气流共同影响，预计15日20时到16日20时还将有明显的降雨天气过程，雨量大雨，部分地方暴雨，局部地方雨量可达100毫米以上，暴雨主要集中在我市的中西部地区，降雨时伴有雷电和短时阵性大风。</p>\n<p>　　同时，四川省气象台也于15日15时30分发布暴雨黄色预警：15日20时～16日20时，广元、绵阳、德阳、成都、雅安、眉山、乐山7市的部分地方及阿坝州漩映地区有暴雨（雨量60～90毫米），局部地方有大暴雨（雨量180～220毫米）。</p>\n<p>　　根据成都市气象台预计，16日白天成都阴云密布，大雨倾盆，中西部部分地方暴雨，个别地方甚至雨量将达大暴雨，气温22～27℃；16日晚上到17日白天降雨稍稍减弱，雨量中到大雨，西部局部地方暴雨，气温22～27℃；17日晚上到18日白天天空状况转好，太阳回归主场，雨水虽有，不过零零散散，气温22～32℃。（记者\n 逯望一）</p>', NULL, 'NEWS', '2018-08-08 15:47:11', '2018-08-08 15:47:11', '成都商报', NULL, NULL, 0, b'0', NULL, 0);
+INSERT INTO `cms_article` VALUES (30, 'jQuery插件的几种写法', 'jQuery', 'jQuery插件的几种写法', '\n\n                                <p>之前在一篇求职的帖子上看过，前端面试的景点题目：jquery插件的几种写法。</p>\n<p>这是看到的一篇总结。比较到位。详尽且简单易懂。如果之前看过jquery的源码，应该特别好理解了。</p>\n\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n插件编写的目的是给已经有的一系列方法或函数做一个封装，以便在其他地方重复使用，方便后期维护。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>一、jQuery插件开发方式</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、通过$.extend()来扩展jQuery</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、通过$.fn 向jQuery添加新的方法</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n3、通过$.widget()应用jQuery UI的部件工厂方式创建</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>二、三种jQuery插件开发方式说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、$.extend()相对简单，一般很少能够独立开发复杂插件，仅仅是在jQuery命名空间或者理解成jQuery身上添加了一个静态方法而以。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、我们调用通过$.extend()添加的函数时直接通过$符号调用（$.myfunction()），而不需要选中DOM元素($(\'#example\').myfunction())。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n3、$.widget()是一种高级的开发模式，该模式开发出来的部件带有很多jQuery内建的特性，比如插件的状态信息自动保存，各种关于插件的常用方法等</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n4、$.fn则是一般插件开发用到的方式，可以利用jQuery强大的选择器带来的便利，以及将插件更好地运用于所选择的元素身上，使用的插件也大多是通过此种方式开发。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>三、$.extend()扩展jQuery的实例</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"2487937147230699286\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.extend(</span><span id=\"Highlighter_10_111_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n    sayHello: </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(name) </span><span id=\"Highlighter_41_109_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n        console.log(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">Hello,</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> (name </span><span style=\"color:rgb(0,0,0);\">?</span><span style=\"color:rgb(0,0,0);\"> name : </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">aaa</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">) </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">!</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n    }</span></span><span style=\"color:rgb(0,0,0);\">\n}</span></span><span style=\"color:rgb(0,0,0);\">)\n$.sayHello(); </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">Hello,aaa</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">$.sayHello(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">bbb</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">); </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">Hello,bbb</span><span style=\"color:rgb(0,128,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n说明：上面代码中，通过$.extend()向jQuery添加了一个sayHello函数，然后通过$直接调用。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>四、$.fn方式插件开发</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">1、定义</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div id=\"5379426089840105907\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.pluginName </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> function() </span><span id=\"Highlighter_30_54_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">your code here</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">2、定义说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n基本上就是往$.fn上面添加一个方法，名字是我们的插件名称。然后我们的插件代码在这个方法里面展开。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">3、简单实例</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n将页面上所有链接颜色转成红色，则可以这样写这个插件</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"736868317292439663\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_127_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">example :$(\'a\'),则this=$(\'a\')</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">4、实例说明</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、在插件名字定义的这个函数内部，this指代的是我们在调用该插件时，用jQuery选择器选中的元素，一般是一个jQuery类型的集合。在插件名字定义的这个函数内部，this指代的是我们在调用该插件时，用jQuery选择器选中的元素，一般是一个jQuery类型的集合。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、如果通过调用jQuery的.each()方法处理集合中的每个元素时要注意的是，在each方法内部，this指带的是普通的DOM元素了，如果需要调用jQuery的方法那就需要用$来重新包装一下。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>&nbsp;</div>\n<div>\n<div id=\"50549955515517096492\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_199_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.each(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_116_195_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">对每个元素进行操作</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">        $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).append(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).attr(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">href</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">));\n    }</span></span><span style=\"color:rgb(0,0,0);\">))\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">5、实例插件的使用</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"27129935143000795453\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">ul</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">aaa</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">bbb</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">a href</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">#</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">ccc</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">a</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">li</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">ul</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">p</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">这是p标签不是a标签，我不会受影响</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">p</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script src</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">jquery-1.11.0.min.js</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script src</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">jquery.myplugin.js</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span><span style=\"color:rgb(0,0,0);\">&lt;</span><span style=\"color:rgb(0,0,0);\">script type</span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(128,0,0);\">text/javascript</span><span style=\"color:rgb(128,0,0);\">\"</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n    $(function()</span><span id=\"Highlighter_275_300_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n        $(</span><span style=\"color:rgb(128,0,0);\">\'</span><span style=\"color:rgb(128,0,0);\">a</span><span style=\"color:rgb(128,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">).myPlugin();\n    }</span></span><span style=\"color:rgb(0,0,0);\">)\n</span><span style=\"color:rgb(0,0,0);\">&lt;/</span><span style=\"color:rgb(0,0,0);\">script</span><span style=\"color:rgb(0,0,0);\">&gt;</span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">6、让插件支持链式调用</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\njQuery一个时常优雅的特性是支持链式调用，选择好DOM元素后可以不断地调用其他方法。要让插件不打破这种链式调用，只需return一下即可。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"47251486690072406299\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_28_206_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">在这里面,this指的是用jQuery选中的元素</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">, </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">);\n</span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.each(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_123_202_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">对每个元素进行操作</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">        $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).append(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,0);\">+</span><span style=\"color:rgb(0,0,0);\"> $(</span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">).attr(</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">href</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">));\n    }</span></span><span style=\"color:rgb(0,0,0);\">))\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">7、让插件接收参数</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、一个强劲的插件是可以让使用者随意定制的，这要求我们提供在编写插件时就要考虑得全面些，尽量提供合适的参数。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、比如现在我们不想让链接只变成红色，我们让插件的使用者自己定义显示什么颜色，要做到这一点很方便，只需要使用者在调用的时候传入一个参数即可。同时我们在插件的代码里面接收。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(3)、为了灵活，使用者可以不传递参数，插件里面会给出参数的默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(4)、在处理插件参数的接收上，通常使用jQuery的extend方法，当给extend方法传递一个以上的参数时，它会将所有参数对象合并到第一个里。同时，如果对象中有同名属性时，合并的时候后面的会覆盖前面的。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(5)、可以在插件里定义一个保存插件参数默认值的对象，同时将接收来的参数对象合并到默认对象上，最后就实现了用户指定了值的参数使用指定的值，未指定的参数使用插件默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(6)、保护好默认参数：做法是将一个新的空对象做为$.extend的第一个参数，defaults和用户传递的参数对象紧随其后，这样做的好处是所有值被合并到这个空对象上，保护了插件里面的默认值。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(0,0,255);\">(7)、实例</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"3077846793797099967\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n$.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(options) </span><span id=\"Highlighter_35_266_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> defaults </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span id=\"Highlighter_56_114_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">12px</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">\n    }</span></span><span style=\"color:rgb(0,0,0);\">;\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> settings </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> $.extend({}, defaults, options);\n</span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span id=\"Highlighter_184_262_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.color,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.fontSize\n    }</span></span><span style=\"color:rgb(0,0,0);\">);\n}</span></span><span style=\"color:rgb(0,0,0);\">\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">8、插件开发中的命名空间</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(1)、不仅仅是jQuery插件的开发，我们在写任何JS代码时都应该注意的一点是不要污染全局命名空间。因为随着你代码的增多，如果有意无意在全局范围内定义一些变量的话，最后很难维护，也容易跟别人写的代码有冲突。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(2)、比如你在代码中向全局window对象添加了一个变量status用于存放状态，同时页面中引用了另一个别人写的库，也向全局添加了这样一个同名变量，最后的结果肯定不是你想要的。所以不到万不得已，一般我们不会将变量定义成全局的。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n(3)、可以使用<span style=\"color:#FF0000;\">自调用匿名函数</span>包裹插件代码</p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"10960674695664685403\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">() </span><span id=\"Highlighter_13_302_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n $.fn.myPlugin </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">(options) </span><span id=\"Highlighter_50_300_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> defaults </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> </span><span id=\"Highlighter_71_129_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">red</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: </span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">12px</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">\n    }</span></span><span style=\"color:rgb(0,0,0);\">;\n</span><span style=\"color:rgb(0,0,255);\">var</span><span style=\"color:rgb(0,0,0);\"> settings </span><span style=\"color:rgb(0,0,0);\">=</span><span style=\"color:rgb(0,0,0);\"> $.extend(</span><span id=\"Highlighter_159_161_Open_Text\"><span style=\"color:rgb(0,0,0);\">{}</span></span><span style=\"color:rgb(0,0,0);\">,defaults, options);</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">将一个空对象做为第一个参数</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,0,255);\">return</span><span style=\"color:rgb(0,0,0);\"> </span><span style=\"color:rgb(0,0,255);\">this</span><span style=\"color:rgb(0,0,0);\">.css(</span><span id=\"Highlighter_217_295_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">color</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.color,\n</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">fontSize</span><span style=\"color:rgb(0,0,0);\">\'</span><span style=\"color:rgb(0,0,0);\">: settings.fontSize\n    }</span></span><span style=\"color:rgb(0,0,0);\">);\n }</span></span><span style=\"color:rgb(0,0,0);\">\n}</span></span><span style=\"color:rgb(0,0,0);\">)();\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">9、尽量在插件的最前面加上分号</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n这样可以避免我们将这段代码放到页面后，前面别人写的代码没有用分号结尾，这样，这个插件代码就会报错。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span style=\"color:rgb(178,34,34);\">10、可以将系统变量以变量形式传递到插件内部</span></p>\n<div style=\"color:rgb(70,70,70);font-size:14px;line-height:16px;background-color:rgb(253,253,252);\">\n<div>\n<div style=\"font-weight:bold;font-size:12px;line-height:normal;font-family:arial;text-indent:12px;\">\n&nbsp;</div>\n</div>\n<div>\n<div id=\"90638801778483676\" style=\"border:1pt solid rgb(204,204,204);background:rgb(245,245,245);\">\n<pre><span><span style=\"color:rgb(0,0,0);\">\n;(</span><span style=\"color:rgb(0,0,255);\">function</span><span style=\"color:rgb(0,0,0);\">($,window,document,undefined)</span><span id=\"Highlighter_40_67_Open_Text\"><span style=\"color:rgb(0,0,0);\">{\n</span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">我们的代码。。</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">    </span><span style=\"color:rgb(0,128,0);\">//</span><span style=\"color:rgb(0,128,0);\">...</span><span style=\"color:rgb(0,128,0);\">\n</span><span style=\"color:rgb(0,0,0);\">}</span></span><span style=\"color:rgb(0,0,0);\">)(jQuery,window,document);\n</span></span></pre>\n</div>\n</div>\n</div>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n&nbsp;</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n<span>五、将插件代码混淆与压缩的方法</span></p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n1、我们下载的插件里面，一般都会提供一个压缩的版本一般在文件名里带个\'min\'字样。也就是minified的意思，压缩浓缩后的版本。例如，并且平时我们使用的jQuery也是官网提供的压缩版本，jquery.min.js。</p>\n<p style=\"color:rgb(70,70,70);font-size:14px;line-height:24px;background-color:rgb(253,253,252);\">\n2、这里的压缩不是指代码进行功能上的压缩，而是通过将代码里面的变量名，方法函数名等等用更短的名称来替换，并且删除注释（如果有的话）删除代码间的空白及换行所得到的浓缩版本。同时由于代码里面的各种名称都已经被替代，别人无法阅读和分清其逻辑，也起到了混淆代码的作用。&nbsp;</p>\n', NULL, 'TECHNOLOGY', '2018-08-08 15:31:35', '2018-08-08 15:31:35', '网摘', NULL, NULL, 0, b'0', NULL, 0);
 
 -- ----------------------------
---  Table structure for `cms_codes`
+-- Table structure for cms_codes
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_codes`;
-CREATE TABLE `cms_codes` (
+CREATE TABLE `cms_codes`  (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID，自动增长',
-  `typename` varchar(30) NOT NULL COMMENT '类型名',
-  `description` varchar(100) NOT NULL COMMENT '类型名描述',
-  `addtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
-  `edittime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '编辑时间',
-  `addwho` varchar(30) NOT NULL COMMENT '添加人',
-  `editwho` varchar(30) DEFAULT NULL COMMENT '编辑人',
-  `version` int(6) NOT NULL DEFAULT '0' COMMENT '版本号',
+  `typename` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名',
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名描述',
+  `addtime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  `edittime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '编辑时间',
+  `addwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '添加人',
+  `editwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑人',
+  `version` int(6) NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `cms_codes`
+-- Records of cms_codes
 -- ----------------------------
-BEGIN;
-INSERT INTO `cms_codes` VALUES ('1', 'ARTICLE_TYPE', '文章类型', '2018-07-19 00:00:17', '2018-07-19 00:35:22', 'zhangsan', null, '14'), ('2', '1', '1', '2018-07-18 23:43:09', '2018-07-19 00:35:37', 'zhangsan', null, '1'), ('3', '1', '1', '2018-07-18 23:44:00', '2018-07-18 23:44:00', 'zhangsan', null, '0'), ('4', '111', '111', '2018-07-19 00:00:01', '2018-07-19 00:00:01', 'zhangsan', null, '1'), ('5', '1', '1', '2018-07-18 23:52:33', '2018-07-18 23:52:33', 'zhangsan', null, '0'), ('6', '1', '1', '2018-07-18 23:53:20', '2018-07-18 23:53:20', 'zhangsan', null, '0'), ('7', '电饭锅电饭锅', '梵蒂冈电饭锅', '2018-07-19 00:06:32', '2018-07-19 00:06:32', 'zhangsan', null, '0'), ('8', '快快快', '急急急', '2018-07-19 00:10:39', '2018-07-19 00:10:38', 'zhangsan', null, '0');
-COMMIT;
+INSERT INTO `cms_codes` VALUES (1, 'ARTICLE_TYPE', '文章类型', '2018-07-19 00:00:17', '2018-08-03 17:07:18', 'zhangsan', NULL, 17);
+INSERT INTO `cms_codes` VALUES (14, 'FILE_UPLOAD_PATH', '文件上传路径', '2018-08-08 17:05:48', '2018-08-08 17:05:47', 'zhangsan', NULL, 0);
 
 -- ----------------------------
---  Table structure for `cms_codesdetail`
+-- Table structure for cms_codesdetail
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_codesdetail`;
-CREATE TABLE `cms_codesdetail` (
+CREATE TABLE `cms_codesdetail`  (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID，自动增长',
-  `typename` varchar(30) NOT NULL COMMENT '类型名',
-  `codename` varchar(30) NOT NULL COMMENT 'CODE',
-  `description` varchar(100) NOT NULL COMMENT 'CODE描述',
-  `short_value` varchar(30) DEFAULT NULL COMMENT '短值',
-  `long_value` varchar(30) DEFAULT NULL COMMENT '长值',
-  `isactive` int(6) NOT NULL DEFAULT '1' COMMENT '是否激活，默认激活',
-  `addtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
-  `edittime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '编辑时间',
-  `addwho` varchar(30) NOT NULL COMMENT '添加人',
-  `editwho` varchar(30) DEFAULT NULL COMMENT '编辑人',
-  `version` int(6) NOT NULL DEFAULT '0' COMMENT '版本号',
+  `typename` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名',
+  `codename` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'CODE',
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'CODE描述',
+  `short_value` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '短值',
+  `long_value` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '长值',
+  `isactive` int(6) NOT NULL DEFAULT 1 COMMENT '是否激活，默认激活',
+  `addtime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+  `edittime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '编辑时间',
+  `addwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '添加人',
+  `editwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑人',
+  `version` int(6) NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Table structure for `items`
+-- Records of cms_codesdetail
+-- ----------------------------
+INSERT INTO `cms_codesdetail` VALUES (-1, 'ARTICLE_TYPE', 'NEWS', '新闻', 'NEWS', 'NEWS', 1, '2018-08-07 15:13:35', '2018-08-07 15:13:35', '1', '1', 9);
+INSERT INTO `cms_codesdetail` VALUES (1, 'ARTICLE_TYPE', 'BUSSINESS', '企业', 'BUSSINESS', 'BUSSINESS', 1, '2018-08-07 11:31:44', '2018-08-07 11:31:44', 'zhangsan', NULL, 7);
+INSERT INTO `cms_codesdetail` VALUES (2, 'qq', 'qq', 'qq', 'qq', 'qq', 0, '2018-08-03 18:44:58', '2018-08-03 18:44:58', 'zhangsan', NULL, 0);
+INSERT INTO `cms_codesdetail` VALUES (3, 'ARTICLE_TYPE', 'LIFE', '生活', 'LIFE', 'LIFE', 1, '2018-08-07 11:31:25', '2018-08-07 11:31:25', 'zhangsan', NULL, 7);
+INSERT INTO `cms_codesdetail` VALUES (4, 'ARTICLE_TYPE', 'TECHNOLOGY', '技术', 'TECHNOLOGY', 'TECHNOLOGY', 1, '2018-08-07 15:17:57', '2018-08-07 15:17:57', 'zhangsan', NULL, 1);
+INSERT INTO `cms_codesdetail` VALUES (6, 'FILE_UPLOAD_PATH', 'COMMON', '通用传输的路径', 'COMMON', '\\\\upload\\\\common', 1, '2018-08-08 17:10:58', '2018-08-08 17:10:58', 'zhangsan', NULL, 3);
+
+-- ----------------------------
+-- Table structure for items
 -- ----------------------------
 DROP TABLE IF EXISTS `items`;
-CREATE TABLE `items` (
+CREATE TABLE `items`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL COMMENT '商品名称',
-  `price` float(10,1) NOT NULL COMMENT '商品定价',
-  `detail` text COMMENT '商品描述',
-  `pic` varchar(64) DEFAULT NULL COMMENT '商品图片',
-  `createtime` datetime NOT NULL COMMENT '生产日期',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+  `price` float(10, 1) NOT NULL COMMENT '商品定价',
+  `detail` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品描述',
+  `pic` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品图片',
+  `createtime` datetime(0) NOT NULL COMMENT '生产日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `items`
+-- Records of items
 -- ----------------------------
-BEGIN;
-INSERT INTO `items` VALUES ('1', '台式机', '3000.0', '该电脑质量非常好！！！！', null, '2015-02-03 13:22:53'), ('2', '笔记本', '6000.0', '笔记本性能好，质量好！！！！！', null, '2015-02-09 13:22:57'), ('3', '背包', '200.0', '名牌背包，容量大质量好！！！！', null, '2015-02-06 13:23:02');
-COMMIT;
+INSERT INTO `items` VALUES (1, '台式机', 3000.0, '该电脑质量非常好！！！！', NULL, '2015-02-03 13:22:53');
+INSERT INTO `items` VALUES (2, '笔记本', 6000.0, '笔记本性能好，质量好！！！！！', NULL, '2015-02-09 13:22:57');
+INSERT INTO `items` VALUES (3, '背包', 200.0, '名牌背包，容量大质量好！！！！', NULL, '2015-02-06 13:23:02');
 
 -- ----------------------------
---  Table structure for `orderdetail`
+-- Table structure for orderdetail
 -- ----------------------------
 DROP TABLE IF EXISTS `orderdetail`;
-CREATE TABLE `orderdetail` (
+CREATE TABLE `orderdetail`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `orders_id` int(11) NOT NULL COMMENT '订单id',
   `items_id` int(11) NOT NULL COMMENT '商品id',
-  `items_num` int(11) DEFAULT NULL COMMENT '商品购买数量',
+  `items_num` int(11) NULL DEFAULT NULL COMMENT '商品购买数量',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `FK_orderdetail_1` (`orders_id`) USING BTREE,
-  KEY `FK_orderdetail_2` (`items_id`) USING BTREE,
-  CONSTRAINT `FK_orderdetail_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `FK_orderdetail_2` FOREIGN KEY (`items_id`) REFERENCES `items` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  INDEX `FK_orderdetail_1`(`orders_id`) USING BTREE,
+  INDEX `FK_orderdetail_2`(`items_id`) USING BTREE,
+  CONSTRAINT `FK_orderdetail_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_orderdetail_2` FOREIGN KEY (`items_id`) REFERENCES `items` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `orderdetail`
+-- Records of orderdetail
 -- ----------------------------
-BEGIN;
-INSERT INTO `orderdetail` VALUES ('1', '3', '1', '1'), ('2', '3', '2', '3'), ('3', '4', '3', '4'), ('4', '4', '2', '3');
-COMMIT;
+INSERT INTO `orderdetail` VALUES (1, 3, 1, 1);
+INSERT INTO `orderdetail` VALUES (2, 3, 2, 3);
+INSERT INTO `orderdetail` VALUES (3, 4, 3, 4);
+INSERT INTO `orderdetail` VALUES (4, 4, 2, 3);
 
 -- ----------------------------
---  Table structure for `orders`
+-- Table structure for orders
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders` (
+CREATE TABLE `orders`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '下单用户id',
-  `number` varchar(32) NOT NULL COMMENT '订单号',
-  `createtime` datetime NOT NULL COMMENT '创建订单时间',
-  `note` varchar(100) DEFAULT NULL COMMENT '备注',
+  `number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+  `createtime` datetime(0) NOT NULL COMMENT '创建订单时间',
+  `note` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `FK_orders_1` (`user_id`) USING BTREE,
-  CONSTRAINT `FK_orders_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  INDEX `FK_orders_1`(`user_id`) USING BTREE,
+  CONSTRAINT `FK_orders_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `orders`
+-- Records of orders
 -- ----------------------------
-BEGIN;
-INSERT INTO `orders` VALUES ('3', '1', '1000010', '2015-02-04 13:22:35', null), ('4', '1', '1000011', '2015-02-03 13:22:41', null), ('5', '10', '1000012', '2015-02-12 16:13:23', null);
-COMMIT;
+INSERT INTO `orders` VALUES (3, 1, '1000010', '2015-02-04 13:22:35', NULL);
+INSERT INTO `orders` VALUES (4, 1, '1000011', '2015-02-03 13:22:41', NULL);
+INSERT INTO `orders` VALUES (5, 10, '1000012', '2015-02-12 16:13:23', NULL);
 
 -- ----------------------------
---  Table structure for `sys_permission`
+-- Table structure for qrtz_blob_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_blob_triggers`;
+CREATE TABLE `qrtz_blob_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `BLOB_DATA` blob NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_calendars
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_calendars`;
+CREATE TABLE `qrtz_calendars`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CALENDAR_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CALENDAR` blob NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_cron_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE `qrtz_cron_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CRON_EXPRESSION` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_fired_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_fired_triggers`;
+CREATE TABLE `qrtz_fired_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ENTRY_ID` varchar(95) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `INSTANCE_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `FIRED_TIME` bigint(13) NOT NULL,
+  `SCHED_TIME` bigint(13) NOT NULL,
+  `PRIORITY` int(11) NOT NULL,
+  `STATE` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_job_details
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_job_details`;
+CREATE TABLE `qrtz_job_details`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `DESCRIPTION` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `IS_DURABLE` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_DATA` blob NULL,
+  PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_job_details
+-- ----------------------------
+INSERT INTO `qrtz_job_details` VALUES ('DefaultQuartzScheduler', 'job1', 'group1', NULL, 'org.zzq.csm.quartz.HelloQuartz', '0', '0', '0', '0', 0x230D0A23576564205365702030352031373A32383A32382043535420323031380D0A6E616D653D71756172747A0D0A);
+
+-- ----------------------------
+-- Table structure for qrtz_locks
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE `qrtz_locks`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `LOCK_NAME` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_locks
+-- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('DefaultQuartzScheduler', 'STATE_ACCESS');
+INSERT INTO `qrtz_locks` VALUES ('DefaultQuartzScheduler', 'TRIGGER_ACCESS');
+
+-- ----------------------------
+-- Table structure for qrtz_paused_trigger_grps
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE `qrtz_paused_trigger_grps`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_scheduler_state
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE `qrtz_scheduler_state`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `INSTANCE_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_scheduler_state
+-- ----------------------------
+INSERT INTO `qrtz_scheduler_state` VALUES ('DefaultQuartzScheduler', 'DESKTOP-K9L2INB1536139707949', 1536139708370, 20000);
+
+-- ----------------------------
+-- Table structure for qrtz_simple_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE `qrtz_simple_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `REPEAT_COUNT` bigint(7) NOT NULL,
+  `REPEAT_INTERVAL` bigint(12) NOT NULL,
+  `TIMES_TRIGGERED` bigint(10) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_simple_triggers
+-- ----------------------------
+INSERT INTO `qrtz_simple_triggers` VALUES ('DefaultQuartzScheduler', 'trigger1', 'group1', -1, 1000, 11);
+
+-- ----------------------------
+-- Table structure for qrtz_simprop_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE `qrtz_simprop_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `STR_PROP_1` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `STR_PROP_2` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `STR_PROP_3` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `INT_PROP_1` int(11) NULL DEFAULT NULL,
+  `INT_PROP_2` int(11) NULL DEFAULT NULL,
+  `LONG_PROP_1` bigint(20) NULL DEFAULT NULL,
+  `LONG_PROP_2` bigint(20) NULL DEFAULT NULL,
+  `DEC_PROP_1` decimal(13, 4) NULL DEFAULT NULL,
+  `DEC_PROP_2` decimal(13, 4) NULL DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_triggers`;
+CREATE TABLE `qrtz_triggers`  (
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `DESCRIPTION` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `NEXT_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
+  `PREV_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
+  `PRIORITY` int(11) NULL DEFAULT NULL,
+  `TRIGGER_STATE` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TRIGGER_TYPE` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `START_TIME` bigint(13) NOT NULL,
+  `END_TIME` bigint(13) NULL DEFAULT NULL,
+  `CALENDAR_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `MISFIRE_INSTR` smallint(2) NULL DEFAULT NULL,
+  `JOB_DATA` blob NULL,
+  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+  INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_triggers
+-- ----------------------------
+INSERT INTO `qrtz_triggers` VALUES ('DefaultQuartzScheduler', 'trigger1', 'group1', 'job1', 'group1', NULL, 1536139718970, 1536139717970, 5, 'WAITING', 'SIMPLE', 1536139707970, 0, NULL, 0, '');
+
+-- ----------------------------
+-- Table structure for schedulejob
+-- ----------------------------
+DROP TABLE IF EXISTS `schedulejob`;
+CREATE TABLE `schedulejob`  (
+  `jobId` int(11) NOT NULL,
+  `createTime` datetime(0) NULL DEFAULT NULL,
+  `updateTime` datetime(0) NULL DEFAULT NULL,
+  `jobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `jobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `jobStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `cronExpression` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `beanClass` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `isConcurrent` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `springId` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `methodName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`jobId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_permission`;
-CREATE TABLE `sys_permission` (
+CREATE TABLE `sys_permission`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
-  `name` varchar(128) NOT NULL COMMENT '资源名称',
-  `type` varchar(32) NOT NULL COMMENT '资源类型：menu,button,',
-  `url` varchar(128) DEFAULT NULL COMMENT '访问url地址',
-  `percode` varchar(128) DEFAULT NULL COMMENT '权限代码字符串',
-  `parentid` bigint(20) DEFAULT NULL COMMENT '父结点id',
-  `parentids` varchar(128) DEFAULT NULL COMMENT '父结点id列表串',
-  `sortstring` varchar(128) DEFAULT NULL COMMENT '排序号',
-  `available` char(1) DEFAULT NULL COMMENT '是否可用,1：可用，0不可用',
-  `iconclass` varchar(100) DEFAULT NULL COMMENT 'font_anwsome matched class',
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源名称',
+  `type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源类型：menu,button,',
+  `url` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问url地址',
+  `percode` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限代码字符串',
+  `parentid` bigint(20) NULL DEFAULT NULL COMMENT '父结点id',
+  `parentids` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父结点id列表串',
+  `sortstring` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '排序号',
+  `available` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否可用,1：可用，0不可用',
+  `iconclass` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'font_anwsome matched class',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_permission`
+-- Records of sys_permission
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_permission` VALUES ('1', '权限', '', '', null, '0', '0/', '0', '1', null), ('11', '商品管理', 'menu', '/item/list', null, '1', '0/1/', '1', '1', 'fa fa-shopping-cart'), ('12', '商品新增', 'permission', '/item/add', 'item:create', '11', '0/1/11/', '1-1', '1', null), ('13', '商品修改', 'permission', '/item/edit', 'item:update', '11', '0/1/11/', '1-2', '1', null), ('14', '商品删除', 'permission', '/item/delete', 'item:delete', '11', '0/1/11/', '1-3', '1', null), ('15', '商品查询', 'permission', '/item/list', 'item:query', '11', '0/1/15/', '1-4', '1', null), ('21', '用户管理', 'menu', '/user/list', 'user:query', '1', '0/1/', '2', '1', 'fa fa-user-circle'), ('22', '用户新增', 'permission', '/user/add', 'user:create', '21', '0/1/21/', '2-1', '1', null), ('23', '用户修改', 'permission', '/user/edit', 'user:update', '21', '0/1/21/', '2-2', '1', null), ('24', '用户删除', 'permission', '/user/delete', 'user:delete', '21', '0/1/21/', '2-3', '1', null);
-COMMIT;
+INSERT INTO `sys_permission` VALUES (1, '权限', '', '', NULL, 0, '0/', '0', '1', NULL);
+INSERT INTO `sys_permission` VALUES (11, '商品管理', 'menu', '/item/list', NULL, 1, '0/1/', '1', '1', 'fa fa-shopping-cart');
+INSERT INTO `sys_permission` VALUES (12, '商品新增', 'permission', '/item/add', 'item:create', 11, '0/1/11/', '1-1', '1', NULL);
+INSERT INTO `sys_permission` VALUES (13, '商品修改', 'permission', '/item/edit', 'item:update', 11, '0/1/11/', '1-2', '1', NULL);
+INSERT INTO `sys_permission` VALUES (14, '商品删除', 'permission', '/item/delete', 'item:delete', 11, '0/1/11/', '1-3', '1', NULL);
+INSERT INTO `sys_permission` VALUES (15, '商品查询', 'permission', '/item/list', 'item:query', 11, '0/1/15/', '1-4', '1', NULL);
+INSERT INTO `sys_permission` VALUES (21, '用户管理', 'menu', '/user/list', 'user:query', 1, '0/1/', '2', '1', 'fa fa-user-circle');
+INSERT INTO `sys_permission` VALUES (22, '用户新增', 'permission', '/user/add', 'user:create', 21, '0/1/21/', '2-1', '1', NULL);
+INSERT INTO `sys_permission` VALUES (23, '用户修改', 'permission', '/user/edit', 'user:update', 21, '0/1/21/', '2-2', '1', NULL);
+INSERT INTO `sys_permission` VALUES (24, '用户删除', 'permission', '/user/delete', 'user:delete', 21, '0/1/21/', '2-3', '1', NULL);
 
 -- ----------------------------
---  Table structure for `sys_role`
+-- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `id` varchar(36) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `available` char(1) DEFAULT NULL COMMENT '是否可用,1：可用，0不可用',
+CREATE TABLE `sys_role`  (
+  `id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `available` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否可用,1：可用，0不可用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_role`
+-- Records of sys_role
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_role` VALUES ('1', '商品管理员', '1'), ('2', '超级管理员', '1');
-COMMIT;
+INSERT INTO `sys_role` VALUES ('1', '商品管理员', '1');
+INSERT INTO `sys_role` VALUES ('2', '超级管理员', '1');
 
 -- ----------------------------
---  Table structure for `sys_role_permission`
+-- Table structure for sys_role_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_permission`;
-CREATE TABLE `sys_role_permission` (
-  `id` varchar(36) NOT NULL,
-  `sys_role_id` varchar(32) NOT NULL COMMENT '角色id',
-  `sys_permission_id` varchar(32) NOT NULL COMMENT '权限id',
+CREATE TABLE `sys_role_permission`  (
+  `id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sys_role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
+  `sys_permission_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_role_permission`
+-- Records of sys_role_permission
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_role_permission` VALUES ('1', '2', '11'), ('2', '2', '21'), ('3', '2', '15'), ('4', '2', '22'), ('5', '2', '13');
-COMMIT;
+INSERT INTO `sys_role_permission` VALUES ('1', '2', '11');
+INSERT INTO `sys_role_permission` VALUES ('2', '2', '21');
+INSERT INTO `sys_role_permission` VALUES ('3', '2', '15');
+INSERT INTO `sys_role_permission` VALUES ('4', '2', '22');
+INSERT INTO `sys_role_permission` VALUES ('5', '2', '13');
 
 -- ----------------------------
---  Table structure for `sys_user`
+-- Table structure for sys_user
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `id` varchar(36) NOT NULL COMMENT '主键',
-  `usercode` varchar(32) NOT NULL COMMENT '账号',
-  `username` varchar(64) NOT NULL COMMENT '姓名',
-  `password` varchar(32) NOT NULL COMMENT '密码',
-  `salt` varchar(64) DEFAULT NULL COMMENT '盐',
-  `locked` char(1) DEFAULT NULL COMMENT '账号是否锁定，1：锁定，0未锁定',
+CREATE TABLE `sys_user`  (
+  `id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `usercode` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号',
+  `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+  `salt` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '盐',
+  `locked` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号是否锁定，1：锁定，0未锁定',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_user`
+-- Records of sys_user
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_user` VALUES ('lisi', 'lisi', '李四', 'bf07fd8bbc73b6f70b8319f2ebb87483', 'uiwueylm', '0'), ('zhangsan', 'zhangsan', '张三', '48e1a118a99e59fb09254e42a0335bc8', 'eteokues', '0');
-COMMIT;
+INSERT INTO `sys_user` VALUES ('lisi', 'lisi', '李四', 'bf07fd8bbc73b6f70b8319f2ebb87483', 'uiwueylm', '0');
+INSERT INTO `sys_user` VALUES ('zhangsan', 'zhangsan', '张三', '48e1a118a99e59fb09254e42a0335bc8', 'eteokues', '0');
 
 -- ----------------------------
---  Table structure for `sys_user_role`
+-- Table structure for sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `id` varchar(36) NOT NULL,
-  `sys_user_id` varchar(32) NOT NULL,
-  `sys_role_id` varchar(32) NOT NULL,
+CREATE TABLE `sys_user_role`  (
+  `id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sys_user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sys_role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `sys_user_role`
+-- Records of sys_user_role
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_user_role` VALUES ('1', 'lisi', '1'), ('2', 'zhangsan', '2');
-COMMIT;
+INSERT INTO `sys_user_role` VALUES ('1', 'lisi', '1');
+INSERT INTO `sys_user_role` VALUES ('2', 'zhangsan', '2');
 
 -- ----------------------------
---  Table structure for `user`
+-- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL COMMENT '用户名称',
-  `birthday` date DEFAULT NULL COMMENT '生日',
-  `sex` char(1) DEFAULT NULL COMMENT '性别',
-  `address` varchar(256) DEFAULT NULL COMMENT '地址',
+  `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名称',
+  `birthday` date NULL DEFAULT NULL COMMENT '生日',
+  `sex` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
+  `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
---  Records of `user`
+-- Records of user
 -- ----------------------------
-BEGIN;
-INSERT INTO `user` VALUES ('1', '王五', null, '2', null), ('10', '张三', '2014-07-10', '1', '北京市'), ('16', '张小明', null, '1', '河南郑州'), ('22', '陈小明', null, '1', '河南郑州'), ('24', '张三丰', null, '1', '河南郑州'), ('25', '陈小明', null, '1', '河南郑州'), ('26', '王五', null, null, null);
-COMMIT;
+INSERT INTO `user` VALUES (1, '王五', NULL, '2', NULL);
+INSERT INTO `user` VALUES (10, '张三', '2014-07-10', '1', '北京市');
+INSERT INTO `user` VALUES (16, '张小明', NULL, '1', '河南郑州');
+INSERT INTO `user` VALUES (22, '陈小明', NULL, '1', '河南郑州');
+INSERT INTO `user` VALUES (24, '张三丰', NULL, '1', '河南郑州');
+INSERT INTO `user` VALUES (25, '陈小明', NULL, '1', '河南郑州');
+INSERT INTO `user` VALUES (26, '王五', NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
