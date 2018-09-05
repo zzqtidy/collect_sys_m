@@ -57,7 +57,7 @@ public interface QuartzProducer {
      * @param jobGroup
      * @param cron
      */
-    public void updateCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup,String cron) throws SchedulerException;
+    public void updateCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup, String className, String methodName, ArrayList paramArray, String cron) throws SchedulerException;
 
     /**
      * 移除任务
