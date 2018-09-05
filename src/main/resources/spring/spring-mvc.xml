@@ -9,7 +9,7 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:property-placeholder location="classpath:quartz.properties"/>
+    <!--<context:property-placeholder location="classpath:quartz.properties"/>-->
     <!--配置SpringMVC-->
     <!--启用@Required @Autowired,JSR 250's @PostConstruct,@PostDestroy 和 @Resource的标注-->
     <context:annotation-config/>
@@ -99,37 +99,6 @@
         <property name="maxInMemorySize" value="4096" />
     </bean>
 
-    <!--
-自动装配类
-@Autowired
-private Scheduler scheduler;
--->
-    <!-- quartz持久化存储  -->
-    <!--实现动态配置只需定义一下schedulerbean就可以了-->
-    <bean name="schedulerFactoryBean"
-          class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="true">
-        <property name="dataSource">
-            <ref bean="dataSource"/>
-        </property>
-        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
-        <property name="quartzProperties">
-            <props>
-                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
-                <!-- 线程池配置 -->
-                <prop key="org.quartz.threadPool.class">${org.quartz.threadPool.class}</prop>
-                <prop key="org.quartz.threadPool.threadCount">${org.quartz.threadPool.threadCount}</prop>
-                <prop key="org.quartz.threadPool.threadPriority">${org.quartz.threadPool.threadPriority}</prop>
-                <prop key="org.quartz.jobStore.misfireThreshold">${org.quartz.jobStore.misfireThreshold}</prop>
-                <!-- JobStore 配置 -->
-                <prop key="org.quartz.jobStore.class">${org.quartz.jobStore.class}</prop>
-                <!-- 集群配置 -->
-                <prop key="org.quartz.jobStore.isClustered">true</prop>
-                <prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
-                <prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">1</prop>
-                <!-- 数据表设置 -->
-                <prop key="org.quartz.jobStore.tablePrefix">${org.quartz.jobStore.tablePrefix}</prop>
-                <prop key="org.quartz.jobStore.dataSource">${org.quartz.jobStore.dataSource}</prop>
-            </props>
-        </property>
-    </bean>
+    <!--配置任务调度quartz，引入spring-quartz.xml文件，加载该文件中的属性-->
+    <import resource="classpath:/spring/spring-quartz.xml" />
 </beans>
