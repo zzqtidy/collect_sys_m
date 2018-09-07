@@ -1,33 +1,21 @@
-package org.zzq.csm.service.quartz;
+package org.zzq.csm.service.cms.quartz.Impl;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
+import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
-import org.zzq.csm.dao.quartz.ScheduleJobMapper;
-import org.zzq.csm.util.JobUtils;
-import org.zzq.csm.entity.quartz.ScheduleJob;
+import org.zzq.csm.dao.cms.quartz.ScheduleJobMapper;
+import org.zzq.csm.entity.cms.quartz.ScheduleJob;
+import org.zzq.csm.service.cms.quartz.JobTaskService;
+import org.zzq.csm.util.quartz.QuartzJobFactory;
+import org.zzq.csm.util.quartz.QuartzJobFactoryDisallowConcurrentExecution;
+import org.zzq.csm.util.quartz.TaskUtils;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -39,10 +27,10 @@ import org.zzq.csm.entity.quartz.ScheduleJob;
  * 计划任务管理
  */
 @Service
-public class JobTaskService {
-    private static Logger log = LoggerFactory.getLogger(JobTaskService.class);
+public class JobTaskServiceImpl implements JobTaskService {
+    public final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
+    private Scheduler scheduler;
 
     @Autowired
     private ScheduleJobMapper scheduleJobMapper;
@@ -52,23 +40,30 @@ public class JobTaskService {
      *
      * @return
      */
+    @Override
     public List<ScheduleJob> getAllTask() {
-        return scheduleJobMapper.select(null);
+        return scheduleJobMapper.selectAll();
     }
-
+    public List<Map<String,Object>> selectAllHashMap(){
+        return scheduleJobMapper.selectAllHashMap();
+    }
     /**
      * 添加到数据库中 区别于addJob
      */
+    @Override
     public void addTask(ScheduleJob job) {
-        job.setCreateTime(new Date());
-        scheduleJobMapper.insertSelective(job);
+        scheduleJobMapper.insertScheduleJob(job);
     }
-
+    @Override
+    public void updateTask(ScheduleJob job){
+        scheduleJobMapper.updateScheduleJob(job);
+    }
     /**
      * 从数据库中查询job
      */
-    public ScheduleJob getTaskById(Long jobId) {
-        return scheduleJobMapper.selectByPrimaryKey(jobId);
+    @Override
+    public ScheduleJob getTaskById(int jobId) {
+        return scheduleJobMapper.selectById(jobId);
     }
 
     /**
@@ -76,19 +71,20 @@ public class JobTaskService {
      *
      * @throws SchedulerException
      */
-    public void changeStatus(Long jobId, String cmd) throws SchedulerException {
+    @Override
+    public void changeStatus(int jobId, String cmd) throws SchedulerException {
         ScheduleJob job = getTaskById(jobId);
         if (job == null) {
             return;
         }
         if ("stop".equals(cmd)) {
             deleteJob(job);
-            job.setJobStatus(JobUtils.STATUS_NOT_RUNNING);
+            job.setJobStatus(TaskUtils.STATUS_NOT_RUNNING);
         } else if ("start".equals(cmd)) {
-            job.setJobStatus(JobUtils.STATUS_RUNNING);
+            job.setJobStatus(TaskUtils.STATUS_RUNNING);
             addJob(job);
         }
-        scheduleJobMapper.updateByPrimaryKeySelective(job);
+        scheduleJobMapper.updateScheduleJob(job);
     }
 
     /**
@@ -96,28 +92,33 @@ public class JobTaskService {
      *
      * @throws SchedulerException
      */
-    public void updateCron(Long jobId, String cron) throws SchedulerException {
+    @Override
+    public void updateCron(int jobId, String cron) throws SchedulerException {
         ScheduleJob job = getTaskById(jobId);
         if (job == null) {
             return;
         }
         job.setCronExpression(cron);
-        if (JobUtils.STATUS_RUNNING.equals(job.getJobStatus())) {
+        if (TaskUtils.STATUS_RUNNING.equals(job.getJobStatus())) {
             updateJobCron(job);
         }
-        scheduleJobMapper.updateByPrimaryKeySelective(job);
+        scheduleJobMapper.updateScheduleJob(job);
+
     }
 
     /**
      * 添加任务
      *
+     * //@param scheduleJob
      * @throws SchedulerException
      */
+    @Override
     public void addJob(ScheduleJob job) throws SchedulerException {
-        if (job == null || !JobUtils.STATUS_RUNNING.equals(job.getJobStatus())) {
+        if (job == null || !TaskUtils.STATUS_RUNNING.equals(job.getJobStatus())) {
             return;
         }
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         log.debug(scheduler + ".......................................................................................add");
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
 
@@ -125,7 +126,8 @@ public class JobTaskService {
 
         // 不存在，创建一个
         if (null == trigger) {
-            Class clazz = JobUtils.CONCURRENT_IS.equals(job.getIsConcurrent()) ? org.zzq.csm.entity.quartz.QuartzJobFactory.class : QuartzJobFactory.class;
+            Class clazz = TaskUtils.CONCURRENT_IS.equals(job.getIsConcurrent()) ? QuartzJobFactory.class : QuartzJobFactoryDisallowConcurrentExecution.class;
+
             JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
 
             jobDetail.getJobDataMap().put("scheduleJob", job);
@@ -146,12 +148,14 @@ public class JobTaskService {
             scheduler.rescheduleJob(triggerKey, trigger);
         }
     }
-
+    @Override
     @PostConstruct
     public void init() throws Exception {
 
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+
         // 这里获取任务信息数据
-        List<ScheduleJob> jobList = scheduleJobMapper.select(null);
+        List<ScheduleJob> jobList = scheduleJobMapper.selectAll();
 
         for (ScheduleJob job : jobList) {
             addJob(job);
@@ -164,8 +168,9 @@ public class JobTaskService {
      * @return
      * @throws SchedulerException
      */
+    @Override
     public List<ScheduleJob> getAllJob() throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
         List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
@@ -195,8 +200,9 @@ public class JobTaskService {
      * @return
      * @throws SchedulerException
      */
+    @Override
     public List<ScheduleJob> getRunningJob() throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
         List<ScheduleJob> jobList = new ArrayList<ScheduleJob>(executingJobs.size());
         for (JobExecutionContext executingJob : executingJobs) {
@@ -225,8 +231,9 @@ public class JobTaskService {
      * @param scheduleJob
      * @throws SchedulerException
      */
+    @Override
     public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.pauseJob(jobKey);
     }
@@ -238,7 +245,7 @@ public class JobTaskService {
      * @throws SchedulerException
      */
     public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.resumeJob(jobKey);
     }
@@ -249,8 +256,9 @@ public class JobTaskService {
      * @param scheduleJob
      * @throws SchedulerException
      */
+    @Override
     public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.deleteJob(jobKey);
 
@@ -262,8 +270,9 @@ public class JobTaskService {
      * @param scheduleJob
      * @throws SchedulerException
      */
+    @Override
     public void runAJobNow(ScheduleJob scheduleJob) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.triggerJob(jobKey);
     }
@@ -274,8 +283,9 @@ public class JobTaskService {
      * @param scheduleJob
      * @throws SchedulerException
      */
+    @Override
     public void updateJobCron(ScheduleJob scheduleJob) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
         TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 
@@ -288,7 +298,4 @@ public class JobTaskService {
         scheduler.rescheduleJob(triggerKey, trigger);
     }
 
-    public static void main(String[] args) {
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("xxxxx");
-    }
 }

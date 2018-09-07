@@ -14,6 +14,7 @@ import java.util.Map;
 public interface CmsCodesDetailService {
     CmsCodesDetail selectByid(int id) throws Exception;
     List<CmsCodesDetail> selectByTypename(String typename) throws Exception;
+    Map<String,List<Map<String,String>>> selectByArrayTypenames(String []typenames,String emptyCode,String emptyValue) throws Exception;
     List<Map<String,Object>> selectByTypenameMap(String typename) throws Exception;
     List<Map<String,String>> selectByTypenameMap(String typename,String emptyCode,String emptyValue) throws Exception;
     List<CmsCodesDetail> selectAll() throws Exception;

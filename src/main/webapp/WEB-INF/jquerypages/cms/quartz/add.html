@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>保存</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../../../../static/css/animate.css" rel="stylesheet">
+
+    <link href="../../../../static/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="../../../../static/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <link href="../../../../static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <!--<div class="ibox-title">-->
+                <!--<h5>新增</h5>-->
+                <!--</div>-->
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="commentForm">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">任务名称：</label>
+                            <div class="col-sm-4">
+                                <input id="id" name="id" type="text" class="form-control hidden" cs-auto-init="true">
+                                <input id="jobName" name="jobName" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                            <label class="col-sm-2 control-label">任务分组：</label>
+                            <div class="col-sm-4">
+                                <input id="jobGroup" name="jobGroup" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">任务状态：</label>
+                            <div class="col-sm-4">
+                                <select id="jobStatus" name="jobStatus" data-placeholder="选择……" class="chosen-select" cs-auto-init="true" cs-typename="QUARTZ_STATUS">
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Cron表达式：</label>
+                            <div class="col-sm-4">
+                                <input id="cronExpression" name="cronExpression" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">包名.类名：</label>
+                            <div class="col-sm-4">
+                                <input id="beanClass" name="beanClass" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                            <label class="col-sm-2 control-label">是否并发：</label>
+                            <div class="col-sm-4">
+                                <select id="isConcurrent" name="isConcurrent" data-placeholder="选择……" class="chosen-select" cs-auto-init="true" cs-typename="QUARTZ_CONCURRENT">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SpringBean：</label>
+                            <div class="col-sm-4">
+                                <input id="springId" name="springId" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                            <label class="col-sm-2 control-label">方法名：</label>
+                            <div class="col-sm-4">
+                                <input id="methodName" name="methodName" type="text" class="form-control" required=""
+                                       aria-required="true" cs-auto-init="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-5">
+                                <button class="btn btn-primary" type="button" id="savebtn">提交</button>
+                                <button class="btn btn-default" type="button" id="resetbtn">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 全局js -->
+<script src="../../../../static/js/jquery.min.js"></script>
+<script src="../../../../static/js/bootstrap.min.js"></script>
+
+<!-- 自定义js -->
+<script src="../../../../static/js/content.js"></script>
+
+
+<!-- Bootstrap table -->
+<script src="../../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="../../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="../../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../../../../static/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<!-- layer javascript -->
+<script src="../../../../static/js/plugins/layer/layer.min.js"></script>
+
+<!-- SUMMERNOTE -->
+<script src="../../../../static/js/plugins/summernote/summernote.min.js"></script>
+<script src="../../../../static/js/plugins/summernote/summernote-zh-CN.js"></script>
+<!-- Peity -->
+<!-- Chosen -->
+<script src="../../../../static/js/plugins/chosen/chosen.jquery.js"></script>
+<script>
+    function init_form(res) {
+        debugger;
+        var data = res["data"];
+        var iframeType = res["iframeType"];
+        if (iframeType == "EDIT") {
+            //后期需要优化，判断是输入框、下拉框、还是其他的，最好写成扩展控件
+            $("#commentForm input[type='text']").each(function (index, element) {
+                //页面元素有auto-init属性的才赋值，取id来赋值
+                if (typeof($(element).attr("cs-auto-init")) != "undefined") {
+                    var dom_id = $(element).attr("id");
+                    var dom_str = "#" + dom_id;
+                    $(dom_str).val(data[dom_id]);//赋值
+                }
+                var dom_edit_readonly = $(element).attr("edit-readonly");
+                if (dom_edit_readonly != "undefined") {
+                    $(element).attr("readonly", dom_edit_readonly);
+                }
+                var dom_new_readonly = $(element).attr("new-readonly");
+                if (dom_new_readonly != "undefined") {
+                    $(element).attr("readonly", dom_new_readonly);
+                }
+            });
+            $("#commentForm select").each(function (index,element) {
+                //页面元素有auto-init属性的才赋值，取id来赋值
+                if(typeof($(element).attr("cs-auto-init"))!="undefined"){
+                    var dom_id = $(element).attr("id");
+                    var dom_str = "#"+dom_id;
+                    $(dom_str).val(data[dom_id]);//赋值
+                    $(dom_str).trigger("chosen:updated")//更新选中项
+                }
+            });
+        }
+        //初始化bootstrap-table
+        $('#exampleTableEvents').bootstrapTable
+        (
+            {
+                url: "/cms_codesdetail/" + $("#typename").val() + "/listjson",
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                switchable: true,
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [20, 100], // 设置页面可以显示的数据条数
+                pageSize: 20, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                iconSize: 'outline',
+                toolbar: '#exampleTableEventsToolbar',
+                icons: {
+                    refresh: 'glyphicon-repeat',
+                    toggle: 'glyphicon-list-alt',
+                    columns: 'glyphicon-list'
+                },
+                columns: //bootstrap-table 另外一种用法，可以直接在js中绑定值，这种用法比较灵活，推荐使用
+                [
+                    {field: 'state', checkbox:'true', title: '', visible: true},
+                    {field: 'id', title: 'ID', visible: false},
+                    {field: 'typename', title: '类型名', visible: true},
+                    {field: 'codename', title: '编码', visible: true},
+                    {field: 'description', title: '编码描述', visible: true},
+                    {field: 'short_value', title: '短值', visible: true},
+                    {field: 'long_value', title: '长值', visible: true},
+                    {field: 'isactive', title: '是否启用', visible: false},
+                    {field: 'isactivename', title: '是否启用', visible: true}
+                ]
+            }
+        );
+    }
+
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    $(document).ready(function () {
+
+        var typenames = [];
+        $("select").each(function (index,element) {
+            //页面元素有cs-typename属性的才赋值，取id来赋值
+            if(typeof($(element).attr("cs-typename"))!="undefined"&&$(element).attr("cs-typename")){
+                typenames.push($(element).attr("cs-typename"))
+            }
+        });
+        //初始化下拉框
+        $.ajax({
+            url: "/common/comboboxinfo/getcodesdetailmaps",
+            data: {
+                typenames: typenames
+            },
+            success: function (data) {
+                $("#commentForm select").each(function (index,element) {
+                    //页面元素有cs-typename属性的才赋值，取id来赋值
+                    if(typeof($(element).attr("cs-typename"))!="undefined"&&$(element).attr("cs-typename")){
+                        var typename = $(element).attr("cs-typename");
+                        var d = data[typename];
+                        var dom_str = "#"+$(element).attr("id");;
+                        $.each(d,function(i){
+                            var op = "<option value='"+d[i].code+"'>"+d[i].value+"</option>";
+                            $(dom_str).append(op);
+                        });
+                        $(dom_str).trigger("liszt:updated");
+                        $(dom_str).chosen({ allow_single_deselect: true,width:"100%" });
+                    }
+
+                });
+            }
+        });
+
+        $("#savebtn").click(function () {
+            //获取form表单的数据，转化成JsonObject
+            var reqData = $('#commentForm').serializeObject();
+            $.ajax({
+                type: "POST",//方法类型
+                url: "/cms_quartz/save/json",
+                data: {
+                    param: JSON.stringify(reqData) //将JsonObject转化成Json字符串
+                },
+                success: function (res) {
+                    var success = res["meta"]["success"];
+                    if (success) {
+                        layer.alert("操作成功", {icon: 1}, function () {
+                                //点击弹出框确认按钮之后发生的事情：关闭弹出层页
+                                //以下代码表示获取父级的弹框，然后关闭这个弹框【就是当前弹出层】
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            }
+                        );
+                    }
+                    else {
+                        layer.alert("操作失败，请联系管理员", {icon: 2});
+                    }
+                }
+            });
+        })
+
+        $("#resetbtn").click(function () {
+            $('#commentForm')[0].reset(); //清空form中数据
+        });
+    });
+</script>
+</body>
+
+</html>

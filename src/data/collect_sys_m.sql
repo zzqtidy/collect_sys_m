@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 05/09/2018 18:13:43
+ Date: 07/09/2018 18:12:00
 */
 
 SET NAMES utf8mb4;
@@ -39,7 +39,7 @@ CREATE TABLE `cms_article`  (
   `src` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `rank` int(8) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_article
@@ -61,13 +61,15 @@ CREATE TABLE `cms_codes`  (
   `editwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑人',
   `version` int(6) NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_codes
 -- ----------------------------
 INSERT INTO `cms_codes` VALUES (1, 'ARTICLE_TYPE', '文章类型', '2018-07-19 00:00:17', '2018-08-03 17:07:18', 'zhangsan', NULL, 17);
 INSERT INTO `cms_codes` VALUES (14, 'FILE_UPLOAD_PATH', '文件上传路径', '2018-08-08 17:05:48', '2018-08-08 17:05:47', 'zhangsan', NULL, 0);
+INSERT INTO `cms_codes` VALUES (15, 'QUARTZ_STATUS', '任务状态', '2018-09-07 14:59:45', '2018-09-07 14:59:45', 'zhangsan', NULL, 0);
+INSERT INTO `cms_codes` VALUES (16, 'QUARTZ_CONCURRENT', '任务是否并发', '2018-09-07 15:02:49', '2018-09-07 15:02:49', 'zhangsan', NULL, 0);
 
 -- ----------------------------
 -- Table structure for cms_codesdetail
@@ -87,7 +89,7 @@ CREATE TABLE `cms_codesdetail`  (
   `editwho` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑人',
   `version` int(6) NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_codesdetail
@@ -98,6 +100,38 @@ INSERT INTO `cms_codesdetail` VALUES (2, 'qq', 'qq', 'qq', 'qq', 'qq', 0, '2018-
 INSERT INTO `cms_codesdetail` VALUES (3, 'ARTICLE_TYPE', 'LIFE', '生活', 'LIFE', 'LIFE', 1, '2018-08-07 11:31:25', '2018-08-07 11:31:25', 'zhangsan', NULL, 7);
 INSERT INTO `cms_codesdetail` VALUES (4, 'ARTICLE_TYPE', 'TECHNOLOGY', '技术', 'TECHNOLOGY', 'TECHNOLOGY', 1, '2018-08-07 15:17:57', '2018-08-07 15:17:57', 'zhangsan', NULL, 1);
 INSERT INTO `cms_codesdetail` VALUES (6, 'FILE_UPLOAD_PATH', 'COMMON', '通用传输的路径', 'COMMON', '\\\\upload\\\\common', 1, '2018-08-08 17:10:58', '2018-08-08 17:10:58', 'zhangsan', NULL, 3);
+INSERT INTO `cms_codesdetail` VALUES (8, 'QUARTZ_STATUS', '1', '运行', '1', '1', 1, '2018-09-07 15:04:08', '2018-09-07 15:04:08', 'zhangsan', NULL, 1);
+INSERT INTO `cms_codesdetail` VALUES (9, 'QUARTZ_STATUS', '0', '停止', '0', '0', 1, '2018-09-07 15:04:16', '2018-09-07 15:04:16', 'zhangsan', NULL, 2);
+INSERT INTO `cms_codesdetail` VALUES (10, 'QUARTZ_CONCURRENT', '1', '并发', '1', '1', 1, '2018-09-07 15:03:44', '2018-09-07 15:03:44', 'zhangsan', NULL, 1);
+INSERT INTO `cms_codesdetail` VALUES (11, 'QUARTZ_CONCURRENT', '0', '不并发', '0', '0', 1, '2018-09-07 15:03:40', '2018-09-07 15:03:39', 'zhangsan', NULL, 0);
+
+-- ----------------------------
+-- Table structure for cms_schedulejob
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_schedulejob`;
+CREATE TABLE `cms_schedulejob`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `jobname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务名称',
+  `jobgroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务分组',
+  `jobstatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务状态 是否启动任务',
+  `cronexpression` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'cron表达式',
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `beanclass` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `isconcurrent` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务是否有状态',
+  `springid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'spring bean',
+  `methodname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务调用的方法名',
+  `addtime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edittime` datetime(0) NULL DEFAULT NULL,
+  `addwho` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `editwho` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version` int(5) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cms_schedulejob
+-- ----------------------------
+INSERT INTO `cms_schedulejob` VALUES (4, '1', '1', '0', '1', NULL, '1', '0', '1', '1', '2018-09-07 18:07:33', NULL, 'zhangsan', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for items
@@ -111,7 +145,7 @@ CREATE TABLE `items`  (
   `pic` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品图片',
   `createtime` datetime(0) NOT NULL COMMENT '生产日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of items
@@ -134,7 +168,7 @@ CREATE TABLE `orderdetail`  (
   INDEX `FK_orderdetail_2`(`items_id`) USING BTREE,
   CONSTRAINT `FK_orderdetail_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_orderdetail_2` FOREIGN KEY (`items_id`) REFERENCES `items` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderdetail
@@ -157,7 +191,7 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_orders_1`(`user_id`) USING BTREE,
   CONSTRAINT `FK_orders_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -366,26 +400,6 @@ CREATE TABLE `qrtz_triggers`  (
 INSERT INTO `qrtz_triggers` VALUES ('DefaultQuartzScheduler', 'trigger1', 'group1', 'job1', 'group1', NULL, 1536139718970, 1536139717970, 5, 'WAITING', 'SIMPLE', 1536139707970, 0, NULL, 0, '');
 
 -- ----------------------------
--- Table structure for schedulejob
--- ----------------------------
-DROP TABLE IF EXISTS `schedulejob`;
-CREATE TABLE `schedulejob`  (
-  `jobId` int(11) NOT NULL,
-  `createTime` datetime(0) NULL DEFAULT NULL,
-  `updateTime` datetime(0) NULL DEFAULT NULL,
-  `jobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `jobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `jobStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `cronExpression` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `beanClass` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `isConcurrent` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `springId` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `methodName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`jobId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for sys_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_permission`;
@@ -502,7 +516,7 @@ CREATE TABLE `user`  (
   `sex` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
   `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user

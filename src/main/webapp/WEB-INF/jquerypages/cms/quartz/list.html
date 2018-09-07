@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>文章列表</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../../../../../static/css/animate.css" rel="stylesheet">
+    <link href="../../../../../static/css/style.css" rel="stylesheet">
+    <link href="../../../../../static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+<!-- Panel Other -->
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>其他</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#">选项1</a>
+                </li>
+                <li><a href="#">选项2</a>
+                </li>
+            </ul>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <!-- Example Events -->
+                <div class="example-wrap">
+                    <h4 class="example-title">事件</h4>
+                    <div class="example">
+                        <div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
+                            事件结果
+                        </div>
+                        <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                            <button type="button" class="btn btn-outline btn-default" onclick="addLayer()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline btn-default" onclick="editLayer()">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline btn-default" onclick="deleteSelectData()">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline btn-default" onclick="getSelectData()">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <table id="exampleTableEvents" data-url="/user/listJson" data-height="400" data-mobile-responsive="true">
+                        </table>
+                    </div>
+                </div>
+                <!-- End Example Events -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+<!-- 全局js -->
+<script src="../../../../../static/js/jquery.min.js"></script>
+<script src="../../../../../static/js/bootstrap.min.js"></script>
+
+<!-- 自定义js -->
+<script src="../../../../../static/js/content.js"></script>
+
+
+<!-- Bootstrap table -->
+<script src="../../../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="../../../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="../../../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../../../../../static/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<!-- layer javascript -->
+<script src="../../../../../static/js/plugins/layer/layer.min.js"></script>
+<!-- Peity -->
+<script>
+    //新增
+    function addLayer() {
+        var index = layer.open({
+            type: 2,
+            title: '新增任务',
+            content: '/cms_quartz/add',
+            area: ['300px', '195px'],
+            maxmin: true,
+            end: function () {
+                $("#exampleTableEvents").bootstrapTable('refresh');
+            }
+        });
+        layer.full(index);
+    }
+
+    //修改
+    function editLayer() {
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+        if (selectDatas.length > 1 || selectDatas.length == 0) {
+            layer.alert('请选中一行');
+            return;
+        }
+        var index = layer.open({
+            type: 2,
+            title: '编辑任务',
+            content: '/cms_quartz/add',
+            area: ['300px', '195px'],
+            maxmin: true,
+            //向弹框出来的IFrame填充值
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = selectDatas[0]["id"];
+                var requestUrl = "/cms_quartz/" + id + "/json";
+                console.log(requestUrl);
+                $.ajax({
+                    url: requestUrl,
+                    success: function (res) {
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var resIframe = {};
+                        resIframe.iframeType = "EDIT";
+                        resIframe.data = res;
+                        iframeWin.init_form(resIframe);
+                    },
+
+                });
+            },
+            end: function () {
+                $("#exampleTableEvents").bootstrapTable('refresh');
+            }
+        });
+        layer.full(index);
+    }
+
+    // Example Bootstrap Table Events
+    // ------------------------------
+    //获取选择的哪些行
+    function getSelectData() {
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+
+        if (selectDatas.length > 0) {
+            var text = "";
+            for (var i = 0; i < selectDatas.length; i++) {
+                text += selectDatas[i].username + "  ";
+            }
+            $('#examplebtTableEventsResult').text(text);
+        }
+        else {
+            layer.alert("请选择一行",2);
+            return;
+        }
+    }
+
+    //删除所选项（删除后重新加载数据）
+    function deleteSelectData() {
+        var selectDatas = $("#exampleTableEvents").bootstrapTable('getSelections');
+
+        if (selectDatas.length > 0) {
+            var idList = new Array(selectDatas.length);
+            for(var i = 0;i<selectDatas.length;i++){
+                idList[i] = selectDatas[i]["id"];
+            }
+            layer.confirm(
+                "确定删除吗？",
+                {
+                    btn: ['确定', '取消'] //按钮
+                },
+                function(){
+                    //第一个按钮事件
+                    $.ajax({
+                        type: "POST", //如果提交的数据太大，请不要使用get请求，否则会出错
+                        // url: "/cms_article/delete",
+                        url: "/cms_quartz/delete_by_ids",
+                        data: {
+                            // paramList: JSON.stringify(selectDatas)
+                            paramList: JSON.stringify(idList)
+                        },
+                        success: function (res) {
+                            $("#exampleTableEvents").bootstrapTable('refresh', res);
+                            layer.msg("所选数据已经被删除！",{icon:1});
+                        }
+                    });
+                },
+                function(){
+                    //第二个事件按钮
+                    layer.close();
+                }
+            );
+        }
+        else {
+            layer.alert("请选择一行",{icon:2});
+            return;
+        }
+    }
+
+    (function () {
+        $('#exampleTableEvents').bootstrapTable
+        (
+            {
+                url: "/cms_quartz/listjson",
+                search: true,
+                showRefresh: true,
+                showToggle: true,
+                showColumns: true,
+                switchable: true,
+                cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+                striped: true,  //表格显示条纹，默认为false
+                pagination: true, // 在表格底部显示分页组件，默认false
+                pageList: [20, 100], // 设置页面可以显示的数据条数
+                pageSize: 20, // 页面数据条数
+                pageNumber: 1, // 首页页码
+                iconSize: 'outline',
+                toolbar: '#exampleTableEventsToolbar',
+                icons: {
+                    refresh: 'glyphicon-repeat',
+                    toggle: 'glyphicon-list-alt',
+                    columns: 'glyphicon-list'
+                },
+                columns: //bootstrap-table 另外一种用法，可以直接在js中绑定值，这种用法比较灵活，推荐使用
+                    [
+                        {field: 'state', checkbox:'true', title: '', visible: true},
+                        {field: 'id', title: 'ID', visible: false},
+                        {field: 'jobname', title: '任务名称', visible: true},
+                        {field: 'jobgroup', title: '任务分组', visible: true},
+                        {field: 'jobstatusname', title: '任务状态', visible: true},
+                        {field: 'cronexpression', title: 'Cron表达式', visible: true},
+                        {field: 'beanclass', title: '包名+类名', visible: true},
+                        {field: 'isconcurrentname', title: '是否并发', visible: true},
+                        {field: 'springid', title: 'SpringBean', visible: true},
+                        {field: 'methodname', title: '方法名', visible: true}
+                    ]
+            }
+        );
+
+
+        var $result = $('#examplebtTableEventsResult');
+
+        $('#exampleTableEvents').on('all.bs.table', function (e, name, args) {
+            console.log('Event:', name, ', data:', args);
+        })
+            .on('click-row.bs.table', function (e, row, $element) {
+                $result.text('Event: 单击某行：' + row.id);
+            })
+            .on('dbl-click-row.bs.table', function (e, row, $element) {
+                $result.text('Event: 双击某行：' + row.id);
+            })
+            .on('sort.bs.table', function (e, name, order) {
+                $result.text('Event: sort.bs.table');
+            })
+            .on('check.bs.table', function (e, row) {
+                $result.text('Event: 你选择了一行：' + row.id);
+            })
+            .on('uncheck.bs.table', function (e, row) {
+                $result.text('Event: 取消了选择行：' + row.id);
+            })
+            .on('check-all.bs.table', function (e) {
+                $result.text('Event: 全选');
+            })
+            .on('uncheck-all.bs.table', function (e) {
+                $result.text('Event: 取消全选');
+            })
+            .on('load-success.bs.table', function (e, data) {
+                $result.text('Event: 成功加载表格数据,共计条数为：' + data.length);
+            })
+            .on('load-error.bs.table', function (e, status) {
+                $result.text('Event: 加载数据失败：' + status);
+            })
+            .on('column-switch.bs.table', function (e, field, checked) {
+                $result.text('Event: column-switch.bs.table');
+            })
+            .on('page-change.bs.table', function (e, size, number) {
+                $result.text('Event: 换页：' + size + ' ' + number);
+            })
+            .on('search.bs.table', function (e, text) {
+                $result.text('Event: 查询事件，输入的参数:' + text);
+            });
+    })();
+</script>
+</body>
+
+</html>

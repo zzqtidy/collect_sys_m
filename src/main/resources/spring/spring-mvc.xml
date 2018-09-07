@@ -99,6 +99,5 @@
         <property name="maxInMemorySize" value="4096" />
     </bean>
 
-    <!--配置任务调度quartz，引入spring-quartz.xml文件，加载该文件中的属性-->
-    <import resource="classpath:/spring/spring-quartz.xml" />
+
 </beans>

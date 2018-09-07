@@ -1,20 +1,17 @@
-package org.zzq.csm.entity.quartz;
+package org.zzq.csm.entity.cms.quartz;
+
+import org.zzq.csm.entity.common.BaseEntity;
 
 import java.io.Serializable;
-import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * Description:计划任务信息
  * User: TYLER
  * Date: 2018-09-05
  */
-public class ScheduleJob implements Serializable {
+public class ScheduleJob extends BaseEntity implements Serializable {
 
-    private Long jobId;
-
-    private Date createTime;
-
-    private Date updateTime;
+    private Integer id;
     /**
      * 任务名称
      */
@@ -52,28 +49,12 @@ public class ScheduleJob implements Serializable {
      */
     private String methodName;
 
-    public Long getJobId() {
-        return jobId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getJobName() {

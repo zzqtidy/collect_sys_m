@@ -7,19 +7,22 @@
     <bean id="localQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"></bean>-->
 
     <!-- 注册集群调度任务 -->
-    <bean name="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="true" destroy-method="destroy">
-        <property name="dataSource">
-            <ref bean="dataSource"/>
-        </property>
-        <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
-        <property name="overwriteExistingJobs" value="true" />
-        <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 -->
-        <property name="startupDelay" value="3" />
-        <!-- 设置自动启动 -->
-        <property name="autoStartup" value="true" />
-        <property name="applicationContextSchedulerContextKey" value="applicationContext" />
-        <!--读取quartz.properties文件中配置的信息并加载-->
-        <property name="configLocation" value="classpath:quartz.properties" />
+    <bean name="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+          <!--lazy-init="true" -->
+          <!--destroy-method="destroy"-->
+
+        <!--<property name="dataSource">-->
+            <!--<ref bean="dataSource"/>-->
+        <!--</property>-->
+        <!--&lt;!&ndash;可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 &ndash;&gt;-->
+        <!--<property name="overwriteExistingJobs" value="true" />-->
+        <!--&lt;!&ndash;必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 &ndash;&gt;-->
+        <!--<property name="startupDelay" value="3" />-->
+        <!--&lt;!&ndash; 设置自动启动 &ndash;&gt;-->
+        <!--<property name="autoStartup" value="true" />-->
+        <!--<property name="applicationContextSchedulerContextKey" value="applicationContext" />-->
+        <!--&lt;!&ndash;读取quartz.properties文件中配置的信息并加载&ndash;&gt;-->
+        <!--<property name="configLocation" value="classpath:quartz.properties" />-->
     </bean>
 
 </beans>

@@ -4,12 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.zzq.csm.service.cms.code.CmsCodesDetailService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +21,8 @@ import java.util.Map;
 @Controller
 public class ComboBoxController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final String EMPTY_CODE="-1";
+    private final String EMPTY_VALUE="无数据";
     @Autowired
     private CmsCodesDetailService cmsCodesDetailService;
 
@@ -31,4 +31,12 @@ public class ComboBoxController {
     public List<Map<String,String>> getCodesDetailList(String typename,String emptyCode,String emptyValue) throws Exception {
         return cmsCodesDetailService.selectByTypenameMap(typename,emptyCode,emptyValue);
     }
+
+    @RequestMapping(value = "common/comboboxinfo/getcodesdetailmaps", method = RequestMethod.GET, produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Map<String,List<Map<String,String>>> getCodesDetailLists(@RequestParam(value = "typenames[]")String []typenames) throws Exception {
+
+        return cmsCodesDetailService.selectByArrayTypenames(typenames,EMPTY_CODE,EMPTY_VALUE);
+    }
+
 }

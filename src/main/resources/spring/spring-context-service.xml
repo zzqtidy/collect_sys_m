@@ -13,6 +13,9 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--配置任务调度quartz，引入spring-quartz.xml文件，加载该文件中的属性-->
+    <import resource="classpath:/spring/spring-quartz.xml" />
+
     <!--配置基于注解的声明式事务，即默认使用注解来管理声明式事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

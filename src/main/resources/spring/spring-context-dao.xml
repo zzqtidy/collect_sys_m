@@ -10,24 +10,68 @@
     <!--1：配置数据库的相关操作-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!--2:数据库的连接池-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <!--c3p0的私有属性-->
-        <!--最小连接池个数-->
-        <property name="minPoolSize" value="10"/>
-        <!--最大连接池个数-->
-        <property name="maxPoolSize" value="30"/>
-        <!--关闭连接后不自动提交-->
-        <property name="autoCommitOnClose" value="false"/>
-        <!--获取连接池中连接的超时时间-->
-        <property name="checkoutTimeout" value="1000"/>
-        <!--获取连接池中连接的超时次数-->
-        <property name="acquireRetryAttempts" value="2"/>
+    <!-- 配置数据源 c3p0-->
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">-->
+        <!--<property name="driverClass" value="${jdbc.driver}"/>-->
+        <!--<property name="jdbcUrl" value="${jdbc.url}"/>-->
+        <!--<property name="user" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+        <!--&lt;!&ndash;c3p0的私有属性&ndash;&gt;-->
+        <!--&lt;!&ndash;最小连接池个数&ndash;&gt;-->
+        <!--<property name="minPoolSize" value="10"/>-->
+        <!--&lt;!&ndash;最大连接池个数&ndash;&gt;-->
+        <!--<property name="maxPoolSize" value="30"/>-->
+        <!--&lt;!&ndash;关闭连接后不自动提交&ndash;&gt;-->
+        <!--<property name="autoCommitOnClose" value="false"/>-->
+        <!--&lt;!&ndash;获取连接池中连接的超时时间&ndash;&gt;-->
+        <!--<property name="checkoutTimeout" value="1000"/>-->
+        <!--&lt;!&ndash;获取连接池中连接的超时次数&ndash;&gt;-->
+        <!--<property name="acquireRetryAttempts" value="2"/>-->
 
-        <property name="maxStatements" value="0"/>
+        <!--<property name="maxStatements" value="0"/>-->
+    <!--</bean>-->
+
+    <!-- 配置数据源 Druid-->
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="5" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="50" />
+        <!-- 连接池最大空闲 该参数已废弃 -->
+        <!-- property name="maxIdle" value="20" / -->
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="1" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- <property name="poolPreparedStatements" value="true" /> <property
+            name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+        <!--mysql的机制，当一旦连接闲置超过八小时后，mysql会自动断开连接，要重启tomcat，加上下面这一句来验证数据库的有效性-->
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <!-- <property name="filters" value="stat" /> -->
+        <property name="filters" value="mergeStat,wall" />
     </bean>
 
     <!--约定大于配置-->

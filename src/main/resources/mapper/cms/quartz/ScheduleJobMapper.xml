@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zzq.csm.dao.cms.quartz.ScheduleJobMapper">
+    <!--按照JobId查找-->
+    <select id="selectById" parameterType="int" resultType="org.zzq.csm.entity.cms.quartz.ScheduleJob">
+        select * from cms_schedulejob where id = #{jobId}
+    </select>
+    <!--查询全部-->
+    <select id="selectAll" resultType="org.zzq.csm.entity.cms.quartz.ScheduleJob">
+        select * from cms_schedulejob
+    </select>
+    <select id="selectAllHashMap" resultType="java.util.HashMap">
+        select cq.*,cd1.description jobstatusname,cd2.description isconcurrentname from cms_schedulejob cq
+        inner join cms_codesdetail cd1 on cq.jobStatus = cd1.codename and cd1.typename = 'QUARTZ_STATUS'
+        inner join cms_codesdetail cd2 on cq.isConcurrent = cd2.codename and cd2.typename = 'QUARTZ_CONCURRENT'
+    </select>
+    <!--插入-->
+    <insert id="insertScheduleJob" parameterType="org.zzq.csm.entity.cms.quartz.ScheduleJob">
+        insert into cms_schedulejob
+        (jobName,jobGroup,jobStatus,cronExpression,description,beanClass,isConcurrent,springId,methodName,addwho) values
+        (#{jobName},#{jobGroup},#{jobStatus},#{cronExpression},#{description},#{beanClass},#{isConcurrent},#{springId},#{methodName},#{addwho})
+    </insert>
+    <!--更新-->
+    <update id="updateScheduleJob" parameterType="org.zzq.csm.entity.cms.quartz.ScheduleJob">
+        update cms_schedulejob
+        <set>
+            <if test="jobStatus != null">
+                jobStatus = #{jobStatus},
+            </if>
+            <if test="cronExpression != null">
+                cronExpression = #{cronExpression},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="beanClass != null">
+                beanClass = #{beanClass},
+            </if>
+            <if test="isConcurrent != null">
+                isConcurrent = #{isConcurrent},
+            </if>
+            <if test="springId != null">
+                springId = #{springId},
+            </if>
+            <if test="methodName != null">
+                methodName = #{methodName},
+            </if>
+        </set>
+        ,edittime = NOW(),version = version+1 where id = #{id}
+    </update>
+    <!--删除-->
+    <delete id="deleteScheduleJobById" parameterType="int">
+        delete from cms_schedulejob where id = #{id}
+    </delete>
+
+    <delete id="deleteScheduleJobByJobName" parameterType="String">
+        delete from cms_schedulejob where jobname = #{jobName}
+    </delete>
+</mapper>

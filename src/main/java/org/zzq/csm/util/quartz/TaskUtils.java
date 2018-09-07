@@ -1,35 +1,33 @@
-package org.zzq.csm.util;
+package org.zzq.csm.util.quartz;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.zzq.csm.entity.cms.quartz.ScheduleJob;
+import org.zzq.csm.util.SpringUtils;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang.StringUtils;
-import org.quartz.JobExecutionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.zzq.csm.entity.quartz.ScheduleJob;
-
 /**
  * Created with IntelliJ IDEA.
- * Description:定时任务工具类
+ * Description:
  * User: TYLER
- * Date: 2018-09-05
+ * Date: 2018-09-07
+ * Time: 14:08
  */
-public class JobUtils {
-    private static Logger log = LoggerFactory.getLogger(JobUtils.class);
+public class TaskUtils {
+    private static Logger log = LoggerFactory.getLogger(TaskUtils.class);
     public static final String STATUS_RUNNING = "1"; //启动状态
     public static final String STATUS_NOT_RUNNING = "0"; //未启动状态
     public static final String CONCURRENT_IS = "1";
     public static final String CONCURRENT_NOT = "0";
-
-    private ApplicationContext ctx;
-
     /**
      * 通过反射调用scheduleJob中定义的方法
      *
      * @param scheduleJob
      */
-    public static void invokMethod(ScheduleJob scheduleJob, JobExecutionContext context) {
+    public static void invokMethod(ScheduleJob scheduleJob) {
         Object object = null;
         Class clazz = null;
         if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
@@ -51,7 +49,7 @@ public class JobUtils {
         clazz = object.getClass();
         Method method = null;
         try {
-            method = clazz.getMethod(scheduleJob.getMethodName(), new Class[] {JobExecutionContext.class});
+            method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
         } catch (NoSuchMethodException e) {
             log.error("任务名称 = [" + scheduleJob.getJobName() + "]---------------未启动成功，方法名设置错误！！！");
         } catch (SecurityException e) {
@@ -60,7 +58,7 @@ public class JobUtils {
         }
         if (method != null) {
             try {
-                method.invoke(object, new Object[] {context});
+                method.invoke(object);
             } catch (IllegalAccessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -72,6 +70,6 @@ public class JobUtils {
                 e.printStackTrace();
             }
         }
-        log.info("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
+        System.out.println("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
     }
 }

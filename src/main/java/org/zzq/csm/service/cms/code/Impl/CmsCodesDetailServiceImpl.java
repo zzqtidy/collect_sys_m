@@ -34,6 +34,16 @@ public class CmsCodesDetailServiceImpl implements CmsCodesDetailService {
     public List<Map<String,Object>> selectByTypenameMap(String typename) throws Exception{
         return cmsCodesDetailMapper.selectByTypenameMap(typename);
     }
+    @Override
+    public Map<String,List<Map<String,String>>> selectByArrayTypenames(String []typenames,String emptyCode,String emptyValue) throws Exception{
+        Map<String,List<Map<String,String>>> maps = new HashMap<String,List<Map<String,String>>>();
+        for(String typename:typenames){
+            List<Map<String,String>> mapList = new ArrayList<Map<String,String>>();
+            mapList=selectByTypenameMap(typename,emptyCode,emptyValue);
+            maps.put(typename,mapList);
+        }
+        return maps;
+    }
 
     @Override
     public List<Map<String,String>> selectByTypenameMap(String typename,String emptyCode,String emptyValue) throws Exception{
