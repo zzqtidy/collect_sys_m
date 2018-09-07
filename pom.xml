@@ -23,6 +23,8 @@
         <!--spring mvc 文件上传 -end-->
         <!--定时任务-->
         <quartz.version>2.2.1</quartz.version>
+        <!--阿里巴巴提供的druid数据库连接-->
+        <druid-version>1.0.28</druid-version>
     </properties>
 
     <dependencies>
@@ -60,10 +62,16 @@
             <version>8.0.11</version>
         </dependency>
         <!--数据库的连接池-->
+        <!--<dependency>-->
+            <!--<groupId>c3p0</groupId>-->
+            <!--<artifactId>c3p0</artifactId>-->
+            <!--<version>0.9.1.2</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>c3p0</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.1.2</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid-version}</version>
         </dependency>
 
         <!--3:DAO层 ORM框架-->
