@@ -23,7 +23,9 @@ public interface JobTaskService {
     ScheduleJob getTaskById(int jobId);
     void addTask(ScheduleJob job);
     void updateTask(ScheduleJob job);
+    void deleteTask(int jobId);
     void changeStatus(int jobId, String cmd) throws SchedulerException;
+    void changeJob(ScheduleJob job) throws SchedulerException;
     void updateCron(int jobId, String cron) throws SchedulerException;
     void addJob(ScheduleJob job) throws SchedulerException;
     void init() throws Exception;
@@ -31,7 +33,7 @@ public interface JobTaskService {
     List<ScheduleJob> getRunningJob() throws SchedulerException;
     void pauseJob(ScheduleJob scheduleJob) throws SchedulerException;
     void resumeJob(ScheduleJob scheduleJob) throws SchedulerException;
-    void deleteJob(ScheduleJob scheduleJob) throws SchedulerException;
+    void deleteJob(int jobId) throws SchedulerException;
     void runAJobNow(ScheduleJob scheduleJob) throws SchedulerException;
     void updateJobCron(ScheduleJob scheduleJob) throws SchedulerException;
 }

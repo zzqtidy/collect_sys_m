@@ -21,11 +21,13 @@ import java.util.*;
  * Description:
  * User: TYLER
  * Date: 2018-09-05
+ * TODO:后期验证Cron表达式，要执行的类和方法等是否存在并满足执行条件
  */
 
 /**
  * 计划任务管理
  */
+
 @Service
 public class JobTaskServiceImpl implements JobTaskService {
     public final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -44,9 +46,11 @@ public class JobTaskServiceImpl implements JobTaskService {
     public List<ScheduleJob> getAllTask() {
         return scheduleJobMapper.selectAll();
     }
-    public List<Map<String,Object>> selectAllHashMap(){
+
+    public List<Map<String, Object>> selectAllHashMap() {
         return scheduleJobMapper.selectAllHashMap();
     }
+
     /**
      * 添加到数据库中 区别于addJob
      */
@@ -54,16 +58,34 @@ public class JobTaskServiceImpl implements JobTaskService {
     public void addTask(ScheduleJob job) {
         scheduleJobMapper.insertScheduleJob(job);
     }
+
     @Override
-    public void updateTask(ScheduleJob job){
+    public void updateTask(ScheduleJob job) {
         scheduleJobMapper.updateScheduleJob(job);
     }
+
     /**
      * 从数据库中查询job
      */
     @Override
     public ScheduleJob getTaskById(int jobId) {
         return scheduleJobMapper.selectById(jobId);
+    }
+
+    public void deleteTask(int jobId) {
+        scheduleJobMapper.deleteScheduleJobById(jobId);
+    }
+
+    @Override
+    public void changeJob(ScheduleJob job) throws SchedulerException {
+        if (job == null) {
+            return;
+        }
+        if (job.getJobStatus().equals(TaskUtils.STATUS_NOT_RUNNING)) {
+            deleteJob(job.getId());
+        } else if (job.getJobStatus().equals(TaskUtils.STATUS_RUNNING)) {
+            addJob(job);
+        }
     }
 
     /**
@@ -78,7 +100,7 @@ public class JobTaskServiceImpl implements JobTaskService {
             return;
         }
         if ("stop".equals(cmd)) {
-            deleteJob(job);
+            deleteJob(job.getId());
             job.setJobStatus(TaskUtils.STATUS_NOT_RUNNING);
         } else if ("start".equals(cmd)) {
             job.setJobStatus(TaskUtils.STATUS_RUNNING);
@@ -108,8 +130,9 @@ public class JobTaskServiceImpl implements JobTaskService {
 
     /**
      * 添加任务
-     *
+     * <p>
      * //@param scheduleJob
+     *
      * @throws SchedulerException
      */
     @Override
@@ -117,8 +140,6 @@ public class JobTaskServiceImpl implements JobTaskService {
         if (job == null || !TaskUtils.STATUS_RUNNING.equals(job.getJobStatus())) {
             return;
         }
-
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         log.debug(scheduler + ".......................................................................................add");
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
 
@@ -148,12 +169,10 @@ public class JobTaskServiceImpl implements JobTaskService {
             scheduler.rescheduleJob(triggerKey, trigger);
         }
     }
+
     @Override
     @PostConstruct
     public void init() throws Exception {
-
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-
         // 这里获取任务信息数据
         List<ScheduleJob> jobList = scheduleJobMapper.selectAll();
 
@@ -170,7 +189,6 @@ public class JobTaskServiceImpl implements JobTaskService {
      */
     @Override
     public List<ScheduleJob> getAllJob() throws SchedulerException {
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
         List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
@@ -202,7 +220,6 @@ public class JobTaskServiceImpl implements JobTaskService {
      */
     @Override
     public List<ScheduleJob> getRunningJob() throws SchedulerException {
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
         List<ScheduleJob> jobList = new ArrayList<ScheduleJob>(executingJobs.size());
         for (JobExecutionContext executingJob : executingJobs) {
@@ -233,7 +250,6 @@ public class JobTaskServiceImpl implements JobTaskService {
      */
     @Override
     public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.pauseJob(jobKey);
     }
@@ -245,7 +261,6 @@ public class JobTaskServiceImpl implements JobTaskService {
      * @throws SchedulerException
      */
     public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.resumeJob(jobKey);
     }
@@ -253,15 +268,14 @@ public class JobTaskServiceImpl implements JobTaskService {
     /**
      * 删除一个job
      *
-     * @param scheduleJob
+     * @param jobId
      * @throws SchedulerException
      */
     @Override
-    public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException {
-//        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public void deleteJob(int jobId) throws SchedulerException {
+        ScheduleJob scheduleJob = getTaskById(jobId);
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.deleteJob(jobKey);
-
     }
 
     /**

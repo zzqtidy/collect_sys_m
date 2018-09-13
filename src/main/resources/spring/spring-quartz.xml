@@ -7,6 +7,19 @@
     <bean id="localQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"></bean>-->
 
     <!-- 注册集群调度任务 -->
+    <!--
+        解惑：
+        以下这种方式是通过 FactoryBean 配置 Bean，一般常用于集成第三方框架的时候使用（第三方框架有些采用这种形式）
+        class 指向的是FactoryBean的全类名
+        property 配置的是FactoryBean的属性
+
+        而实际上这里返回的是FactoryBean中的getObject()方法返回的实例，如下面SchedulerFactoryBean中的部分代码
+        private Scheduler scheduler;
+        public Scheduler getObject() {
+            return this.scheduler;
+        }
+    -->
+
     <bean name="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
           <!--lazy-init="true" -->
           <!--destroy-method="destroy"-->

@@ -6,8 +6,13 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-    <!-- 扫描service包（包括子包中）下面的所有注解，初始化并加入到IOC的容器中,如果类中有其他的依赖，也会初始化-->
-    <context:component-scan base-package="org.zzq.csm.service"/>
+    <!--
+    扫描service包（包括子包中）下面的所有注解，初始化并加入到IOC的容器中,如果类中有其他的依赖，也会初始化，扫描多个包，用逗号隔开
+    即Spring能够从classpath下面自动扫描、侦测和实例化具有特定注解的组件
+    如果不想扫描这个路径下面所有的包，只想扫描指定的包，可以使用resource-pattern来扫描指定的资源
+    resource-pattern="login/*class"
+    -->
+    <context:component-scan base-package="org.zzq.csm.service"></context:component-scan>
     <!--配置事务管理器-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

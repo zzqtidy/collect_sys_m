@@ -1,5 +1,6 @@
 package org.zzq.csm.controller.cms.quartz;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +63,7 @@ public class QuartzController {
             //新增
             scheduleJob.setAddwho(CurrentUserManager.getUserId());
             try {
+                jobTaskService.addJob(scheduleJob);
                 jobTaskService.addTask(scheduleJob);
             } catch (Exception e) {
                 logger.error("新增："+e.getMessage());
@@ -72,6 +74,7 @@ public class QuartzController {
         else{
             //修改
             try {
+                jobTaskService.changeJob(scheduleJob);
                 jobTaskService.updateTask(scheduleJob);
             } catch (Exception e) {
                 logger.error("修改："+e.getMessage());
@@ -87,5 +90,23 @@ public class QuartzController {
     public ScheduleJob selectByid(@PathVariable(value = "id") int id) throws Exception {
         //注意@PathVariable(value = "id")是取出url地址中的{id},当然也可以不用写，不过按照规范，最好写上
         return jobTaskService.getTaskById(id);
+    }
+
+    //传输CmsCodes对应id的数据到json，传输数据量比较小
+    @RequestMapping(value = "cms_quartz/delete_by_ids",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public List<Map<String,Object>> deleteSelectRowsByIds(String paramList) throws Exception {
+        JSONArray jsonArray = JSONArray.fromObject(paramList);
+        //生成类
+        List<Integer> idList = (List<Integer>) JSONArray.toCollection(jsonArray, Integer.class);
+        for (Integer id : idList) {
+            try {
+                jobTaskService.deleteJob(id);
+                jobTaskService.deleteTask(id);
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+            }
+        }
+        return selectAllHashMap();
     }
 }

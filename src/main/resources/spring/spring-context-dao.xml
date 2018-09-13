@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <!--配置整合Mybatis过程-->
-    <!--1：配置数据库的相关操作-->
+    <!--1：配置数据库的相关操作,通过context:property-placeholder命名空间可以导入外部的properties文件-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!--2:数据库的连接池-->
     <!-- 配置数据源 c3p0-->
